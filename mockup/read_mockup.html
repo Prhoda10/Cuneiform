@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+   <!-- Meta -->
+   <title>Cuneiform</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- Styles -->
+   <link rel="stylesheet" href="styles.css">
+   <script src="pullesvapi.js"></script>
+   <script src="jquery-3.5.1.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+   <nav class="navigation">
+      <div class="logo">
+         <a href="index.html" id="title">
+           <!-- <img src="logo.png" alt="cuneiform-b" width="70px" height="70px"></img>
+           --> <strong>Cuneiform</strong>
+         </a>
+
+      </div>
+      <ul>
+         <li> <a class="nav-link" href="index.html">Home</a> </li>
+         <li> <a class="nav-link" href="memorize.html">Memorize</a> </li>
+         <li> <a class="nav-link" href="prayer-jar.html">Prayer Jar</a> </li>
+         <li> <a class="nav-link" href="account.html">Account</a> </li>
+      </ul>
+      <div id="search">
+         <input type="text" class="searchfield" id="book" placeholder="Enter Book"/>
+         <input type="text" class="searchfield" id="reference" placeholder="Enter reference (xx:xx)" />
+         <button id="toggleVerse" onclick="getTXT()">SEARCH</button>
+      </div>
+   </nav>
+
+   <div class="icon-bar">
+      <a href="#" class="darkmode-icon" onclick="darkmode()">&#9680;</a>
+   </div>
+
+   <div id="main" class="Container">
+   </div>
+
+   <div class="footer">
+      <a href="#">SHARE</a>
+      <a href="#">FAVORITE</a>
+   </div>
+
+   <nav class="nav-reading">
+      <div class="nav-reading-prev">
+         <a href="prev.html" class="prev">
+            &laquo; previous chapter
+         </a>
+      </div>
+      <div class="nav-reading-next">
+         <a href="next.html" title="Next Chapter">
+            next chapter &raquo;
+         </a>
+      </div>
+   </nav>
+
+</body>
+
+</html>
