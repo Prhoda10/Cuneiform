@@ -43,13 +43,17 @@ async function getTXT(mode) {
 var input = document.getElementById("reference");
 input.addEventListener("keyup", function (event) {
   // Number 13 is the "Enter" key on the keyboard
-  if (event.key === 'Enter') {
+  if (event.code === "Enter") {
     // Cancel the default action, if needed
     event.preventDefault();
     // Trigger the button element with a click
-    document.getElementById("btn1").click();
+    validate (event);
   }
 });
+
+function validate(e) {
+  
+}
 
 //darkmode
 function darkmode() {
