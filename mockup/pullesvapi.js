@@ -1,32 +1,48 @@
 
 //fetch API
-var api_url = 'https://api.esv.org/v3/passage/text/?q='
+var api_url = 'https://api.esv.org/v3/passage/html/?q='
 const options = {
   headers: {
     Authorization: "Token abefecf1787b77af8b490d6056e2691433f6d3d4"
   }
 };
+let next = [];
+let prev = [];
 
 //display text
-async function getTXT() {
-  var str = document.getElementById("book").value;
-  var str2 = document.getElementById("reference").value;
-  const request = api_url + str + "+" + str2;
+async function getTXT(mode) {
+  let params = {
+    'include-chapter-numbers': 'False',
+    'include-audio-link': 'False'
+}
+  var request;
+  if (mode == 1) {
+    var str = document.getElementById("book").value;
+    var str2 = document.getElementById("reference").value;
+    request = api_url + str + "+" + str2;
+  } else if (mode == 0) {
+    request = api_url + next.join('-');
+  } else {
+    request = api_url + prev.join('-');
+  }
   console.log(request);
-  const response = await fetch(request, options);
+  const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
-  console.log(data);
+  //console.log(data);
   // document.getElementById("main").innerHTML = data.passages;
   let output = "";
   function formatTXT(item, index) {
     output += index + ". " + item + "<br/>";
   }
-  var text = JSON.stringify(data.passages, null, 5).split(/\[\d{1,}\]/).forEach(formatTXT);
+  //var text = JSON.stringify(data.passages, null, 5).split(/\[\d{1,}\]/).forEach(formatTXT);
 
-  output = output.replace(/(\n)/, "<br />");
-  document.getElementById("main").innerHTML = output;
-  console.log(text);
-  console.log(output);
+  //output = output.replace(/(\n)/, "<br />");
+  //document.getElementById("main").innerHTML = output;
+  document.getElementById("main").innerHTML = data.passages;
+  //console.log(text);
+  //console.log(output);
+  next = data.passage_meta[0].next_chapter;
+  prev = data.passage_meta[0].prev_chapter;
 
 }
 

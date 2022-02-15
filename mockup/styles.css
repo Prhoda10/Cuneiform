@@ -96,6 +96,7 @@ button,
 #main {
     position: relative;
     width: 90%;
+    height: auto;
     margin: 30px auto;
     padding: 40px;
     border-radius: 5px;
@@ -139,11 +140,22 @@ nav {
 }
 
 .nav-reading-next {
-  float: right; 
+  float: right;
 
 }
+
+.nav-reading-next button {
+  color: white;
+  font-size: medium;
+}
+
 .nav-reading-prev {
   float: left;
+}
+
+.nav-reading-prev button {
+  color: white;
+  font-size: medium;
 }
 
 .nav-reading-next a, .nav-reading-prev a {

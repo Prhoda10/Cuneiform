@@ -32,7 +32,7 @@
       <div id="search">
          <input type="text" class="searchfield" id="book" placeholder="Enter Book"/>
          <input type="text" class="searchfield" id="reference" placeholder="Enter reference (xx:xx)" />
-         <button id="toggleVerse" onclick="getTXT()">SEARCH</button>
+         <button id="toggleVerse" onclick="getTXT(1)">SEARCH</button>
       </div>
    </nav>
 
@@ -50,14 +50,16 @@
 
    <nav class="nav-reading">
       <div class="nav-reading-prev">
-         <a href="prev.html" class="prev">
+         <!--<a href="prev.html" class="prev">
             &laquo; previous chapter
-         </a>
+         </a>-->
+         <button id="prevChapter" onclick="getTXT(2)">&laquo prev chapter</button>
       </div>
       <div class="nav-reading-next">
-         <a href="next.html" title="Next Chapter">
+         <!--<a href="next.html" title="Next Chapter" onlick="next()">
             next chapter &raquo;
-         </a>
+         </a> -->
+         <button class="nav-reading-next" id="nextChapter" onclick="getTXT(0)">next chapter &raquo</button>
       </div>
    </nav>
 
