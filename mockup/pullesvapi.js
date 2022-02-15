@@ -26,21 +26,14 @@ async function getTXT(mode) {
     request = api_url + prev.join('-');
   }
   console.log(request);
+
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
-  //console.log(data);
-  // document.getElementById("main").innerHTML = data.passages;
   let output = "";
-  function formatTXT(item, index) {
-    output += index + ". " + item + "<br/>";
-  }
-  //var text = JSON.stringify(data.passages, null, 5).split(/\[\d{1,}\]/).forEach(formatTXT);
 
-  //output = output.replace(/(\n)/, "<br />");
-  //document.getElementById("main").innerHTML = output;
   document.getElementById("main").innerHTML = data.passages;
-  //console.log(text);
-  //console.log(output);
+
+  // gets next + previous chapters
   next = data.passage_meta[0].next_chapter;
   prev = data.passage_meta[0].prev_chapter;
 
