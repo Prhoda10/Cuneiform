@@ -28,21 +28,28 @@ async function getTXT(mode) {
   console.log(request);
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
-  //console.log(data);
-  // document.getElementById("main").innerHTML = data.passages;
-  let output = "";
-  function formatTXT(item, index) {
-    output += index + ". " + item + "<br/>";
-  }
-  //var text = JSON.stringify(data.passages, null, 5).split(/\[\d{1,}\]/).forEach(formatTXT);
-
-  //output = output.replace(/(\n)/, "<br />");
-  //document.getElementById("main").innerHTML = output;
   document.getElementById("main").innerHTML = data.passages;
-  //console.log(text);
-  //console.log(output);
   next = data.passage_meta[0].next_chapter;
   prev = data.passage_meta[0].prev_chapter;
+
+}
+
+//Get Search Results
+async function getSRC() {
+  let params = {
+    'page_size' : '100'
+}
+  var str = document.getElementById("keyWordSearch").value;
+  var request = "https://api.esv.org/v3/passage/search/?q=" + str;
+  const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
+  const data = await response.json();
+  // document.getElementById("main").innerHTML = data.results[1].reference;
+  // document.getElementById("main").innerHTML += data.results[1].reference;
+
+  document.getElementById("main").innerHTML = "";
+  for (let i = 0; i < data.total_results; i++) {
+    document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
+  }
 
 }
 
@@ -50,16 +57,16 @@ async function getTXT(mode) {
 var input = document.getElementById("reference");
 input.addEventListener("keyup", function (event) {
   // Number 13 is the "Enter" key on the keyboard
-  if (event.code === "Enter") {
+  if (event.keyCode === 13) {
     // Cancel the default action, if needed
     event.preventDefault();
     // Trigger the button element with a click
-    validate (event);
+    validate(event);
   }
 });
 
 function validate(e) {
-  
+  getTXT(1);
 }
 
 //darkmode
