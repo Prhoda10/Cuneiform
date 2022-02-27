@@ -1,0 +1,19 @@
+{
+  "name": "cuneiform",
+  "version": "1.0.0",
+  "description": "Bible Study Engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prhoda10/Cuneiform.git"
+  },
+  "author": "Gloria Kim, Philip Rhoda, Laura Gilboy, Ethan Cliff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Prhoda10/Cuneiform/issues"
+  },
+  "homepage": "https://github.com/Prhoda10/Cuneiform#readme"
+}

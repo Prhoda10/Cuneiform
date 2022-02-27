@@ -56,16 +56,10 @@ button,
   text-decoration: underline;
 }
 
-.logo {
-  float:left;
-  margin: 30px auto;
-  padding-left: 100px;
+#title {
+  float: left;
   font-size: 3em;
   font-family: 'Alegreya Sans', sans-serif;
-
-}
-
-#title {
   color:rgb(127, 106, 139);
   text-decoration: none;
 }
@@ -117,6 +111,13 @@ button {
 #search {
   margin: 30px 50px;
   float: right;
+
+}
+
+#keyword {
+  margin: 30px 50px;
+  float: left;
+  
 }
 
 .searchfield {

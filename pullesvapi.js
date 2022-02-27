@@ -1,4 +1,3 @@
-
 //fetch API
 var api_url = 'https://api.esv.org/v3/passage/html/?q='
 const options = {
@@ -58,7 +57,7 @@ async function getSRC() {
 var input = document.getElementById("reference");
 input.addEventListener("keyup", function (event) {
   // Number 13 is the "Enter" key on the keyboard
-  if (event.keyCode === 13) {
+  if (event.key === 13) {
     // Cancel the default action, if needed
     event.preventDefault();
     // Trigger the button element with a click
