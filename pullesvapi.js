@@ -55,16 +55,17 @@ async function getSRC() {
 
 // this doesn't work yet
 var input = document.getElementById("reference");
-input.addEventListener("keyup", function (event) {
+if (input) {
+input.addEventListener("input", function (event) {
   // Number 13 is the "Enter" key on the keyboard
+  log.textContent += ` ${event.code}`;
   if (event.key === 13) {
-    // Cancel the default action, if needed
-    event.preventDefault();
+    console.log("hello");
     // Trigger the button element with a click
     validate(event);
   }
 });
-
+}
 function validate(e) {
   getTXT(1);
 }

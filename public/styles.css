@@ -57,6 +57,7 @@ button,
 }
 
 #title {
+  margin-left: 40px;
   float: left;
   font-size: 3em;
   font-family: 'Alegreya Sans', sans-serif;
@@ -102,34 +103,31 @@ button,
 button {
   background-color: rgb(148, 141, 175);
   padding: 7px;
-  display: inline-block;
   text-decoration: none;
   border: none;
   border-radius: 5px;
   }
 
-.searchBar {
-  white-space: nowrap;
+
+#searchKey {
+  position: relative;
+  margin: 30px 0px;
+  float: left;
 }
 
 #search {
-  margin: 30px 50px;
+  position: relative;
+  margin: 30px 0px;
   padding-right: 15%;
   float: right;
-
-}
-
-#keyword {
-  margin: 30px 50px;
-  float: left;
-  
 }
 
 .searchfield {
+  position: relative;
+  white-space: nowrap;
   padding: 7px;
   width: 40%;
   border: 1px solid rgb(148, 141, 175);
-  display: inline-block;
 }
 
 .nav-reading {
@@ -201,3 +199,17 @@ text-decoration: none;
   color: midnightblue;
 }
 
+
+/* prayer jar */
+
+#prayer {
+  margin: 30px 0px;
+}
+
+.submit-prayer {
+  display: inline-block;
+}
+#prayerlist {
+  
+  size: 60%;
+}

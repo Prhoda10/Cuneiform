@@ -5,45 +5,11 @@
 	<title>Prayer Submissons and Requests</title>
 	<!---Styles--->
 	<link rel="stylesheet" href="styles.css">
+	<script src="../prayerjar.js"></script>
 </head>
 <body>
 	<script>
-		const unaccepableWords = []; //An array of words banned from prayer requests.
-		/**
-		* A function for submiting prayer requests.
-		*/
-		function submitPrayer() {
-			let list = document.getElementById("prayerList");
-			let prayer = document.getElementById("submissionBox").value;
-			let li = document.createElement("li");
-			if(checkPrayer(prayer, unaccepableWords)) {
-				return;
-			} else {
-				li.setAttribute('id', prayer);
-				li.appendChild(document.createTextNode(prayer));
-				list.appendChild(li);
-			}
-		}
-		/**
-		* A function for remmoving prayer requests.
-		*/
-		function removePrayer() {
-			let list = document.getElementById("prayerList");
-			list.removeChild(list.childNodes[0]);
-		}
-		/**
-		* Checks a string for inapropriate words.
-		* @param x The string to be checked.
-		* @param words The list of strings to be checked against.
-		*/
-		function checkPrayer(x, words) {
-			for(let i = 0; i < words.length; i++) {
-				if(x.includes(words[i])) {
-					document.getElementById("invalidPrayerInput").innerHTML = "Prayer contains unaccepable language";
-					return true;
-				}
-			}
-		}
+		
 	</script>
 	
 	<nav class="navigation">
@@ -56,17 +22,15 @@
 		</ul>
 	</nav>
 	
-
-	<form>
-		<label for="submissionBox">Enter prayer here:</label><br>
-		<input type="text" id="submissionBox" name="submissionBox"><br>
-	</form>
-
-	
-	<button onclick="submitPrayer()">Submit Prayer</button>
-	<button onclick="removePrayer()">Get Prayer</button>
-
-	<p id ="invalidPrayerInput"></p>
+	<div>
+		<form id="prayer">
+			<label for="submissionBox">Enter prayer here:</label>
+			<input type="text" id="submissionBox" name="submissionBox">
+		</form>
+	<button class="submit-prayer" onclick="submitPrayer()">Submit Prayer</button>
+	<button class="submit-prayer" onclick="removePrayer()">Get Prayer</button>
+	</div>
+	<p id="invalidPrayerInput"></p>
 
 	<h1>Prayer List</h1>
 	<ol id="prayerList"></ol>
