@@ -108,8 +108,13 @@ button {
   border-radius: 5px;
   }
 
+.searchBar {
+  white-space: nowrap;
+}
+
 #search {
   margin: 30px 50px;
+  padding-right: 15%;
   float: right;
 
 }
@@ -124,6 +129,7 @@ button {
   padding: 7px;
   width: 40%;
   border: 1px solid rgb(148, 141, 175);
+  display: inline-block;
 }
 
 .nav-reading {
