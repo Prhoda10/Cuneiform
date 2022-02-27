@@ -22,18 +22,20 @@
 		</ul>
 	</nav>
 	
-	<div>
-		<form id="prayer">
-			<label for="submissionBox">Enter prayer here:</label>
-			<input type="text" id="submissionBox" name="submissionBox">
-		</form>
+	<div id="prayerJar">
+	<form id="prayer">
+		<input type="text" class="searchfield" id="submissionBox" placeholder="Enter Prayer Request Here" name="submissionBox">
+	</form>
+
 	<button class="submit-prayer" onclick="submitPrayer()">Submit Prayer</button>
 	<button class="submit-prayer" onclick="removePrayer()">Get Prayer</button>
 	</div>
 	<p id="invalidPrayerInput"></p>
 
-	<h1>Prayer List</h1>
-	<ol id="prayerList"></ol>
+	<div id="prayerDiv">
+		<h1>Prayer List</h1>
+		<ol id="prayerList"></ol>
+	</div>
 	
 </body>
 </html>

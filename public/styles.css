@@ -202,6 +202,19 @@ text-decoration: none;
 
 /* prayer jar */
 
+#prayerJar {
+  margin-left: 30px;
+}
+
+#prayerDiv {
+  margin-left: 30px;
+  margin-top: 2%;
+  font-size: 1em;
+  font-family: 'Alegreya Sans', sans-serif;
+  color:rgb(127, 106, 139);
+  text-decoration: none;
+}
+
 #prayer {
   margin: 30px 0px;
 }
@@ -210,6 +223,5 @@ text-decoration: none;
   display: inline-block;
 }
 #prayerlist {
-  
   size: 60%;
 }
