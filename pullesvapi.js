@@ -37,7 +37,7 @@ async function getTXT(mode) {
   console.log(data);
   
   if (data.canonical === "") {
-    alert("Invalid entry");
+    getSRC();
   } else {
     document.getElementById("main").innerHTML = data.passages;
     next = data.passage_meta[0].next_chapter;
@@ -51,7 +51,7 @@ async function getSRC() {
   let params = {
     'page_size' : '100'
   }
-  var str = document.getElementById("keyWordSearch").value;
+  var str = document.getElementById("reference").value;
   var request = "https://api.esv.org/v3/passage/search/?q=" + str;
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
