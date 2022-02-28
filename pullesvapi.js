@@ -43,6 +43,9 @@ async function getSRC() {
   var request = "https://api.esv.org/v3/passage/search/?q=" + str;
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
+  // document.getElementById("main").innerHTML = data.results[1].reference;
+  // document.getElementById("main").innerHTML += data.results[1].reference;
+
   document.getElementById("main").innerHTML = "";
   for (let i = 0; i < data.total_results; i++) {
     document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
@@ -69,6 +72,6 @@ function validate(e) {
 
 //darkmode
 function darkmode() {
-  var element = document.getElementById("main");
+  var element = document.body;
   element.classList.toggle("darkmode");
 }
