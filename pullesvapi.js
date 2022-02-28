@@ -13,24 +13,36 @@ async function getTXT(mode) {
   let params = {
     'include-chapter-numbers': 'False',
     'include-audio-link': 'False'
-}
+  }
   var request;
+  // From Text Input
   if (mode == 1) {
-    var str = document.getElementById("book").value;
-    var str2 = document.getElementById("reference").value;
-    request = api_url + str + "+" + str2;
+    //var str1 = document.getElementById("book").value;
+    var str = document.getElementById("reference").value;
+    request = api_url + str;
+    // Next Chapter
   } else if (mode == 0) {
     request = api_url + next.join('-');
-  } else {
+    // Previous Chapter
+  } else if (mode == 2) {
     request = api_url + prev.join('-');
+    // Default upon launch
+  } else if (mode == 3) {
+    request = api_url + "Genesis1";
   }
   console.log(request);
 
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
-  document.getElementById("main").innerHTML = data.passages;
-  next = data.passage_meta[0].next_chapter;
-  prev = data.passage_meta[0].prev_chapter;
+  console.log(data);
+  
+  if (data.canonical === "") {
+    alert("Invalid entry");
+  } else {
+    document.getElementById("main").innerHTML = data.passages;
+    next = data.passage_meta[0].next_chapter;
+    prev = data.passage_meta[0].prev_chapter;
+  }
 
 }
 
@@ -38,7 +50,7 @@ async function getTXT(mode) {
 async function getSRC() {
   let params = {
     'page_size' : '100'
-}
+  }
   var str = document.getElementById("keyWordSearch").value;
   var request = "https://api.esv.org/v3/passage/search/?q=" + str;
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
@@ -46,6 +58,7 @@ async function getSRC() {
   // document.getElementById("main").innerHTML = data.results[1].reference;
   // document.getElementById("main").innerHTML += data.results[1].reference;
 
+  console.log(data);
   document.getElementById("main").innerHTML = "";
   for (let i = 0; i < data.total_results; i++) {
     document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
@@ -53,21 +66,29 @@ async function getSRC() {
 
 }
 
-// this doesn't work yet
-var input = document.getElementById("reference");
-if (input) {
-input.addEventListener("input", function (event) {
-  // Number 13 is the "Enter" key on the keyboard
-  log.textContent += ` ${event.code}`;
-  if (event.key === 13) {
-    console.log("hello");
-    // Trigger the button element with a click
-    validate(event);
+// Proceed on 'Enter' Key
+var navBox = document.getElementById("reference");
+// navBox.addEventListener("keydown", (event) => {
+//   if (event.key === "Enter") {
+//     document.getElementById("toggleVerse").click();
+//     getTXT(1);
+//   }
+// });
+
+navBox.addEventListener("keypress", handleEnter, false);
+
+function handleEnterRef() {
+  if(event.key == "Enter") {
+    event.preventDefault();
+    document.getElementById("toggleVerse").click();
   }
-});
 }
-function validate(e) {
-  getTXT(1);
+
+function handleEnterSRC() {
+  if(event.key == "Enter") {
+    event.preventDefault();
+    document.getElementById("Search").click();
+  }
 }
 
 //darkmode
