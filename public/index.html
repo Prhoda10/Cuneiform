@@ -11,7 +11,7 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 
-<body>
+<body onload="getTXT(3)">
    <nav class="navigation">
       <ul>
          <a href="index.html" id="title">
@@ -25,16 +25,13 @@
    </nav>
 
       <div id="searchKey"> 
-         <input type="text" id="keyWordSearch" class="searchfield" placeholder="keyword" onkeypress="return
-         enterKeyPressed(event)" />
-        <button id="keyWordSearch" onclick="getSRC()">SEARCH</button>
+         <input type="text" id="keyWordSearch" class="searchfield" placeholder="keyword" onkeypress="handleEnterSRC()" />
+        <button id="Search" onclick="getSRC()">SEARCH</button>
       </div>
 
       <div id="search">
-         <input type="text" class="searchfield" id="book" placeholder="Enter Book" onkeypress="return
-         enterKeyPressed(event)">
-         <input type="text" class="searchfield" id="reference" placeholder="Enter reference (xx:xx)" onkeypress="return
-         enterKeyPressed(event)">
+         <!--<input type="text" class="searchfield" id="book" placeholder="Enter Book" onkeypress="handleEnter(event)">-->
+         <input type="text" class="searchfield" id="reference" placeholder="Enter reference 'Luke'(xx:xx)" onkeypress="handleEnterRef()">
          <button id="toggleVerse" onclick="getTXT(1)">GO</button>
       </div>
 
