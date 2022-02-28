@@ -34,9 +34,15 @@ async function getTXT(mode) {
 
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
-  document.getElementById("main").innerHTML = data.passages;
-  next = data.passage_meta[0].next_chapter;
-  prev = data.passage_meta[0].prev_chapter;
+  console.log(data);
+  
+  if (data.canonical === "") {
+    alert("Invalid entry");
+  } else {
+    document.getElementById("main").innerHTML = data.passages;
+    next = data.passage_meta[0].next_chapter;
+    prev = data.passage_meta[0].prev_chapter;
+  }
 
 }
 
@@ -49,6 +55,7 @@ async function getSRC() {
   var request = "https://api.esv.org/v3/passage/search/?q=" + str;
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
+  console.log(data);
   document.getElementById("main").innerHTML = "";
   for (let i = 0; i < data.total_results; i++) {
     document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
