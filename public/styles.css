@@ -110,24 +110,25 @@ button {
   }
 
 
-#searchKey {
+/* #searchKey {
   position: relative;
   margin: 30px 0px;
   float: left;
-}
+} */
 
 #search {
   position: relative;
   margin: 30px 0px;
   padding-right: 15%;
   float: right;
+  white-space: nowrap;
 }
 
 .searchfield {
   position: relative;
   white-space: nowrap;
   padding: 7px;
-  width: 60%;
+  width: 120%;
   border: 1px solid rgb(148, 141, 175);
 }
 
