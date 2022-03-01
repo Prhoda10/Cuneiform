@@ -38,7 +38,8 @@ async function getTXT(mode) {
   console.log(data);
   
   if (data.canonical === "") {
-    getSRC();
+    //getSRC();
+    searchRedirect(document.getElementById("reference").value);
   } else {
     document.getElementById("main").innerHTML = data.passages;
     next = data.passage_meta[0].next_chapter;
@@ -54,8 +55,7 @@ async function getSRC() {
   let params = {
     'page_size' : '100'
   }
-  var str = document.getElementById("reference").value;
-  var request = "https://api.esv.org/v3/passage/search/?q=" + str;
+  var request = "https://api.esv.org/v3/passage/search/?q=" + getUrlVars()["search"];
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
   const data = await response.json();
   // document.getElementById("main").innerHTML = data.results[1].reference;
@@ -67,6 +67,14 @@ async function getSRC() {
     document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
   }
 
+}
+
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value;
+  });
+  return vars;
 }
 
 // Proceed on 'Enter' Key
@@ -87,11 +95,12 @@ function handleEnterRef() {
   }
 }
 
-function handleEnterSRC() {
-  if(event.key == "Enter") {
-    event.preventDefault();
-    document.getElementById("Search").click();
-  }
+function searchRedirect(loc) {
+  window.location = "searchResults.html?search=" + loc;
+}
+
+function refRedirect(loc) {
+  window.location = "index.html?ref=" + loc;
 }
 
 //darkmode

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+   <!-- Meta -->
+   <title>Cuneiform</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- Styles -->
+   <link rel="stylesheet" href="styles.css">
+   <link type="text/css" rel="stylesheet" href="bower_components/firebaseui/dist/firebaseui.css" />
+   <!-- Scripts -->
+   <script src="../src/index.js"></script>
+   <script src="main.js"></script>
+   <script src="https://unpkg.com/lodash@4.17.20"></script>
+   <!-- Firebase App is always required and must be first -->
+   <script src="/__/firebase/5.0.1/firebase-app.js"></script>
+   <!-- Add additional services you want to use -->
+   <script src="/__/firebase/5.0.1/firebase-auth.js"></script>
+   <script src="/__/firebase/5.0.1/firebase-database.js"></script>
+   <script src="bower_components/firebaseui/dist/firebaseui.js"></script>
+   <!-- Comment out (or don't include) services you don't want to use -->
+   <!-- <script src="/__/firebase/5.0.1/firebase-storage.js"></script> -->
+   <script src="/__/firebase/init.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+
+<body onload="getSRC()">
+   <nav class="navigation">
+      <ul>
+         <a href="index.html" id="title">
+           <strong>Cuneiform</strong>
+          </a>
+         <li> <a class="nav-link" href="index.html">Home</a> </li>
+         <li> <a class="nav-link" href="memorize.html">Memorize</a> </li>
+         <li> <a class="nav-link" href="prayer-jar.html">Prayer Jar</a> </li>
+         <li> <a class="nav-link" href="account.html">Account</a> </li>
+      </ul>
+   </nav>
+
+      <div id="search"> 
+         <input type="text" class="searchfield" id="reference" placeholder="Enter reference or search" onkeydown="handleEnterRef()">
+         <button id="toggleVerse" onclick="getTXT(1)">GO</button>
+      </div>
+
+   <div class="icon-bar">
+      <a href="#" class="darkmode-icon" onclick="darkmode()">&#9680;</a>
+   </div>
+
+   <div id="main" class="Container">
+   </div>
+
+   <div class="footer">
+      <a href="#">SHARE</a>
+      <a href="#">FAVORITE</a>
+   </div>
+
+</body>
+
+</html>
