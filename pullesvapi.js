@@ -44,6 +44,8 @@ async function getTXT(mode) {
     prev = data.passage_meta[0].prev_chapter;
   }
 
+  document.getElementById("reference").value = "";
+
 }
 
 //Get Search Results
