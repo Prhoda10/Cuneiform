@@ -23,10 +23,12 @@ async function getTXT(mode) {
     request = api_url + str;
     // Next Chapter
   } else if (mode == 0) {
-    request = api_url + next.join('-');
+    //request = api_url + next.join('-');
+    refRedirect(next.join('-'));
     // Previous Chapter
   } else if (mode == 2) {
-    request = api_url + prev.join('-');
+    //request = api_url + prev.join('-');
+    refRedirect(prev.join('-'));
     // Default upon launch
   } else if (mode == 3) {
     request = api_url + "Genesis1";
