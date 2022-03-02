@@ -22,6 +22,10 @@ button,
   padding: 30px;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .darkmode {
   background-color: #202124;
   color: white;
@@ -226,9 +230,79 @@ text-decoration: none;
   margin: 30px 0px;
 }
 
+.prayer-submission {
+  text-align: left;
+  margin: auto 5px;
+  height: 50px;
+  width: 50%;
+  padding: 20px;
+  display: inline-block;
+  overflow-wrap: normal;
+}
+
 .submit-prayer {
   display: inline-block;
 }
+
 #prayerlist {
   size: 60%;
+}
+
+/* memorize */
+
+#card-back {
+  text-align: left;
+  margin: auto 5px;
+  height: 200px;
+  width: 200px;
+  padding: 20px;
+  display: inline-block;
+  overflow-wrap: normal;
+}
+
+.Memorize-Creation-Controls, .Flashcard-Display{
+  margin-left: 10%;
+  margin-top: 2%;
+}
+
+.flashcard-options {
+  display: inline-block;
+  margin: 50px 10px;
+}
+
+.flashcard-options button{
+  margin: 5px auto;
+  position: relative;
+}
+
+.Flashcard-Display button {
+  margin-left: 0px;
+  width: 100px ;
+}
+
+.decks {
+  height: 30%; 
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: rgb(94, 92, 133); /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  margin: 15% auto;
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+.decks a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #ffffff;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.decks a:hover {
+  color: #f1f1f1;
 }
