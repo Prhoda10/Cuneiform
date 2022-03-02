@@ -9,7 +9,7 @@ const options = {
 let next = [];
 let prev = [];
 
-//display text
+//Check if its a search or a reference
 async function getTXT(mode) {
   let params = {
     'include-chapter-numbers': 'False',
@@ -41,9 +41,10 @@ async function getTXT(mode) {
     //getSRC();
     searchRedirect(document.getElementById("reference").value);
   } else {
-    document.getElementById("main").innerHTML = data.passages;
-    next = data.passage_meta[0].next_chapter;
-    prev = data.passage_meta[0].prev_chapter;
+    refRedirect(document.getElementById("reference").value);
+    //document.getElementById("main").innerHTML = data.passages;
+    // next = data.passage_meta[0].next_chapter;
+    // prev = data.passage_meta[0].prev_chapter;
   }
 
   document.getElementById("reference").value = "";
@@ -67,6 +68,24 @@ async function getSRC() {
     document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
   }
 
+}
+//Get chapter
+async function getCPT() {
+  let params = {
+    'include-chapter-numbers': 'False',
+    'include-audio-link': 'False'
+  }
+  var ref = getUrlVars()["ref"];
+  if (ref == "") {
+    ref = "Gen1";
+  }
+  var request = api_url + ref;
+  const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
+  const data = await response.json();
+  console.log(data);
+  document.getElementById("main").innerHTML = data.passages;
+  next = data.passage_meta[0].next_chapter;
+  prev = data.passage_meta[0].prev_chapter;
 }
 
 function getUrlVars() {
