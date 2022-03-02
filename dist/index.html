@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang='en'>
+
 <head>
+   <script src="jquery-3.5.1.min.js"></script>
    <!-- Meta -->
    <title>Cuneiform</title>
    <meta charset="UTF-8">
@@ -28,8 +30,8 @@
    <nav class="navigation">
       <ul>
          <a href="index.html" id="title">
-           <strong>Cuneiform</strong>
-          </a>
+            <strong>Cuneiform</strong>
+         </a>
          <li> <a class="nav-link" href="index.html">Home</a> </li>
          <li> <a class="nav-link" href="memorize.html">Memorize</a> </li>
          <li> <a class="nav-link" href="prayer-jar.html">Prayer Jar</a> </li>
@@ -37,10 +39,24 @@
       </ul>
    </nav>
 
-      <div id="search"> 
-         <input type="text" class="searchfield" id="reference" placeholder="Enter reference or search" onkeydown="handleEnterRef()">
-         <button id="toggleVerse" onclick="getTXT(1)">GO</button>
-      </div>
+   <div id="search">
+      <input type="text" class="searchfield" id="reference" placeholder="Enter reference or search"
+         onkeydown="handleEnterRef()">
+      <button id="toggleVerse" onclick="getTXT(1)">GO</button>
+   </div>
+
+   <script>
+      //Highlight
+      $(document).ready(function () {
+         $('#main').on('DOMSubtreeModified', function () {
+            $("#main p").off();
+            $("#main p").click(function () {
+               $(this).toggleClass("highlight");
+            });
+         });
+
+      });
+   </script>
 
    <div class="icon-bar">
       <a href="#" class="darkmode-icon" onclick="darkmode()">&#9680;</a>
