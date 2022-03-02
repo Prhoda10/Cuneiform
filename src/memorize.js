@@ -1,6 +1,5 @@
 const flashcardArray = [];
 let count = 0;
-let flashcardIndex = flashcardArray.length;
 
 /**
  * A function for adding new flashcards to the user's flashcard list.
@@ -21,28 +20,29 @@ function submitFlashcard() {
 /*function exportFlashcards() {
 }*/
 
+/**
+ *A function for getting the previous card in the array.
+ */
 function getPreviousFlashcard() {
 	let e = document.getElementById("displayFlashcard");
-	e.innerHTML = flashcardArray;
-	/*if(count > 0) {
-		count--;
-		document.write(e.innerHTML = flashcardArray[count]);
-	} 
+	if(count > 0) {
+		count = count - 1;
+		e.innerHTML = flashcardArray[count];
 	} else if(count == 0) {
-		document.write(e.innerHTML = flashcardArray[count]);
+		e.innerHTML = flashcardArray[count];
 	} else {
-		return;*/
+		return;
+	}
 }
 
 function getNextFlashcard() {
 	let e = document.getElementById("displayFlashcard");
-	e.innerHTML = flashcardArray;
-	/*if(count < flashcardArray.length) {
-		count++;
-		document.write(e.innerHTML = flashcardArray[count]);
-	} 
-	} else if(count == flashcardArray.length) {
-		document.write(e.innerHTML = flashcardArray[count]);
+	if(count < flashcardArray.length - 1) {
+		count = count + 1;
+		e.innerHTML = flashcardArray[count];
+	} else if(count == flashcardArray.length - 1) {
+		e.innerHTML = flashcardArray[count];
 	} else {
-		return;*/
+		return;
+	}
 }
