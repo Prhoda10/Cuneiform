@@ -21,24 +21,28 @@ function submitFlashcard() {
 /*function exportFlashcards() {
 }*/
 
-/*function getPreviousFlashcard() {
-	if(count > 0) {
+function getPreviousFlashcard() {
+	let e = document.getElementById("displayFlashcard");
+	e.innerHTML = flashcardArray;
+	/*if(count > 0) {
 		count--;
-		document.getElementById("displayFlashcard").innerHTML = String(flashcardArray[count]);
+		document.write(e.innerHTML = flashcardArray[count]);
 	} 
 	} else if(count == 0) {
-		document.getElementById("displayFlashcard").innerHTML = String(flashcardArray[count]);
+		document.write(e.innerHTML = flashcardArray[count]);
 	} else {
-		return;
+		return;*/
 }
 
 function getNextFlashcard() {
-	if(count < flashcardArray.length) {
+	let e = document.getElementById("displayFlashcard");
+	e.innerHTML = flashcardArray;
+	/*if(count < flashcardArray.length) {
 		count++;
-		document.getElementById("displayFlashcard").innerHTML = String(flashcardArray[count]);
+		document.write(e.innerHTML = flashcardArray[count]);
 	} 
 	} else if(count == flashcardArray.length) {
-		document.getElementById("displayFlashcard").innerHTML = String(flashcardArray[count]);
+		document.write(e.innerHTML = flashcardArray[count]);
 	} else {
-		return;
-}*/
+		return;*/
+}
