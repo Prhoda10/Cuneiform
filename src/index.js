@@ -66,7 +66,7 @@ async function getSRC() {
 
   console.log(data);
   document.getElementById("main").innerHTML = "";
-  for (let i = 0; i < data.total_results; i++) {
+  for (let i = 0; i < data.results.length; i++) {
     document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
   }
 
