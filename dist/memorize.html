@@ -5,9 +5,11 @@
 	<title>Memorize</title>
 	<!---Styles--->
 	<link rel="stylesheet" href="styles.css">
+	<script src="../src/memorize.js"></script>
 </head>
 
 <body>
+	<!---Navagation link buttons--->
 	<nav class="navigation">
 		<ul>
 			<a href="#" id="title"> <strong>Memorize</strong> </a>
@@ -17,4 +19,24 @@
 			<li> <a class="nav-link" href="account.html">Account</a> </li>
 		</ul>
 	</nav>
+	
+	<!---Controls for creating new flashcards--->
+	<div class="Memorize-Creation-Controls">
+		<input type="text" class="searchfield" id="submissionbox">
+		<button id="createNewFlashcard" onclick="submitFlashcard()">Create New Flashcard</button>
+		<button id="getFlashcards">Get Flashcards</button>
+		<button id="exportFlashcards">Export Flashcards</button>
+	</div>
+	
+	<!---Area for displaying a flashcard--->
+	<div class="Flashcard-Display">
+		<p id="displayFlashcard"></p>
+		<button id="previous" onclick="getPreviousFlashcard()">Previous</button>
+		<button id="next" onclick="getNextFlashcard()">Next</button>
+	</div>
+	
+	<!---Hidden list of flashcards--->
+	<div class="Flashcard-List">
+		<ol id="flashcardList"></ol>
+	</div>
 </body>

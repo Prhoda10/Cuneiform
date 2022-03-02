@@ -33,4 +33,5 @@ function checkPrayer(x, words) {
 			return true;
 		}
 	}
+	return false;
 }
