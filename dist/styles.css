@@ -260,6 +260,16 @@ text-decoration: none;
   overflow-wrap: normal;
 }
 
+#card-front {
+  text-align: left;
+  margin: auto 5px;
+  height: 200px;
+  width: 200px;
+  padding: 20px;
+  display: inline-block;
+  overflow-wrap: normal;
+}
+
 .Memorize-Creation-Controls, .Flashcard-Display{
   margin-left: 10%;
   margin-top: 2%;

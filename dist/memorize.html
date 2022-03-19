@@ -32,7 +32,7 @@
 
 	<!---Controls for creating new flashcards--->
 	<div class="Memorize-Creation-Controls">
-		<input type="text" class="searchfield" id="card-back" placeholder="Front">
+		<input type="text" class="searchfield" id="card-front" placeholder="Front">
 		<input type="text" class="searchfield" id="card-back" placeholder="Back">
 		<ul class="flashcard-options">
 			<li> <button id="createNewFlashcard" onclick="submitFlashcard()">Create New Flashcard</button> </li>
@@ -45,6 +45,7 @@
 		<p id="displayFlashcard"></p>
 		<button id="previous" onclick="getPreviousFlashcard()">Previous</button>
 		<button id="next" onclick="getNextFlashcard()">Next</button>
+		<button id="flip" onclick="flipFlashcard()">Flip</button>
 	</div>
 	</div>
 

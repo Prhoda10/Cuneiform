@@ -1,17 +1,13 @@
 const flashcardArray = [];
 let count = 0;
+let side = "front";
 
 /**
  * A function for adding new flashcards to the user's flashcard list.
  */
 function submitFlashcard() {
-	let list = document.getElementById("flashcardList");
-	let newText = document.getElementById("submissionbox").value;
-	let newCard = document.createElement("newCard");
-	newCard.setAttribute('id', newText);
-	newCard.appendChild(document.createTextNode(newText));
-	list.appendChild(newCard);
-	flashcardArray.push(document.getElementById("submissionbox").value);
+	const card = {front: document.getElementById("card-front").value, back: document.getElementById("card-back").value};
+	flashcardArray.push(card);
 }
 
 /*function getFlashcards() {
@@ -24,25 +20,48 @@ function submitFlashcard() {
  *A function for getting the previous card in the array.
  */
 function getPreviousFlashcard() {
-	let e = document.getElementById("displayFlashcard");
+	let display = document.getElementById("displayFlashcard");
 	if(count > 0) {
 		count = count - 1;
-		e.innerHTML = flashcardArray[count];
-	} else if(count == 0) {
-		e.innerHTML = flashcardArray[count];
-	} else {
+		display.innerHTML = ["Front", flashcardArray[count].front];
+		side = "front";
+	} 
+	else if(count == 0) {
+		display.innerHTML = ["Front", flashcardArray[count].front];
+		side = "front";
+	} 
+	else {
 		return;
 	}
 }
 
 function getNextFlashcard() {
-	let e = document.getElementById("displayFlashcard");
+	let display = document.getElementById("displayFlashcard");
 	if(count < flashcardArray.length - 1) {
 		count = count + 1;
-		e.innerHTML = flashcardArray[count];
-	} else if(count == flashcardArray.length - 1) {
-		e.innerHTML = flashcardArray[count];
-	} else {
+		display.innerHTML = ["Front", flashcardArray[count].front];
+		side = "front";
+	} 
+	else if(count == flashcardArray.length - 1) {
+		display.innerHTML = ["Front", flashcardArray[count].front];
+		side = "front";
+	} 
+	else {
+		return;
+	}
+}
+
+function flipFlashcard() {
+	let display = document.getElementById("displayFlashcard");
+	if(side == "front") {
+		display.innerHTML = ["Back", flashcardArray[count].back];
+		side = "back";
+	}
+	else if(side == "back") {
+		display.innerHTML = ["Front", flashcardArray[count].front];
+		side = "front";
+	}
+	else {
 		return;
 	}
 }
