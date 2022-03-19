@@ -14,6 +14,7 @@ function submitFlashcard() {
 }*/
 
 /*function exportFlashcards() {
+	JSON.stringify(flashcardArray);
 }*/
 
 /**
@@ -21,8 +22,10 @@ function submitFlashcard() {
  */
 function getPreviousFlashcard() {
 	let display = document.getElementById("displayFlashcard");
+	let cardNumber = document.getElementById("cardNumber");
 	if(count > 0) {
 		count = count - 1;
+		cardNumber.innerHTML = count;
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
 	} 
@@ -30,6 +33,7 @@ function getPreviousFlashcard() {
 		return;
 	} 
 	else if(count == 0) {
+		cardNumber.innerHTML = count;
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
 	} 
@@ -38,10 +42,15 @@ function getPreviousFlashcard() {
 	}
 }
 
+/**
+ *A function for getting the next card in the array.
+ */
 function getNextFlashcard() {
 	let display = document.getElementById("displayFlashcard");
+	let cardNumber = document.getElementById("cardNumber");
 	if(count < flashcardArray.length - 1) {
 		count = count + 1;
+		cardNumber.innerHTML = count;
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
 	}
@@ -49,6 +58,7 @@ function getNextFlashcard() {
 		return;
 	} 
 	else if(count == flashcardArray.length - 1) {
+		cardNumber.innerHTML = count;
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
 	} 
@@ -57,6 +67,9 @@ function getNextFlashcard() {
 	}
 }
 
+/**
+ *A function for fliping the currently displayed card.
+ */
 function flipFlashcard() {
 	let display = document.getElementById("displayFlashcard");
 	if(side == "front") {
@@ -69,5 +82,21 @@ function flipFlashcard() {
 	}
 	else {
 		return;
+	}
+}
+
+/**
+ *A function for deleting the currently displayed card.
+ */
+function deleteFlashcard() {
+	let display = document.getElementById("displayFlashcard");
+	if(flashcardArray.length == 0) {
+		return;
+	}
+	else {
+		flashcardArray.splice(count, 1);
+		count = count - 1;
+		display.innerHTML = "";
+		cardNumber = "";
 	}
 }
