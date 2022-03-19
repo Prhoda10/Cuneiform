@@ -6,7 +6,7 @@ let side = "front";
  * A function for adding new flashcards to the user's flashcard list.
  */
 function submitFlashcard() {
-	const card = {front: document.getElementById("card-front").value, back: document.getElementById("card-back").value};
+	let card = {front: document.getElementById("card-front").value, back: document.getElementById("card-back").value};
 	flashcardArray.push(card);
 }
 
@@ -26,6 +26,9 @@ function getPreviousFlashcard() {
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
 	} 
+	else if(count == 0 && side == "back") {
+		return;
+	} 
 	else if(count == 0) {
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
@@ -41,6 +44,9 @@ function getNextFlashcard() {
 		count = count + 1;
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
+	}
+	else if(count == flashcardArray.length - 1 && side == "back") {
+		return;
 	} 
 	else if(count == flashcardArray.length - 1) {
 		display.innerHTML = ["Front", flashcardArray[count].front];
