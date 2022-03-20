@@ -11,6 +11,7 @@ let prev = [];
 
 //Check if its a search or a reference
 async function getTXT(mode) {
+  var trans = document.getElementById("translation").value;
   let params = {
     'include-chapter-numbers': 'False',
     'include-audio-link': 'False'
@@ -18,16 +19,13 @@ async function getTXT(mode) {
   var request;
   // From Text Input
   if (mode == 1) {
-    //var str1 = document.getElementById("book").value;
     var str = document.getElementById("reference").value;
     request = api_url + str;
     // Next Chapter
   } else if (mode == 0) {
-    //request = api_url + next.join('-');
     refRedirect(next.join('-'));
     // Previous Chapter
   } else if (mode == 2) {
-    //request = api_url + prev.join('-');
     refRedirect(prev.join('-'));
     // Default upon launch
   } else if (mode == 3) {
@@ -43,7 +41,7 @@ async function getTXT(mode) {
     //getSRC();
     searchRedirect(document.getElementById("reference").value);
   } else {
-    refRedirect(document.getElementById("reference").value);
+    refRedirect(document.getElementById("reference").value, trans);
     //document.getElementById("main").innerHTML = data.passages;
     // next = data.passage_meta[0].next_chapter;
     // prev = data.passage_meta[0].prev_chapter;
@@ -73,21 +71,26 @@ async function getSRC() {
 }
 //Get chapter
 async function getCPT() {
-  let params = {
-    'include-chapter-numbers': 'False',
-    'include-audio-link': 'False'
+  var trans = getUrlVars()["vers"];
+  if (trans == "ESV") {
+    let params = {
+      'include-chapter-numbers': 'False',
+      'include-audio-link': 'False'
+    }
+    var ref = getUrlVars()["ref"];
+    if (ref == "") {
+      ref = "Gen1";
+    }
+    var request = api_url + ref;
+    const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
+    const data = await response.json();
+    console.log(data);
+    document.getElementById("main").innerHTML = data.passages;
+    next = data.passage_meta[0].next_chapter;
+    prev = data.passage_meta[0].prev_chapter;
+  } else {
+    document.getElementById("main").innerHTML = "<h2>Not Supported yet, try ESV!</h2>";
   }
-  var ref = getUrlVars()["ref"];
-  if (ref == "") {
-    ref = "Gen1";
-  }
-  var request = api_url + ref;
-  const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), options);
-  const data = await response.json();
-  console.log(data);
-  document.getElementById("main").innerHTML = data.passages;
-  next = data.passage_meta[0].next_chapter;
-  prev = data.passage_meta[0].prev_chapter;
 }
 
 function getUrlVars() {
@@ -120,14 +123,42 @@ function searchRedirect(loc) {
   window.location = "searchResults.html?search=" + loc;
 }
 
-function refRedirect(loc) {
-  window.location = "index.html?ref=" + loc;
+function refRedirect(loc, trans) {
+  window.location = "index.html?ref=" + loc + "&vers=" + trans;
 }
 
 //darkmode
 function darkmode() {
   var element = document.body;
   element.classList.toggle("darkmode");
+}
+
+
+// Translation code
+function tranSetUp() {
+  // var langObj1 = {
+  //   "English": ["ESV","KJV","ASV"],
+  //   "Spanish": ["Reina Valera 1909", "FBV"]
+  // };
+  var langObj1 = ["English","Spanish"];
+  var langObj2 = [["ESV","KJV","ASV"],["Reina Valera 1909", "FBV"]];
+
+  //console.log("tranSetUP called");
+  var langSel = document.getElementById("langu");
+  var tranSel = document.getElementById("translation");
+  for (var i = 0; i < langObj1.length; i++) {
+    langSel.options[langSel.options.length] = new Option(langObj1[i], langObj1[i]);
+  }
+  langSel.onchange = function() {
+
+    tranSel.length = 1;
+    var index = langObj1.indexOf(this.value);
+    var z = langObj2[index];
+    console.log("tranSetUP called");
+    for (var i = 0; i < z.length; i++) {
+      tranSel.options[tranSel.options.length] = new Option(z[i], z[i]);
+    }
+  }
 }
 
 //signin 

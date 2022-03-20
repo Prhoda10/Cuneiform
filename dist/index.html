@@ -40,6 +40,16 @@
    </nav>
 
    <div id="search">
+
+      <select name="language" id="langu">
+         <option value="" selected="selected">Select language</option>
+      </select>
+      <br><br>
+      <select name="translation" id="translation">
+         <option value="" selected="selected">Please select language first</option>
+      </select>
+      <br><br>
+      
       <input type="text" class="searchfield" id="reference" placeholder="Enter reference or search"
          onkeydown="handleEnterRef()">
       <button id="toggleVerse" onclick="getTXT(1)">GO</button>
@@ -80,5 +90,6 @@
    </nav>
 
 </body>
+<script>tranSetUp()</script>
 
 </html>
