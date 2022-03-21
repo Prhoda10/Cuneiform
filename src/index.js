@@ -193,7 +193,7 @@ var navBox = document.getElementById("reference");
 //   }
 // });
 
-navBox.addEventListener("keypress", handleEnter, false);
+navBox.addEventListener("keypress", handleEnterRef, false);
 
 function handleEnterRef() {
   if(event.key == "Enter") {
