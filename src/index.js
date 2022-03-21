@@ -90,9 +90,6 @@ async function getTXT(mode) {
     searchRedirect(document.getElementById("reference").value);
   } else {
     refRedirect(data.canonical, trans);
-    //document.getElementById("main").innerHTML = data.passages;
-    // next = data.passage_meta[0].next_chapter;
-    // prev = data.passage_meta[0].prev_chapter;
   }
 
   document.getElementById("reference").value = "";
@@ -120,7 +117,7 @@ async function getSRC() {
 //Get chapter
 async function getCPT() {
   var trans = getUrlVars()["vers"];
-  if (trans == "") { trans = "ESV";}
+  if (trans == "" || trans == "undefined") { trans = "ESV";}
   var ref = getUrlVars()["ref"];
   if (ref == "") {
     ref = "Gen1";
@@ -138,9 +135,16 @@ async function getCPT() {
     next = data.passage_meta[0].next_chapter;
     prev = data.passage_meta[0].prev_chapter;
   } else {
+    let params = {
+      'include-chapter-numbers': 'false',
+      'include-titles': 'true'
+    };
     ref = parseRef(ref);
-    var request = "https://api.scripture.api.bible/v1/bibles/" + versMap.get(trans) + "/chapters/" + ref;
-    const response = await fetch(request, apiBibOptions);
+    var request = "https://api.scripture.api.bible/v1/bibles/" + versMap.get(trans) + "/chapters/" + ref + "?";
+    for(let k in params) {
+      request += k + "=" + params[k] + "&";
+    }
+    const response = await fetch(request/* + "&" + (new URLSearchParams(params)).toString()*/, apiBibOptions);
     const data = await response.json();
     if (data.statusCode >= 400) {
       console.log(request);
@@ -148,7 +152,7 @@ async function getCPT() {
       document.getElementById("main").innerHTML = "<h2>Not supported yet or doesnt exist!</h2>";
     } else {
       console.log(data);
-      document.getElementById("main").innerHTML = data.data.content;
+      document.getElementById("main").innerHTML = "<h2>" + data.data.reference + "</h2><br>" + data.data.content;
       next = [data.data.next.id];
       prev = [data.data.previous.id];
     }
@@ -189,32 +193,11 @@ function getUrlVars() {
   return vars;
 }
 
-// Proceed on 'Enter' Key
-var navBox = document.getElementById("reference");
-// navBox.addEventListener("keydown", (event) => {
-//   if (event.key === "Enter") {
-//     document.getElementById("toggleVerse").click();
-//     getTXT(1);
-//   }
-// });
-
-navBox.addEventListener("keypress", handleEnterRef, false);
-
-function handleEnterRef() {
-  if(event.key == "Enter") {
-    event.preventDefault();
-    document.getElementById("toggleVerse").click();
-  }
-}
-
 function searchRedirect(loc) {
   window.location = "searchResults.html?search=" + loc;
 }
 
 function refRedirect(loc, trans) {
-  // if (trans == null) {
-  //   trans = "ESV";
-  // }
   window.location = "index.html?ref=" + loc + "&vers=" + trans;
 }
 
@@ -227,10 +210,6 @@ function darkmode() {
 
 // Show different options for translation based on language selected
 function tranSetUp() {
-  // var langObj1 = {
-  //   "English": ["ESV","KJV","ASV"],
-  //   "Spanish": ["Reina Valera 1909", "FBV"]
-  // };
   var langObj1 = ["English","Spanish","Ancient Greek","Arabic",'Belarusian',"Bengali","Czech","German","Hebrew (Modern)","Hindi","Indonesian",
                   "Italian","Dutch","Polish","Swedish","Swahili","Thai","Vietnamese"];
   var langObj2 = [

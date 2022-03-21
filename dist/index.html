@@ -38,8 +38,8 @@
       </select>
       <br><br>
       
-      <input type="text" class="searchfield" id="reference" placeholder="Enter reference or keyword"
-         onkeydown="handleEnterRef()">
+      <input type="text" class="searchfield" id="reference" placeholder="Enter reference or keyword" 
+         onkeydown="if (event.keyCode == 13) getTXT(1)">
       <button id="toggleVerse" onclick="getTXT(1)">GO</button>
    </div>
 
