@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Bible Study Engine",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
+    "build": "webpack --mode=development",
     "start:dev": "webpack-dev-server"
   },
   "repository": {
@@ -27,6 +28,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@types/node": "^17.0.21",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"
