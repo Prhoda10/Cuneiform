@@ -125,6 +125,20 @@ button {
   float: left;
 } */
 
+#langu {
+  color:rgb(94, 92, 133);
+  background-color: #ffffff;
+  font-family: 'Nunito Sans', sans-serif;
+  border: 1px solid rgb(148, 141, 175);
+}
+
+#translation {
+  color:rgb(94, 92, 133);
+  background-color: #ffffff;
+  font-family: 'Nunito Sans', sans-serif;
+  border: 1px solid rgb(148, 141, 175);
+}
+
 #search {
   position: relative;
   margin: 30px 0px;
