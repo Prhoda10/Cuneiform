@@ -97,16 +97,9 @@ var bookMap = new Map([
   ['Hebrews', 'HEB'], ['James', 'JAS'], ['1 Peter', '1PE'], ['2 Peter', '2PE'], ['1 John', '1JN'], ['2 John', '2JN'], ['2 John', '2JN'], ['Jude', 'JUD'], ['Revelation', 'REV']
 ]);
 
-const ESVoptions = {
-  headers: {
-    Authorization: "Token abefecf1787b77af8b490d6056e2691433f6d3d4"
-  }
-};
-const apiBibOptions = {
-  headers: {
-    "api-key": "232ec92dbff52f241c17a807c867c8c8"
-  }
-};
+import { ESVoptions } from 'myAPIKey.js';
+import { apiBibOptions } from 'myAPIKey.js';
+
 let next = [];
 let prev = [];
 
