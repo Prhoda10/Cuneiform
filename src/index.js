@@ -26,6 +26,7 @@ writeUserData("98883", "gloria", "gloria.kim@my.wheaton.edu")
 /* connecting functions to html */
 
 //set up translations, then either get search results or the chapter
+if (!window.location.href.includes("account")) {
   document.addEventListener('DOMContentLoaded', () => {
     tranSetUp();
     if (window.location.href.includes("search")) {
@@ -34,6 +35,8 @@ writeUserData("98883", "gloria", "gloria.kim@my.wheaton.edu")
       getCPT();
     }
   });
+}
+
 if (document.getElementById("toggleVerse")) {
   document.getElementById("toggleVerse").addEventListener("click", () => {
     getTXT(1);

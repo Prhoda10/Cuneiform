@@ -302,7 +302,12 @@ text-decoration: none;
   overflow-wrap: normal;
 }
 
-.Memorize-Creation-Controls, .Flashcard-Display{
+.Memorize-Creation-Controls{
+  margin-left: 10%;
+  margin-top: 2%;
+}
+
+.Flashcard-Display{
   margin-left: 10%;
   margin-top: 2%;
 }
