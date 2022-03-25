@@ -167,7 +167,7 @@ async function getSRC() {
   console.log(data);
   document.getElementById("main").innerHTML = "";
   for (let i = 0; i < data.results.length; i++) {
-    document.getElementById("main").innerHTML += "<div>" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
+    document.getElementById("main").innerHTML += "<div class=\"Divtext" + i + "\">" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
   }
 
 }
@@ -315,6 +315,22 @@ $(document).ready(function () {
     $("#main p").click(function () {
       $(this).toggleClass("highlight");
     });
+  });
+
+});
+
+//Click search results
+$(document).ready(function () {
+  $('#main').on('DOMSubtreeModified', function () {
+     $("#main div").off();
+     $("#main div").click(function () {
+      const num = parseInt($(this).attr("class").replace('Divtext',''), 10);
+      console.log(num);
+      var mytext = $('.Divtext' + num).text();
+      mytext = mytext.substr(0,mytext.indexOf(":"));
+      console.log(mytext);
+      refRedirect(mytext, "ESV");
+     });
   });
 
 });
