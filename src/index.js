@@ -13,6 +13,7 @@ const app = initializeApp({
 
 import { getDatabase, ref as sRef, set } from 'firebase/database';
 
+//testing a function to use the realtime database
 function writeUserData(userId, name, email) {
   const db = getDatabase();
   set(sRef(db, 'users/' + userId), {
@@ -20,9 +21,12 @@ function writeUserData(userId, name, email) {
     email: email,
   });
 }
-writeUserData("98883","gloria","gloria.kim@my.wheaton.edu")
+writeUserData("98883", "gloria", "gloria.kim@my.wheaton.edu")
 
+/* connecting functions to html */
 
+//set up translations, then either get search results or the chapter
+if (window.location.href.includes("index")) {
 document.addEventListener('DOMContentLoaded', () => {
   tranSetUp();
   if (window.location.href.includes("search")) {
@@ -30,15 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     getCPT();
   }
-
 });
-
+}
+if(document.getElementById("toggleVerse")) {
 document.getElementById("toggleVerse").addEventListener("click", () => {
   getTXT(1);
 });
-
+}
+if(document.getElementById("darkBut")) {
 document.getElementById("darkBut").addEventListener("click", darkmode);
-
+}
 if (document.getElementById("prevChapter")) {
   document.getElementById("prevChapter").addEventListener("click", () => {
     getTXT(2);
@@ -139,7 +144,6 @@ async function getTXT(mode) {
   console.log(data);
 
   if (data.canonical === "") {
-    //getSRC();
     searchRedirect(document.getElementById("reference").value);
   } else {
     refRedirect(data.canonical, trans);
@@ -165,9 +169,13 @@ async function getSRC() {
   // document.getElementById("main").innerHTML += data.results[1].reference;
   //--- Populate page with search results ---
   console.log(data);
-  document.getElementById("main").innerHTML = "";
-  for (let i = 0; i < data.results.length; i++) {
-    document.getElementById("main").innerHTML += "<div>" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
+  
+  if (data.total_results == 0) {
+    document.getElementById("main").innerHTML = "<h2>No results.</h2>";
+  } else {
+    for (let i = 0; i < data.results.length; i++) {
+      document.getElementById("main").innerHTML += "<div>" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
+    }
   }
 
 }
@@ -203,6 +211,7 @@ async function getCPT() {
     }
     const response = await fetch(request/* + "&" + (new URLSearchParams(params)).toString()*/, apiBibOptions);
     const data = await response.json();
+
     if (data.statusCode >= 400) {
       console.log(request);
       console.log(data);

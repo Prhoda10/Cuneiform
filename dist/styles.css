@@ -323,7 +323,6 @@ text-decoration: none;
 }
 
 .decks {
-  height: 30%; 
   width: 160px; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */
@@ -332,7 +331,7 @@ text-decoration: none;
   background-color: rgb(94, 92, 133); /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
   margin: 15% auto;
-  padding-top: 20px;
+  padding: 20px;
 }
 
 /* The navigation menu links */
