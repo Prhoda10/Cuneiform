@@ -9,12 +9,11 @@
    <!-- Styles -->
    <link rel="stylesheet" href="styles.css">
    <!-- Scripts -->
-   <script src="../src/index.js"></script>
-   <script src="https://unpkg.com/lodash@4.17.20"></script>
+   <!-- <script src="https://unpkg.com/lodash@4.17.20"></script> -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 
-<body onload="getCPT()">
+<body>
    <nav class="navigation">
       <ul>
          <a href="index.html?ref=Gen1&vers=ESV" id="title">
@@ -38,26 +37,12 @@
       </select>
       <br><br>
       
-      <input type="text" class="searchfield" id="reference" placeholder="Enter reference or keyword" 
-         onkeydown="if (event.keyCode == 13) getTXT(1)">
-      <button id="toggleVerse" onclick="getTXT(1)">GO</button>
+      <input type="text" class="searchfield" id="reference" placeholder="Enter reference or keyword">
+      <button id="toggleVerse">GO</button>
    </div>
 
-   <script>
-      //Highlight
-      $(document).ready(function () {
-         $('#main').on('DOMSubtreeModified', function () {
-            $("#main p").off();
-            $("#main p").click(function () {
-               $(this).toggleClass("highlight");
-            });
-         });
-
-      });
-   </script>
-
    <div class="icon-bar">
-      <a href="#" class="darkmode-icon" onclick="darkmode()">&#9680;</a>
+      <a id="darkBut" href="#" class="darkmode-icon">&#9680;</a>
    </div>
 
    <div id="main" class="Container">
@@ -70,14 +55,14 @@
 
    <nav class="nav-reading">
       <div class="nav-reading-prev">
-         <button id="prevChapter" onclick="getTXT(2)">&laquo prev chapter</button>
+         <button id="prevChapter">&laquo prev chapter</button>
       </div>
       <div class="nav-reading-next">
-         <button class="nav-reading-next" id="nextChapter" onclick="getTXT(0)">next chapter &raquo</button>
+         <button class="nav-reading-next" id="nextChapter">next chapter &raquo</button>
       </div>
    </nav>
 
 </body>
-<script>tranSetUp()</script>
+<script src="main.js"></script>
 
 </html>

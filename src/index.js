@@ -1,4 +1,4 @@
-/*import { initializeApp } from '/firebase/app';
+import { initializeApp } from 'firebase/app';
 
 const app = initializeApp( {
   apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
@@ -11,22 +11,42 @@ const app = initializeApp( {
   measurementId: "G-9PGSSD2423"
 });
 
-import { getDatabase, ref } from '/firebase/database';
+import { getDatabase, ref } from 'firebase/database';
 import { getFirestore, collection, getDocs, getDoc } from 'firebase/firestore';
-import { set } from 'lodash';
+///import { set } from 'lodash';
 
-function writeUserData(userId, name, email, imageUrl) {
-  const db = getDatabase(app);
-  const reference = ref(db, 'users/' +userId);
-  set(reference, {
-  username: name,
-  email: email,
-  profile_picture: imageUrl
+// function writeUserData(userId, name, email, imageUrl) {
+//   const db = getDatabase(app);
+//   const reference = ref(db, 'users/' +userId);
+//   set(reference, {
+//   username: name,
+//   email: email,
+//   profile_picture: imageUrl
+// });
+// }
+
+// writeUserData("gloriakim", "gloria", "gloria.kim@my.wheaton.edu", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi2.wp.com%2Frehabilitationadvantage.com%2Fwp-content%2Fuploads%2F2018%2F09%2F1-7.png%3Ffit%3D2550%252C2550%26ssl%3D1&f=1&nofb=1")
+// */
+
+document.addEventListener('DOMContentLoaded', () => {
+  tranSetUp();
+  getCPT();
 });
-}
 
-writeUserData("gloriakim", "gloria", "gloria.kim@my.wheaton.edu", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi2.wp.com%2Frehabilitationadvantage.com%2Fwp-content%2Fuploads%2F2018%2F09%2F1-7.png%3Ffit%3D2550%252C2550%26ssl%3D1&f=1&nofb=1")
-*/
+document.getElementById("toggleVerse").addEventListener("click", () => {
+  getTXT(1);
+});
+document.getElementById("darkBut").addEventListener("click", darkmode);
+document.getElementById("prevChapter").addEventListener("click", () => {
+  getTXT(2);
+});
+document.getElementById("nextChapter").addEventListener("click", () => {
+  getTXT(0);
+});
+document.addEventListener('keydown', () => {
+  if (event.keyCode == 13) getTXT(1)
+})
+
 
 //fetch API
 var esvapi_url = 'https://api.esv.org/v3/passage/html/?q=';
@@ -283,6 +303,17 @@ function tranSetUp() {
     }
   }
 }
+
+//Highlight
+$(document).ready(function () {
+  $('#main').on('DOMSubtreeModified', function () {
+     $("#main p").off();
+     $("#main p").click(function () {
+        $(this).toggleClass("highlight");
+     });
+  });
+
+});
 
 //signin 
 /*
