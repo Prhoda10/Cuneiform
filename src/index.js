@@ -26,7 +26,6 @@ writeUserData("98883", "gloria", "gloria.kim@my.wheaton.edu")
 /* connecting functions to html */
 
 //set up translations, then either get search results or the chapter
-if (window.location.href.includes("index")) {
   document.addEventListener('DOMContentLoaded', () => {
     tranSetUp();
     if (window.location.href.includes("search")) {
@@ -35,7 +34,6 @@ if (window.location.href.includes("index")) {
       getCPT();
     }
   });
-}
 if (document.getElementById("toggleVerse")) {
   document.getElementById("toggleVerse").addEventListener("click", () => {
     getTXT(1);
@@ -169,15 +167,12 @@ async function getSRC() {
   // document.getElementById("main").innerHTML += data.results[1].reference;
   //--- Populate page with search results ---
   console.log(data);
+  document.getElementById("main").innerHTML = "";
+  for (let i = 0; i < data.results.length; i++) {
 
-  if (data.total_results == 0) {
-    document.getElementById("main").innerHTML = "<h2>No results.</h2>";
-  } else {
-    document.getElementById("main").innerHTML = "";
-    for (let i = 0; i < data.results.length; i++) {
-      document.getElementById("main").innerHTML += "<div class=\"Divtext" + i + "\">" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
-    }
+    document.getElementById("main").innerHTML += "<div class=\"Divtext" + i + "\">" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
   }
+
 
 }
 //Get chapter
