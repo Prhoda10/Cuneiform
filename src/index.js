@@ -97,8 +97,8 @@ var bookMap = new Map([
   ['Hebrews', 'HEB'], ['James', 'JAS'], ['1 Peter', '1PE'], ['2 Peter', '2PE'], ['1 John', '1JN'], ['2 John', '2JN'], ['2 John', '2JN'], ['Jude', 'JUD'], ['Revelation', 'REV']
 ]);
 
-import { ESVoptions } from 'myAPIKey.js';
-import { apiBibOptions } from 'myAPIKey.js';
+import { ESVoptions } from '../src/myAPIKey.js';
+import { apiBibOptions } from '../src/myAPIKey.js';
 
 let next = [];
 let prev = [];
