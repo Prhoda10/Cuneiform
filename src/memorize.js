@@ -1,4 +1,6 @@
 const flashcardArray = [];
+const flashcardDeckArray = [];
+let deckNumber = 0;
 let count = 0;
 let side = "front";
 
@@ -11,10 +13,14 @@ function submitFlashcard() {
 }
 
 /*function getFlashcards() {
+	let getDeckNumber = document.getElementById("Decks").value;
+	flashcardArray = flashcardDeckArray.slice[getDeckNumber, getDeckNumber + 1];
 }*/
 
 /*function exportFlashcards() {
-	JSON.stringify(flashcardArray);
+	//JSON.stringify(flashcardArray);
+	flashcardDeckArray[deckNumber] = flashcardArray.slice(0);
+	deckNumber = deckNumber + 1;
 }*/
 
 /**
