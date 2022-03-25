@@ -198,7 +198,8 @@ async function getCPT() {
   } else {
     let params = {
       'include-chapter-numbers': 'false',
-      'include-titles': 'true'
+      'include-titles': 'true',
+      'content-type': 'json'
     };
     ref = parseRef(ref);
     var request = "https://api.scripture.api.bible/v1/bibles/" + versMap.get(trans) + "/chapters/" + ref + "?";
@@ -214,7 +215,31 @@ async function getCPT() {
       document.getElementById("main").innerHTML = "<h2>Not supported yet or doesnt exist!</h2>";
     } else {
       console.log(data);
-      document.getElementById("main").innerHTML = "<h2>" + data.data.reference + "</h2><br>" + data.data.content;
+      document.getElementById("main").innerHTML = "<h2>" + data.data.reference + "</h2><br>";
+      var content = data.data.content;
+      //var innerHtml = document.getElementById("main").innerHTML;
+      document.getElementById("main").innerHTML += "<span>";
+      console.log("<span>");
+      for (var i = 0; i < content.length; i++) {
+          for(var j = 0; j < content[i].items.length; j++) {
+            //console.log(content[i].items[j].type);
+            //console.log(content[i].items[j].name);
+              if(content[i].items[j].type == "tag" && content[i].items[j].name == "verse") { //If we are on a verse, then
+                document.getElementById("main").innerHTML += "</span><span>";
+                console.log("</span><span>")
+              }
+              if(content[i].items[j].type == "text") {
+                document.getElementById("main").innerHTML += content[i].items[j].text;
+                console.log(content[i].items[j].text);
+              } else {
+                for (var k = 0; k < content[i].items[j].items.length; k++) {
+                  document.getElementById("main").innerHTML += content[i].items[j].items[k].text;
+                  console.log(content[i].items[j].items[k].text);
+                }
+              }
+          }
+      }
+      document.getElementById("main").innerHTML += "</span>";
       next = [data.data.next.id];
       prev = [data.data.previous.id];
     }
@@ -316,8 +341,8 @@ function tranSetUp() {
 //Highlight
 $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
-    $("#main p").off();
-    $("#main p").click(function () {
+    $("#main span").off();
+    $("#main span").click(function () {
       $(this).toggleClass("highlight");
     });
   });
