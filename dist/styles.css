@@ -107,6 +107,59 @@ ul {
 /* Highlight */
 .highlight {
   background-color: lightyellow;
+  color: black;
+}
+
+/* Highlight popup container */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  background-color: #ffffff;
+  color:rgb(148, 141, 175);
+  border: 1px solid rgb(148, 141, 175);
+  width: 25%;
+  height: 25%;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+}
+
+.redHighlight {
+  background-color: red;
+  color:#ffffff;
+}
+
+.orangeHighlight {
+  background-color: lightsalmon;
+  color: black;
+}
+
+.yellowHighlight {
+  background-color: lightyellow;
+  color: black;
+}
+
+.greenHighlight {
+  background-color: lightgreen;
+  color: black;
+}
+
+.blueHighlight {
+  background-color: lightblue;
+  color: black;
+}
+
+.purpleHighlight {
+  background-color: rgba(147, 112, 216, 0.637);
+  color: black;
 }
 
 button {
