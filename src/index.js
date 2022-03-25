@@ -27,22 +27,22 @@ writeUserData("98883", "gloria", "gloria.kim@my.wheaton.edu")
 
 //set up translations, then either get search results or the chapter
 if (window.location.href.includes("index")) {
-document.addEventListener('DOMContentLoaded', () => {
-  tranSetUp();
-  if (window.location.href.includes("search")) {
-    getSRC();
-  } else {
-    getCPT();
-  }
-});
+  document.addEventListener('DOMContentLoaded', () => {
+    tranSetUp();
+    if (window.location.href.includes("search")) {
+      getSRC();
+    } else {
+      getCPT();
+    }
+  });
 }
-if(document.getElementById("toggleVerse")) {
-document.getElementById("toggleVerse").addEventListener("click", () => {
-  getTXT(1);
-});
+if (document.getElementById("toggleVerse")) {
+  document.getElementById("toggleVerse").addEventListener("click", () => {
+    getTXT(1);
+  });
 }
-if(document.getElementById("darkBut")) {
-document.getElementById("darkBut").addEventListener("click", darkmode);
+if (document.getElementById("darkBut")) {
+  document.getElementById("darkBut").addEventListener("click", darkmode);
 }
 if (document.getElementById("prevChapter")) {
   document.getElementById("prevChapter").addEventListener("click", () => {
@@ -169,12 +169,13 @@ async function getSRC() {
   // document.getElementById("main").innerHTML += data.results[1].reference;
   //--- Populate page with search results ---
   console.log(data);
-  
+
   if (data.total_results == 0) {
     document.getElementById("main").innerHTML = "<h2>No results.</h2>";
   } else {
+    document.getElementById("main").innerHTML = "";
     for (let i = 0; i < data.results.length; i++) {
-      document.getElementById("main").innerHTML += "<div>" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
+      document.getElementById("main").innerHTML += "<div class=\"Divtext" + i + "\">" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
     }
   }
 
@@ -327,3 +328,20 @@ $(document).ready(function () {
   });
 
 });
+
+//Click search results
+$(document).ready(function () {
+  $('#main').on('DOMSubtreeModified', function () {
+    $("#main div").off();
+    $("#main div").click(function () {
+      const num = parseInt($(this).attr("class").replace('Divtext', ''), 10);
+      console.log(num);
+      var mytext = $('.Divtext' + num).text();
+      mytext = mytext.substr(0, mytext.indexOf(":"));
+      console.log(mytext);
+      refRedirect(mytext, "ESV");
+    });
+  });
+
+});
+
