@@ -124,22 +124,26 @@ async function getTXT(mode) {
   document.getElementById("reference").value = "";
 
 }
-
-//Get Search Results
+/**
+ * getSRC function
+ * Gets search results from the API and populates the main section of the page with
+ * these search results.
+ */
 async function getSRC() {
   let params = {
     'page_size' : '100'
   }
+  //--- Get Search Results ---
   var request = "https://api.esv.org/v3/passage/search/?q=" + getUrlVars()["search"];
   const response = await fetch(request + "&" + (new URLSearchParams(params)).toString(), ESVoptions);
   const data = await response.json();
   // document.getElementById("main").innerHTML = data.results[1].reference;
   // document.getElementById("main").innerHTML += data.results[1].reference;
-
+  //--- Populate page with search results ---
   console.log(data);
   document.getElementById("main").innerHTML = "";
   for (let i = 0; i < data.results.length; i++) {
-    document.getElementById("main").innerHTML += data.results[i].reference + "<br>" + data.results[i].content + "<br><br>";
+    document.getElementById("main").innerHTML += "<div>" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
   }
 
 }

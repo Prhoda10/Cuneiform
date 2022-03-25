@@ -52,6 +52,19 @@
          <button id="toggleVerse" onclick="getTXT(1)">GO</button>
       </div>
 
+      <script>
+         //Highlight
+         $(document).ready(function () {
+            $('#main').on('DOMSubtreeModified', function () {
+               $("#main div").off();
+               $("#main div").click(function () {
+                  $(this).toggleClass("highlight");
+               });
+            });
+   
+         });
+      </script>
+
    <div class="icon-bar">
       <a href="#" class="darkmode-icon" onclick="darkmode()">&#9680;</a>
    </div>
