@@ -100,16 +100,9 @@ var bookMap = new Map([
   ['Hebrews', 'HEB'], ['James', 'JAS'], ['1 Peter', '1PE'], ['2 Peter', '2PE'], ['1 John', '1JN'], ['2 John', '2JN'], ['2 John', '2JN'], ['Jude', 'JUD'], ['Revelation', 'REV']
 ]);
 
-const ESVoptions = {
-  headers: {
-    Authorization: "Token abefecf1787b77af8b490d6056e2691433f6d3d4"
-  }
-};
-const apiBibOptions = {
-  headers: {
-    "api-key": "232ec92dbff52f241c17a807c867c8c8"
-  }
-};
+import { ESVoptions } from '../src/myAPIKey.js';
+import { apiBibOptions } from '../src/myAPIKey.js';
+
 let next = [];
 let prev = [];
 
@@ -201,7 +194,8 @@ async function getCPT() {
   } else {
     let params = {
       'include-chapter-numbers': 'false',
-      'include-titles': 'true'
+      'include-titles': 'true',
+      'content-type': 'json'
     };
     ref = parseRef(ref);
     var request = "https://api.scripture.api.bible/v1/bibles/" + versMap.get(trans) + "/chapters/" + ref + "?";
@@ -216,8 +210,26 @@ async function getCPT() {
       console.log(data);
       document.getElementById("main").innerHTML = "<h2>Not supported yet or doesnt exist!</h2>";
     } else {
+      var pastetext = "";
       console.log(data);
-      document.getElementById("main").innerHTML = "<h2>" + data.data.reference + "</h2><br>" + data.data.content;
+      document.getElementById("main").innerHTML = "<h2>" + data.data.reference + "</h2><br>";
+      var content = data.data.content;
+      //var innerHtml = document.getElementById("main").innerHTML;
+      for (var i = 0; i < content.length; i++) {
+          for(var j = 0; j < content[i].items.length; j++) {
+              if(content[i].items[j].type == "tag" && content[i].items[j].name == "verse") { //If we are on a verse, then
+                document.getElementById("main").innerHTML += "<span>" + pastetext + "</span>";
+                pastetext = "";
+              }
+              if(content[i].items[j].type == "text") {
+                pastetext += content[i].items[j].text;
+              } else {
+                for (var k = 0; k < content[i].items[j].items.length; k++) {
+                  pastetext += content[i].items[j].items[k].text;
+                }
+              }
+          }
+      }
       next = [data.data.next.id];
       prev = [data.data.previous.id];
     }
@@ -317,6 +329,16 @@ function tranSetUp() {
 }
 
 //Highlight
+$(document).ready(function () {
+  $('#main').on('DOMSubtreeModified', function () {
+    $("#main span").off();
+    $("#main span").click(function () {
+      $(this).toggleClass("highlight");
+    });
+  });
+
+});
+
 $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main p").off();

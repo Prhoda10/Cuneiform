@@ -64,3 +64,9 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# API Key security
+/src/myAPIKey.js
+
+#webpack conflicts
+/dist/main.js
