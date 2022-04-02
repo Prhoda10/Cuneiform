@@ -306,8 +306,8 @@ function tranSetUp() {
 //Highlight
 $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
-    $("#main span").off();
-    $("#main span").click(function () {
+    $("#main p").off();
+    $("#main p").click(function () {
       $(this).toggleClass("highlight");
     });
   });
