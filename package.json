@@ -2,7 +2,7 @@
   "name": "cuneiform",
   "version": "1.0.0",
   "description": "Bible Study Engine",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=development",

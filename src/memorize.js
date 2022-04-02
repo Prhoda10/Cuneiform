@@ -5,10 +5,24 @@ let count = 0;
 let side = "front";
 
 /**
+ * Connect functions to html 
+ */
+
+ if (document.getElementById("createNewFlashcard")) {
+	document.getElementById("createNewFlashcard").addEventListener("click", submitFlashcard);
+	document.getElementById("previous").addEventListener("click", getPreviousFlashcard);
+	document.getElementById("next").addEventListener("click", getNextFlashcard);
+	document.getElementById("flip").addEventListener("click", flipFlashcard);
+	document.getElementById("delete").addEventListener("click", deleteFlashcard);
+  }
+
+/**
  * A function for adding new flashcards to the user's flashcard list.
  */
 function submitFlashcard() {
-	let card = {front: document.getElementById("card-front").value, back: document.getElementById("card-back").value};
+	console.log("flashcard created")
+	let card = {front: document.getElementById("card-front").value, 
+	back: document.getElementById("card-back").value};
 	flashcardArray.push(card);
 }
 

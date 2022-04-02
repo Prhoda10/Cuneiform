@@ -5,7 +5,7 @@
 	<title>Prayer Submissons and Requests</title>
 	<!---Styles--->
 	<link rel="stylesheet" href="styles.css">
-	<script src="../src/prayerjar.js"></script>
+
 </head>
 <body>
 	
@@ -24,8 +24,8 @@
 		<input type="text" class="searchfield" id="submissionBox" placeholder="Enter Prayer Request Here" name="submissionBox">
 	</form>
 
-	<button class="submit-prayer" onclick="submitPrayer()">Submit Prayer</button>
-	<button class="submit-prayer" onclick="removePrayer()">Get Prayer</button>
+	<button class="submit-prayer">Submit Prayer</button>
+	<button class="get-prayer">Get Prayer</button>
 	</div>
 	<p id="invalidPrayerInput"></p>
 
@@ -33,6 +33,17 @@
 		<h1>Prayer List</h1>
 		<ol id="prayerList"></ol>
 	</div>
-	
+
+	<body class="container-fluid p-3">
+		<form class="d-flex align-items-center p-2">
+		  <input class="form-control" id="taskTitle" aria-describedby="emailHelp" placeholder="Task Name">
+		  <button type="submit" id= "submit-button" class="ml-3 btn btn-primary">Submit</button>
+		</form>
+	  
+		<h1 class="p-2">My Tasks</h1>
+		<div id="tasks" class="p-2 row m-0"></div>
+	  
+	<script src="main.js"></script>
 </body>
+
 </html>
