@@ -1,6 +1,7 @@
-var $ = require('jquery');
+
+/* connecting functions to html */
 //set up translations, then either get search results or the chapter
-if (window.location.href.includes("index")) {
+if (window.location.href.includes("index")||window.location.href.includes("search") ) {
   console.log("This is the index page")
   document.addEventListener('DOMContentLoaded', () => {
     tranSetUp();
