@@ -329,8 +329,8 @@ function tranSetUp() {
 $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main span").off();
-    $("#main span").click(function () {
-      $(this).toggleClass("highlight");
+    $("#main span").on('click', function () {
+      $(".dropdown-content").show();
     });
   });
 
@@ -339,12 +339,39 @@ $(document).ready(function () {
 $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main p").off();
-    $("#main p").click(function () {
-      $(this).toggleClass("highlight");
+    $("#main p").on('click', function () {
+      $(".dropdown-content").show();
     });
   });
 
 });
+
+$(document).ready(function () {
+  $('#redButton').click(function () {
+    $("#main p").toggleClass(".redHighlight")
+  });
+});
+
+//Toggle the dropdown for highlights
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function dropdown() {
+  document.getElementById("dropdown-content").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('#main p')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+} 
 
 //Click search results
 $(document).ready(function () {
@@ -361,4 +388,3 @@ $(document).ready(function () {
   });
 
 });
-
