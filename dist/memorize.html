@@ -6,6 +6,7 @@
 	<title>Memorize</title>
 	<!---Styles--->
 	<link rel="stylesheet" href="styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -40,6 +41,16 @@
 
 	<!---Controls for creating new flashcards--->
 	<div class="Memorize-Creation-Controls">
+		<div class="fd">
+			<p id="cardNumber"></p>
+			<p id="displayFlashcard"></p>
+			<div class="flashcard-options">
+				<button id="previous">Previous</button>
+				<button id="next">Next</button>
+				<button id="flip">Flip</button>
+				<button id="delete">Delete</button>
+			</div>
+		</div>
 		<input type="text" class="searchfield" id="card-front" placeholder="Front">
 		<input type="text" class="searchfield" id="card-back" placeholder="Back">
 		<ul class="flashcard-options">
@@ -47,16 +58,9 @@
 			<li> <button id="getFlashcards">Get Flashcards</button> </li>
 			<li> <button id="exportFlashcards">Export Flashcards</button> </li>
 		</ul>
+		<!---Area for displaying a flashcard--->
 
-	<!---Area for displaying a flashcard--->
-	<div class="Flashcard-Display">
-		<p id="cardNumber"></p>
-		<p id="displayFlashcard"></p>
-		<button id="previous">Previous</button>
-		<button id="next">Next</button>
-		<button id="flip">Flip</button>
-		<button id="delete">Delete</button>
-	</div>
+
 	</div>
 
 	<!---Hidden list of flashcards--->

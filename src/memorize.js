@@ -6,7 +6,7 @@ let side = "front";
 
 /**
  * Connect functions to html 
- */
+ */ 
 
  if (document.getElementById("createNewFlashcard")) {
 	document.getElementById("createNewFlashcard").addEventListener("click", submitFlashcard);
@@ -24,6 +24,9 @@ function submitFlashcard() {
 	let card = {front: document.getElementById("card-front").value, 
 	back: document.getElementById("card-back").value};
 	flashcardArray.push(card);
+	getNextFlashcard();
+		$('#card-front').val(''); 
+		$('#card-back').val('');
 }
 
 /*function getFlashcards() {

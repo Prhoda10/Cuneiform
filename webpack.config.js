@@ -2,6 +2,7 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: ['./src/initialization.js',
+    './src/prayerjar.js',
     './src/memorize.js',
     './src/index.js'],
   output: {

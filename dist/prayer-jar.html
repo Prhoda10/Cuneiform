@@ -5,10 +5,9 @@
 	<title>Prayer Submissons and Requests</title>
 	<!---Styles--->
 	<link rel="stylesheet" href="styles.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
-	
 	<nav class="navigation">
 		<ul>
 			<a href="#" id="title"> <strong>Prayer Jar</strong> </a>
@@ -24,8 +23,8 @@
 		<input type="text" class="searchfield" id="submissionBox" placeholder="Enter Prayer Request Here" name="submissionBox">
 	</form>
 
-	<button class="submit-prayer">Submit Prayer</button>
-	<button class="get-prayer">Get Prayer</button>
+	<button id="submit-prayer">Submit Prayer</button>
+	<button id="get-prayer">Get Prayer</button>
 	</div>
 	<p id="invalidPrayerInput"></p>
 
@@ -43,7 +42,10 @@
 		<h1 class="p-2">My Tasks</h1>
 		<div id="tasks" class="p-2 row m-0"></div>
 	  
-	<script src="main.js"></script>
+
+	<script src="main.js"></script> 
+	<!-- <script src="../src/prayerjar.js"></script> -->
+
 </body>
 
 </html>

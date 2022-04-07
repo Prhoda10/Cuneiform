@@ -335,17 +335,7 @@ text-decoration: none;
 
 /* memorize */
 
-#card-back {
-  text-align: left;
-  margin: auto 5px;
-  height: 200px;
-  width: 200px;
-  padding: 20px;
-  display: inline-block;
-  overflow-wrap: normal;
-}
-
-#card-front {
+#card-back, #card-front {
   text-align: left;
   margin: auto 5px;
   height: 200px;
@@ -359,10 +349,16 @@ text-decoration: none;
   margin-left: 10%;
   margin-top: 2%;
 }
+.fd {
+  display: inline-block;
+  border:#000
+}
 
-.Flashcard-Display{
-  margin-left: 10%;
-  margin-top: 2%;
+#displayFlashcard{
+  width:300px;
+ height:200px;
+ font-size:45px;
+ display: inline-block;
 }
 
 .flashcard-options {
