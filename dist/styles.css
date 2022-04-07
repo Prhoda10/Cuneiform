@@ -104,64 +104,6 @@ ul {
     line-height: 2;
 }
 
-/* Highlight */
-.highlight {
-  background-color: lightyellow;
-  color: black;
-}
-
-/* Highlight popup container */
-.popup {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-/* The actual popup (appears on top) */
-.popup .popuptext {
-  visibility: hidden;
-  background-color: #ffffff;
-  color:rgb(148, 141, 175);
-  border: 1px solid rgb(148, 141, 175);
-  width: 25%;
-  height: 25%;
-}
-
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
-.popup .show {
-  visibility: visible;
-}
-
-.redHighlight {
-  background-color: red;
-  color:#ffffff;
-}
-
-.orangeHighlight {
-  background-color: lightsalmon;
-  color: black;
-}
-
-.yellowHighlight {
-  background-color: lightyellow;
-  color: black;
-}
-
-.greenHighlight {
-  background-color: lightgreen;
-  color: black;
-}
-
-.blueHighlight {
-  background-color: lightblue;
-  color: black;
-}
-
-.purpleHighlight {
-  background-color: rgba(147, 112, 216, 0.637);
-  color: black;
-}
-
 button {
   background-color: rgb(148, 141, 175);
   padding: 7px;
@@ -170,6 +112,88 @@ button {
   border-radius: 5px;
   cursor: pointer;
   }
+
+  /*********************----------HIGHLIGHTS----------********************/
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: fixed;
+  display: inline-block;
+  bottom:85px;
+  width: 100%;
+  margin-left: 26%;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content button {
+  color: white;
+}
+
+/* Change color of dropdown buttons on hover */
+.dropdown-content button:hover {color: black}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+.redHighlight {
+  background-color: rgb(184, 71, 71);
+  color:#ffffff;
+}
+#redButton {
+  background-color: rgb(184, 71, 71);
+}
+
+.orangeHighlight {
+  background-color: lightsalmon;
+  color: black;
+}
+#orangeButton {
+  background-color: lightsalmon;
+}
+
+.yellowHighlight {
+  background-color: rgb(245, 245, 147);
+  color: black;
+}
+#yellowButton {
+  background-color: rgb(245, 245, 147);
+}
+
+.greenHighlight {
+  background-color: lightgreen;
+  color: black;
+}
+#greenButton {
+  background-color: lightgreen;
+}
+
+.blueHighlight {
+  background-color: lightblue;
+  color: black;
+}
+#blueButton {
+  background-color: lightblue;
+}
+
+.purpleHighlight {
+  background-color: rgba(147, 112, 216, 0.637);
+  color: black;
+}
+#purpleButton {
+  background-color: rgba(147, 112, 216, 0.637);
+}
+
+#noteButton {
+  background-color: rgb(148, 141, 175);
+}
 
 
 /* #searchKey {
