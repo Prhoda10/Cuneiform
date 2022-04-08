@@ -13,6 +13,14 @@ if (window.location.href.includes("index")||window.location.href.includes("searc
   });
 }
 
+if (window.location.href.includes("note")) {
+  console.log("This is the note page")
+  document.addEventListener('DOMContentLoaded', () => {
+    //tranSetUp();
+    readNote();
+  });
+}
+
 if (document.getElementById("toggleVerse")) {
   document.getElementById("toggleVerse").addEventListener("click", () => {
     getTXT(1);
@@ -82,6 +90,7 @@ import { apiBibOptions } from '../src/myAPIKey.js';
 
 let next = [];
 let prev = [];
+var canon = "";
 
 //Check if its a search or a reference
 async function getTXT(mode) {
@@ -168,6 +177,7 @@ async function getCPT() {
     document.getElementById("main").innerHTML = data.passages;
     next = data.passage_meta[0].next_chapter;
     prev = data.passage_meta[0].prev_chapter;
+    canon = data.canonical;
   } else {
     let params = {
       'include-chapter-numbers': 'false',
@@ -209,6 +219,7 @@ async function getCPT() {
       }
       next = [data.data.next.id];
       prev = [data.data.previous.id];
+      canon = data.data.reference;
     }
   }
 }
@@ -318,27 +329,87 @@ var element;
 
 document.getElementById("redButton").addEventListener("click", () => {
   $(element).toggleClass("redHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
 });
 
 document.getElementById("orangeButton").addEventListener("click", () => {
   $(element).toggleClass("orangeHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
 });
 
 document.getElementById("yellowButton").addEventListener("click", () => {
   $(element).toggleClass("yellowHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
 });
 
 document.getElementById("greenButton").addEventListener("click", () => {
   $(element).toggleClass("greenHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
 });
 
 document.getElementById("blueButton").addEventListener("click", () => {
   $(element).toggleClass("blueHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
 });
 
 document.getElementById("purpleButton").addEventListener("click", () => {
   $(element).toggleClass("purpleHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
 });
+
+document.getElementById("noteButton").addEventListener("click", () => {
+  document.getElementById("noteRef").innerHTML = canon;
+  document.getElementById('myForm').style.display = "block";
+});
+
+document.getElementById("cancelButton").addEventListener("click", () => {
+  document.getElementById('myForm').style.display = "none";
+});
+
+import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
+document.getElementById("saveButton").addEventListener("click", () => {
+  addNote(document.getElementById('NOTE').value, document.getElementById('noteRef').innerHTML);
+  document.getElementById('myForm').style.display = "none";
+});
+
+async function addNote(note, ref) {
+  try {
+    const docRef = await addDoc(collection(getFirestore(), 'note'), {
+      reference: ref,
+      text: note,
+      timestamp: serverTimestamp()
+    });
+    console.log("Note Submitted: ", docRef.id);
+  }
+  catch(error) {
+    console.error('Error writing new note to Firebase Firestore Database', error);
+  }
+}
+
+import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
+async function readNote() {
+  console.log("readNote Called");
+
+  const myNotes = query(collectionGroup(getFirestore(), 'note'));
+  const querySnapshot = await getDocs(myNotes);
+  querySnapshot.forEach((doc) => {
+      console.log(doc.id, ' => ', doc.data());
+      document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
+      document.getElementById("main").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
+      document.getElementById("main").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>"+ "<br><br>";
+
+  });
+
+  // const docRef = doc(getFirestore(), "note", "tall");
+  // const docSnap = await getDoc(docRef);
+
+  // if (docSnap.exists()) {
+  //   console.log("Document data:", docSnap.data());
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  // }
+}
 
 document.getElementById('highlightDropdown').style.display = "none";
 
