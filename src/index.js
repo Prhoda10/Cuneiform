@@ -182,7 +182,8 @@ async function getCPT() {
     let params = {
       'include-chapter-numbers': 'false',
       'include-titles': 'true',
-      'content-type': 'json'
+      'content-type': 'json',
+      'include-notes': 'true'
     };
     ref = parseRef(ref);
     var request = "https://api.scripture.api.bible/v1/bibles/" + versMap.get(trans) + "/chapters/" + ref + "?";
@@ -201,7 +202,6 @@ async function getCPT() {
       console.log(data);
       document.getElementById("main").innerHTML = "<h2>" + data.data.reference + "</h2><br>";
       var content = data.data.content;
-      //var innerHtml = document.getElementById("main").innerHTML;
       for (var i = 0; i < content.length; i++) {
           for(var j = 0; j < content[i].items.length; j++) {
               if(content[i].items[j].type == "tag" && content[i].items[j].name == "verse") { //If we are on a verse, then
@@ -212,7 +212,11 @@ async function getCPT() {
                 pastetext += content[i].items[j].text;
               } else {
                 for (var k = 0; k < content[i].items[j].items.length; k++) {
-                  pastetext += content[i].items[j].items[k].text;
+                  if (content[i].items[j].name == "verse") {
+                    pastetext += "<b>" + content[i].items[j].items[k].text + "</b> "
+                  } else {
+                    pastetext += content[i].items[j].items[k].text;
+                  }
                 }
               }
           }
@@ -417,6 +421,22 @@ $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main p").off();
     $("#main p").on('click', function () {
+      console.log("Highlight");
+      //$(".dropdown-content").show();
+      var dd = document.getElementById('highlightDropdown');
+      if (dd.style.display == "none") {
+        dd.style.display = 'block';
+      } else { dd.style.display = 'none'; }
+      element = this;
+    });
+  });
+
+});
+
+$(document).ready(function () {
+  $('#main').on('DOMSubtreeModified', function () {
+    $("#main span").off();
+    $("#main span").on('click', function () {
       console.log("Highlight");
       //$(".dropdown-content").show();
       var dd = document.getElementById('highlightDropdown');
