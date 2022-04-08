@@ -259,6 +259,7 @@ function refRedirect(loc, trans) {
 function darkmode() {
   var element = document.body;
   element.classList.toggle("darkmode");
+  //document.getElementsByClassName(".dropdown-content").style.backgroundColor = "black";
 }
 
 

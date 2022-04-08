@@ -127,7 +127,7 @@ button {
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   position: absolute;
-  background-color: white;
+  background-color: transparent;
   min-width: 160px;
 }
 
@@ -184,11 +184,11 @@ button {
 }
 
 .purpleHighlight {
-  background-color: rgba(147, 112, 216, 0.637);
+  background-color: rgb(188, 154, 255);
   color: black;
 }
 #purpleButton {
-  background-color: rgba(147, 112, 216, 0.637);
+  background-color: rgb(188, 154, 255);
 }
 
 #noteButton {
