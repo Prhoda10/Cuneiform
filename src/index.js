@@ -13,6 +13,14 @@ if (window.location.href.includes("index")||window.location.href.includes("searc
   });
 }
 
+if (window.location.href.includes("note")) {
+  console.log("This is the note page")
+  document.addEventListener('DOMContentLoaded', () => {
+    //tranSetUp();
+    readNote();
+  });
+}
+
 if (document.getElementById("toggleVerse")) {
   document.getElementById("toggleVerse").addEventListener("click", () => {
     getTXT(1);
@@ -82,6 +90,7 @@ import { apiBibOptions } from '../src/myAPIKey.js';
 
 let next = [];
 let prev = [];
+var canon = "";
 
 //Check if its a search or a reference
 async function getTXT(mode) {
@@ -168,11 +177,13 @@ async function getCPT() {
     document.getElementById("main").innerHTML = data.passages;
     next = data.passage_meta[0].next_chapter;
     prev = data.passage_meta[0].prev_chapter;
+    canon = data.canonical;
   } else {
     let params = {
       'include-chapter-numbers': 'false',
       'include-titles': 'true',
-      'content-type': 'json'
+      'content-type': 'json',
+      'include-notes': 'true'
     };
     ref = parseRef(ref);
     var request = "https://api.scripture.api.bible/v1/bibles/" + versMap.get(trans) + "/chapters/" + ref + "?";
@@ -191,7 +202,6 @@ async function getCPT() {
       console.log(data);
       document.getElementById("main").innerHTML = "<h2>" + data.data.reference + "</h2><br>";
       var content = data.data.content;
-      //var innerHtml = document.getElementById("main").innerHTML;
       for (var i = 0; i < content.length; i++) {
           for(var j = 0; j < content[i].items.length; j++) {
               if(content[i].items[j].type == "tag" && content[i].items[j].name == "verse") { //If we are on a verse, then
@@ -202,13 +212,18 @@ async function getCPT() {
                 pastetext += content[i].items[j].text;
               } else {
                 for (var k = 0; k < content[i].items[j].items.length; k++) {
-                  pastetext += content[i].items[j].items[k].text;
+                  if (content[i].items[j].name == "verse") {
+                    pastetext += "<b>" + content[i].items[j].items[k].text + "</b> "
+                  } else {
+                    pastetext += content[i].items[j].items[k].text;
+                  }
                 }
               }
           }
       }
       next = [data.data.next.id];
       prev = [data.data.previous.id];
+      canon = data.data.reference;
     }
   }
 }
@@ -317,10 +332,88 @@ function tranSetUp() {
 var element;
 
 document.getElementById("redButton").addEventListener("click", () => {
-  console.log("red");
-  console.log(element);
   $(element).toggleClass("redHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
 });
+
+document.getElementById("orangeButton").addEventListener("click", () => {
+  $(element).toggleClass("orangeHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
+});
+
+document.getElementById("yellowButton").addEventListener("click", () => {
+  $(element).toggleClass("yellowHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
+});
+
+document.getElementById("greenButton").addEventListener("click", () => {
+  $(element).toggleClass("greenHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
+});
+
+document.getElementById("blueButton").addEventListener("click", () => {
+  $(element).toggleClass("blueHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
+});
+
+document.getElementById("purpleButton").addEventListener("click", () => {
+  $(element).toggleClass("purpleHighlight");
+  document.getElementById('highlightDropdown').style.display = "none";
+});
+
+document.getElementById("noteButton").addEventListener("click", () => {
+  document.getElementById("noteRef").innerHTML = canon;
+  document.getElementById('myForm').style.display = "block";
+});
+
+document.getElementById("cancelButton").addEventListener("click", () => {
+  document.getElementById('myForm').style.display = "none";
+});
+
+import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
+document.getElementById("saveButton").addEventListener("click", () => {
+  addNote(document.getElementById('NOTE').value, document.getElementById('noteRef').innerHTML);
+  document.getElementById('myForm').style.display = "none";
+});
+
+async function addNote(note, ref) {
+  try {
+    const docRef = await addDoc(collection(getFirestore(), 'note'), {
+      reference: ref,
+      text: note,
+      timestamp: serverTimestamp()
+    });
+    console.log("Note Submitted: ", docRef.id);
+  }
+  catch(error) {
+    console.error('Error writing new note to Firebase Firestore Database', error);
+  }
+}
+
+import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
+async function readNote() {
+  console.log("readNote Called");
+
+  const myNotes = query(collectionGroup(getFirestore(), 'note'));
+  const querySnapshot = await getDocs(myNotes);
+  querySnapshot.forEach((doc) => {
+      console.log(doc.id, ' => ', doc.data());
+      document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
+      document.getElementById("main").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
+      document.getElementById("main").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>"+ "<br><br>";
+
+  });
+
+  // const docRef = doc(getFirestore(), "note", "tall");
+  // const docSnap = await getDoc(docRef);
+
+  // if (docSnap.exists()) {
+  //   console.log("Document data:", docSnap.data());
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log("No such document!");
+  // }
+}
 
 document.getElementById('highlightDropdown').style.display = "none";
 
@@ -328,6 +421,22 @@ $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main p").off();
     $("#main p").on('click', function () {
+      console.log("Highlight");
+      //$(".dropdown-content").show();
+      var dd = document.getElementById('highlightDropdown');
+      if (dd.style.display == "none") {
+        dd.style.display = 'block';
+      } else { dd.style.display = 'none'; }
+      element = this;
+    });
+  });
+
+});
+
+$(document).ready(function () {
+  $('#main').on('DOMSubtreeModified', function () {
+    $("#main span").off();
+    $("#main span").on('click', function () {
       console.log("Highlight");
       //$(".dropdown-content").show();
       var dd = document.getElementById('highlightDropdown');

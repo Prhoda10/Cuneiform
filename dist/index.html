@@ -20,6 +20,7 @@
          <li> <a class="nav-link" href="index.html?ref=Gen1&vers=ESV">Read</a> </li>
          <li> <a class="nav-link" href="memorize.html">Memorize</a> </li>
          <li> <a class="nav-link" href="prayer-jar.html">Prayer Jar</a> </li>
+         <li> <a class="nav-link" href="notes.html">Notes</a> </li>
          <li> <a class="nav-link" href="account.html">Account</a> </li>
       </ul>
    </nav>
@@ -41,19 +42,6 @@
 
    <div class="icon-bar">
       <a id="darkBut" href="#" class="darkmode-icon">&#9680;</a>
-      <div id="highlightDropdown" class="dropdown-content">
-         <button id="redButton">&#9998</button>
-         <button id="orangeButton">&#9998</button>
-         <button id="yellowButton">&#9998</button>
-         <button id="greenButton">&#9998</button>
-         <button id="blueButton">&#9998</button>
-         <button id="purpleButton">&#9998</button>
-         <button id="noteButton">&#10010</button>
-       </div>
-   </div>
-
-   <div class="dropdown">
-      
    </div>
 
    <div id="main" class="Container">
@@ -68,10 +56,31 @@
       <div class="nav-reading-prev">
          <button id="prevChapter">&laquo prev chapter</button>
       </div>
+      <div class="dropdown">
+         <div id="highlightDropdown" class="dropdown-content">
+            <button id="redButton">&#9998</button>
+            <button id="orangeButton">&#9998</button>
+            <button id="yellowButton">&#9998</button>
+            <button id="greenButton">&#9998</button>
+            <button id="blueButton">&#9998</button>
+            <button id="purpleButton">&#9998</button>
+            <button id="noteButton">&#10010</button>
+          </div>
+      </div>
       <div class="nav-reading-next">
          <button class="nav-reading-next" id="nextChapter">next chapter &raquo</button>
       </div>
    </nav>
+   <div class="form-popup" id="myForm">
+      <form class="form-container">
+        <div id="noteRef"></div>
+    
+        <textarea id="NOTE"></textarea>
+    
+        <button type="button" class="btn submit" id="saveButton">Save</button>
+        <button type="button" class="btn cancel" id="cancelButton">Cancel</button>
+      </form>
+    </div>
 
 </body>
 <!-- Scripts -->
