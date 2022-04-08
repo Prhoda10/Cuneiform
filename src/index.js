@@ -320,6 +320,22 @@ function tranSetUp() {
   }
 }
 
+//Click search results
+$(document).ready(function () {
+  $('#main').on('DOMSubtreeModified', function () {
+    $("#main div").off();
+    $("#main div").click(function () {
+      const num = parseInt($(this).attr("class").replace('Divtext', ''), 10);
+      console.log(num);
+      var mytext = $('.Divtext' + num).text();
+      mytext = mytext.substr(0, mytext.indexOf(":"));
+      console.log(mytext);
+      refRedirect(mytext, "ESV");
+    });
+  });
+
+});
+
 //Highlight
 
 // $(document).ready(function () {
@@ -469,19 +485,3 @@ window.onclick = function(event) {
     }
   }
 }
-
-//Click search results
-$(document).ready(function () {
-  $('#main').on('DOMSubtreeModified', function () {
-    $("#main div").off();
-    $("#main div").click(function () {
-      const num = parseInt($(this).attr("class").replace('Divtext', ''), 10);
-      console.log(num);
-      var mytext = $('.Divtext' + num).text();
-      mytext = mytext.substr(0, mytext.indexOf(":"));
-      console.log(mytext);
-      refRedirect(mytext, "ESV");
-    });
-  });
-
-});
