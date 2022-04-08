@@ -330,7 +330,7 @@ function tranSetUp() {
 // });
 
 var element;
-
+if (document.getElementById("redButton")) {
 document.getElementById("redButton").addEventListener("click", () => {
   $(element).toggleClass("redHighlight");
   document.getElementById('highlightDropdown').style.display = "none";
@@ -370,11 +370,14 @@ document.getElementById("cancelButton").addEventListener("click", () => {
   document.getElementById('myForm').style.display = "none";
 });
 
+}
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
+if(document.getElementById("saveButton")){
 document.getElementById("saveButton").addEventListener("click", () => {
   addNote(document.getElementById('NOTE').value, document.getElementById('noteRef').innerHTML);
   document.getElementById('myForm').style.display = "none";
 });
+}
 
 async function addNote(note, ref) {
   try {
@@ -414,9 +417,9 @@ async function readNote() {
   //   console.log("No such document!");
   // }
 }
-
+if(document.getElementById('highlightDropdown')) {
 document.getElementById('highlightDropdown').style.display = "none";
-
+}
 $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main p").off();

@@ -14,6 +14,20 @@ async function saveMessage(msg) {
 	}
   }
 
+  import { query, getDocs } from "firebase/firestore";
+
+  async function readMessage() {
+  const q = query(collection(getFirestore(), 'prayer'));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+	console.log(doc.id, " => ", doc.data());
+	let li = document.createElement("li");
+	li.setAttribute('id', prayer);
+	li.appendChild(document.createTextNode(doc.data().text));
+	document.getElementById("prayerList").appendChild(li)
+  })
+  }
+
 /*
 * connect functions to buttons for this specific page
 */
@@ -33,9 +47,10 @@ function submitPrayer() {
 	if (checkPrayer(prayer, unacceptableWords)) {
 		return;
 	} else {
-		li.setAttribute('id', prayer);
+		window.alert("Prayer Submitted!");
+		/*li.setAttribute('id', prayer);
 		li.appendChild(document.createTextNode(prayer));
-		list.appendChild(li);
+		list.appendChild(li);*/
 		saveMessage(prayer);
 	}
 }
@@ -45,7 +60,10 @@ function submitPrayer() {
 */
 function removePrayer() {
 	let list = document.getElementById("prayerList");
-	list.removeChild(list.childNodes[0]);
+	while (list.firstChild) {
+	  list.removeChild(addListener.lastChild);
+	}
+	readMessage();
 }
 
 /**
