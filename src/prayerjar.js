@@ -1,26 +1,13 @@
-import { initializeApp } from 'firebase/app';
-
-const firebase = initializeApp({
-  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
-  authDomain: "cuneiform-99812.firebaseapp.com",
-  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
-  projectId: "cuneiform-99812",
-  storageBucket: "cuneiform-99812.appspot.com",
-  messagingSenderId: "294328255555",
-  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
-  measurementId: "G-9PGSSD2423"
-});
-
-// import { getDatabase, ref, set, onValue} from "firebase/database";
-// const db = getDatabase(firebase);
-import { getFirestore, addDoc, collection, ref, set, onValue} from "firebase/firestore";
+import { getFirestore, addDoc, collection, serverTimestamp} from "firebase/firestore";
 // Saves a new message to Cloud Firestore.
-async function saveMessage(messageText) {
+async function saveMessage(msg) {
 	// Add a new message entry to the Firebase database.
 	try {
-	  await addDoc(collection(getFirestore(), 'messages'), {
-		text: messageText,
+	 	const docRef = await addDoc(collection(getFirestore(), 'prayer'), {
+		text: msg,
+		timestamp: serverTimestamp()
 	  });
+	  console.log("Prayer submitted: ", docRef.id);
 	}
 	catch(error) {
 	  console.error('Error writing new message to Firebase Database', error);
