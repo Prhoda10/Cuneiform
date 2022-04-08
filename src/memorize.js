@@ -59,7 +59,8 @@ function submitFlashcard() {
  * Exports the current flashcard array to the firebase database.
  * ! Currently not functioning !
  */
-function exportFlashcards() {
+async function exportFlashcards() {
+	console.log("export Called");
 	const deckName = document.getElementById("deck-name").value;
 	try {
 		const docRef = await addDoc(collection(db, "flashcardDecks"), {
