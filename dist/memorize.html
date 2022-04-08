@@ -6,18 +6,17 @@
 	<title>Memorize</title>
 	<!---Styles--->
 	<link rel="stylesheet" href="styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 
 <body>
-	<!---Navagation link buttons--->
+	<!---Navigation link buttons--->
 	<nav class="navigation">
 		<ul>
-			<a href="index.html?ref=Gen1" id="title">
-				<strong>Cuneiform</strong>
-			</a>
-			<li> <a class="nav-link" href="index.html?ref=Gen1">Home</a> </li>
-			<li> <a class="nav-link" href="#">Memorize</a> </li>
+			<a href="#" id="title"> <strong>Memorize</strong> </a>
+			<li> <a class="nav-link" href="index.html?ref=Gen1&vers=ESV">Read</a> </li>
 			<li> <a class="nav-link" href="prayer-jar.html">Prayer Jar</a> </li>
+			<li> <a class="nav-link" href="notes.html">Notes</a> </li>
 			<li> <a class="nav-link" href="account.html">Account</a> </li>
 		</ul>
 	</nav>
@@ -34,6 +33,16 @@
 
 	<!---Controls for creating new flashcards--->
 	<div class="Memorize-Creation-Controls">
+		<div class="fd">
+			<p id="cardNumber"></p>
+			<p id="displayFlashcard"></p>
+			<div class="flashcard-options">
+				<button id="previous">Previous</button>
+				<button id="next">Next</button>
+				<button id="flip">Flip</button>
+				<button id="delete">Delete</button>
+			</div>
+		</div>
 		<input type="text" class="searchfield" id="card-front" placeholder="Front">
 		<input type="text" class="searchfield" id="card-back" placeholder="Back">
 		<input type="text" id="deck-name" placeholder="Enter deck name here">
@@ -42,16 +51,9 @@
 			<li> <button id="getFlashcards">Get Flashcards</button> </li>
 			<li> <button id="exportFlashcards">Export Flashcards</button> </li>
 		</ul>
+		<!---Area for displaying a flashcard--->
 
-	<!---Area for displaying a flashcard--->
-	<div class="Flashcard-Display">
-		<p id="cardNumber"></p>
-		<p id="displayFlashcard"></p>
-		<button id="previous">Previous</button>
-		<button id="next">Next</button>
-		<button id="flip">Flip</button>
-		<button id="delete">Delete</button>
-	</div>
+
 	</div>
 
 	<!---Hidden list of flashcards--->

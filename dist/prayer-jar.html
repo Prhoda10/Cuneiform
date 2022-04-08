@@ -5,16 +5,15 @@
 	<title>Prayer Submissons and Requests</title>
 	<!---Styles--->
 	<link rel="stylesheet" href="styles.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
 <body>
-	
 	<nav class="navigation">
 		<ul>
 			<a href="#" id="title"> <strong>Prayer Jar</strong> </a>
-			<li> <a class="nav-link" href="index.html">Home</a> </li>
+			<li> <a class="nav-link" href="index.html?ref=Gen1&vers=ESV">Home</a> </li>
 			<li> <a class="nav-link" href="memorize.html">Memorize</a> </li>
-			<li> <a class="nav-link" href="#">Prayer Jar</a> </li>
+			<li> <a class="nav-link" href="notes.html">Notes</a> </li>
 			<li> <a class="nav-link" href="account.html">Account</a> </li>
 		</ul>
 	</nav>
@@ -24,8 +23,8 @@
 		<input type="text" class="searchfield" id="submissionBox" placeholder="Enter Prayer Request Here" name="submissionBox">
 	</form>
 
-	<button class="submit-prayer">Submit Prayer</button>
-	<button class="get-prayer">Get Prayer</button>
+	<button id="submit-prayer">Submit Prayer</button>
+	<button id="get-prayer">Get Prayer</button>
 	</div>
 	<p id="invalidPrayerInput"></p>
 
@@ -34,16 +33,8 @@
 		<ol id="prayerList"></ol>
 	</div>
 
-	<body class="container-fluid p-3">
-		<form class="d-flex align-items-center p-2">
-		  <input class="form-control" id="taskTitle" aria-describedby="emailHelp" placeholder="Task Name">
-		  <button type="submit" id= "submit-button" class="ml-3 btn btn-primary">Submit</button>
-		</form>
-	  
-		<h1 class="p-2">My Tasks</h1>
-		<div id="tasks" class="p-2 row m-0"></div>
-	  
-	<script src="main.js"></script>
+	<script src="main.js"></script> 
+
 </body>
 
 </html>

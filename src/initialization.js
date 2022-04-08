@@ -14,6 +14,8 @@ const app = initializeApp({
   measurementId: "G-9PGSSD2423"
 });
 
+console.log("firebase initialized");
+
 import { getDatabase, ref as sRef, set } from 'firebase/database';
 
 //testing a function to use the realtime database
@@ -24,4 +26,3 @@ function writeUserData(userId, name, email) {
     email: email,
   });
 }
-writeUserData("98883", "hello", "gloria.kim@my.wheaton.edu")
