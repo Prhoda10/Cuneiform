@@ -259,7 +259,6 @@ function refRedirect(loc, trans) {
 function darkmode() {
   var element = document.body;
   element.classList.toggle("darkmode");
-  //document.getElementsByClassName(".dropdown-content").style.backgroundColor = "black";
 }
 
 
@@ -316,29 +315,27 @@ function tranSetUp() {
 // });
 
 var element;
-//RED
+
 document.getElementById("redButton").addEventListener("click", () => {
-  console.log("red");
-  console.log(element);
   $(element).toggleClass("redHighlight");
 });
-//ORANGE
+
 document.getElementById("orangeButton").addEventListener("click", () => {
   $(element).toggleClass("orangeHighlight");
 });
-//YELLOW
+
 document.getElementById("yellowButton").addEventListener("click", () => {
   $(element).toggleClass("yellowHighlight");
 });
-//GREEN
+
 document.getElementById("greenButton").addEventListener("click", () => {
   $(element).toggleClass("greenHighlight");
 });
-//BLUE
+
 document.getElementById("blueButton").addEventListener("click", () => {
   $(element).toggleClass("blueHighlight");
 });
-//PURPLE
+
 document.getElementById("purpleButton").addEventListener("click", () => {
   $(element).toggleClass("purpleHighlight");
 });
