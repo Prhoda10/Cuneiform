@@ -34,6 +34,7 @@ document.addEventListener('keydown', () => {
   if (event.keyCode == 13) getTXT(1)
 })
 
+
 //fetch API
 var esvapi_url = 'https://api.esv.org/v3/passage/html/?q=';
 //var apiBib_url = 'https://api.scripture.api.bible/v1/bibles/';
@@ -305,20 +306,38 @@ function tranSetUp() {
 }
 
 //Highlight
+
+// $(document).ready(function () {
+//   $('#redButton').click(function () {
+//     console.log("red");
+//     $(element).toggleClass(".redHighlight")
+//   });
+// });
+
+var element;
+
+document.getElementById("redButton").addEventListener("click", () => {
+  console.log("red");
+  console.log(element);
+  $(element).toggleClass("redHighlight");
+});
+
+document.getElementById('highlightDropdown').style.display = "none";
+
 $(document).ready(function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main p").off();
     $("#main p").on('click', function () {
-      $(".dropdown-content").show();
+      console.log("Highlight");
+      //$(".dropdown-content").show();
+      var dd = document.getElementById('highlightDropdown');
+      if (dd.style.display == "none") {
+        dd.style.display = 'block';
+      } else { dd.style.display = 'none'; }
+      element = this;
     });
   });
 
-});
-
-$(document).ready(function () {
-  $('#redButton').click(function () {
-    $("#main p").toggleClass(".redHighlight")
-  });
 });
 
 //Toggle the dropdown for highlights
@@ -340,7 +359,7 @@ window.onclick = function(event) {
       }
     }
   }
-} 
+}
 
 //Click search results
 $(document).ready(function () {

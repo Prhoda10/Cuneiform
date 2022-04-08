@@ -126,7 +126,6 @@ button {
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
   position: absolute;
   background-color: white;
   min-width: 160px;
@@ -146,6 +145,7 @@ button {
 .redHighlight {
   background-color: rgb(184, 71, 71);
   color:#ffffff;
+  cursor: pointer;
 }
 #redButton {
   background-color: rgb(184, 71, 71);
