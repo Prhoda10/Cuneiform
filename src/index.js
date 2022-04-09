@@ -6,7 +6,7 @@ import { ESVoptions, apiBibOptions } from '../src/myAPIKey.js';
 
 let next = [];
 let prev = [];
-var canon = "";
+export var canon = "";
 
 //Check if its a search or a reference and delegate
 export async function getTXT(mode) {

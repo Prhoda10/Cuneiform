@@ -184,6 +184,7 @@ document.getElementById("yellowButton").addEventListener("click", () => {
 });
 
 //Note button Action Listeners
+import { canon } from '../src/index.js';
 document.getElementById("noteButton").addEventListener("click", () => {
   document.getElementById("noteRef").innerHTML = canon;
   document.getElementById('myForm').style.display = "block";
