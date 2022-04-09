@@ -207,19 +207,18 @@ export function darkmode() {
 }
 
 //Click search results
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main div").off();
-    $("#main div").click(function () {
+    $("#main div").on("click",function () {
       const num = parseInt($(this).attr("class").replace('Divtext', ''), 10);
       console.log(num);
       var mytext = $('.Divtext' + num).text();
-      mytext = mytext.substr(0, mytext.indexOf(":"));
+      mytext = mytext.substring(0, mytext.indexOf(":"));
       console.log(mytext);
       refRedirect(mytext, "ESV");
     });
   });
-
 });
 
 //Note Database methods
@@ -266,7 +265,7 @@ export function toggleHighlight(color) {
 
 //Highlight Jquery
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main span").off();
     $("#main span").on('click', toggleDropdown);
@@ -274,7 +273,7 @@ $(document).ready(function () {
 
 });
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main p").off();
     $("#main p").on('click', toggleDropdown);
