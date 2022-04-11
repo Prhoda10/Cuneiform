@@ -1,5 +1,6 @@
 /* This file initializes our app - 
 * allows firebase to work
+* connects functions from separate js files to appropriate html files
 */
 import { initializeApp } from 'firebase/app';
 

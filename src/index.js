@@ -1,4 +1,4 @@
-import {bookMap, versMap} from '../src/initialization.js'
+import { bookMap, versMap } from '../src/initialization.js'
 //fetch API
 var esvapi_url = 'https://api.esv.org/v3/passage/html/?q=';
 
@@ -135,12 +135,12 @@ function nonESVPrintText(datas) {
   var pastetext = "";
   document.getElementById("main").innerHTML = "<h2>" + datas.data.reference + "</h2><br>";
   for (var i = 0; i < content.length; i++) {
-    for(var j = 0; j < content[i].items.length; j++) {
-      if(content[i].items[j].type == "tag" && content[i].items[j].name == "verse") { //If we are on a verse, then
+    for (var j = 0; j < content[i].items.length; j++) {
+      if (content[i].items[j].type == "tag" && content[i].items[j].name == "verse") { //If we are on a verse, then
         document.getElementById("main").innerHTML += "<span>" + pastetext + "</span>";
         pastetext = "";
       }
-      if(content[i].items[j].type == "text") {
+      if (content[i].items[j].type == "text") {
         pastetext += content[i].items[j].text;
       } else {
         for (var k = 0; k < content[i].items[j].items.length; k++) {
@@ -206,71 +206,11 @@ export function darkmode() {
   element.classList.toggle("darkmode");
 }
 
-<<<<<<< HEAD
-
-// Show different options for translation based on language selected
-function tranSetUp() {
-  var langObj1 = ["English", "Spanish", "Ancient Greek", "Arabic", 'Belarusian', "Bengali", "Czech", "German", "Hebrew (Modern)", "Hindi", "Indonesian",
-    "Italian", "Dutch", "Polish", "Swedish", "Swahili", "Thai", "Vietnamese"];
-  var langObj2 = [
-    ["ESV", "KJV", "ASV"],/*English*/
-    ["Reina Valera 1909", "The Holy Bible in Simple Spanish", "VBL"],/*Spanish*/
-    ["grcF35"],/*Ancient Greek*/
-    ["New Arabic Version"],/*Arabic*/
-    ["NTPrv"],/*Belarusan*/
-    ["Indian Revised Version (Bengali)"],/*Bengali*/
-    ["Czech Kralická Bible 1613"],/*Czech*/
-    ["German Unrevised elberfelder Bible", "German Luther Bible", "Elderfelder Translation"],/*German*/
-    ["Open Hebrew Living New Testament"],/*Hebrew*/
-    ["Indian Revised Version (Hindi)"],/*Hindi*/
-    ["Plain Indonesian Translation"],/*Indonesian*/
-    ["Diodati Bible"],/*Italian*/
-    ["Catholic Dutch Bible 1939"],/*Dutch*/
-    ["Gdansk Bible"],/*Polish*/
-    ["Swedish Core Bible"],/*Swedish*/
-    ["Open Kiswahili Contemporary Version"],/*Swahili*/
-    ["Thai KJV"],/*Thai*/
-    ["Open Vietnamese Contemporary Bible", "Vietnamese Bible 1934"]/*Vietnamese*/
-  ];
-
-  console.log("tranSetUP called");
-  var langSel = document.getElementById("langu");
-  var tranSel = document.getElementById("translation");
-  for (var i = 0; i < langObj1.length; i++) {
-    langSel.options[langSel.options.length] = new Option(langObj1[i], langObj1[i]);
-  }
-  langSel.onchange = function () {
-
-    tranSel.length = 1;
-    var index = langObj1.indexOf(this.value);
-    var z = langObj2[index];
-    console.log("tranSetUP called");
-    for (var i = 0; i < z.length; i++) {
-      tranSel.options[tranSel.options.length] = new Option(z[i], z[i]);
-    }
-  }
-}
-
-//Highlight
-
-// $(document).ready(function () {
-//   $('#redButton').click(function () {
-//     console.log("red");
-//     $(element).toggleClass(".redHighlight")
-//   });
-// });
-
-var element;
-if (document.getElementById("redButton")) {
-document.getElementById("redButton").addEventListener("click", () => {
-  $(element).toggleClass("redHighlight");
-  document.getElementById('highlightDropdown').style.display = "none";
-=======
 //Click search results
 document.addEventListener("DOMContentLoaded", function () {
   $('#main').on('DOMSubtreeModified', function () {
     $("#main div").off();
-    $("#main div").on("click",function () {
+    $("#main div").on("click", function () {
       const num = parseInt($(this).attr("class").replace('Divtext', ''), 10);
       console.log(num);
       var mytext = $('.Divtext' + num).text();
@@ -279,22 +219,11 @@ document.addEventListener("DOMContentLoaded", function () {
       refRedirect(mytext, "ESV");
     });
   });
->>>>>>> 5d3b51e7fce89fd1e16efde161bcf7852efb23b4
 });
 
 //Note Database methods
 
-}
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
-<<<<<<< HEAD
-if(document.getElementById("saveButton")){
-document.getElementById("saveButton").addEventListener("click", () => {
-  addNote(document.getElementById('NOTE').value, document.getElementById('noteRef').innerHTML);
-  document.getElementById('myForm').style.display = "none";
-});
-}
-=======
->>>>>>> 5d3b51e7fce89fd1e16efde161bcf7852efb23b4
 
 export async function addNote(note, ref) {
   try {
@@ -305,7 +234,7 @@ export async function addNote(note, ref) {
     });
     console.log("Note Submitted: ", docRef.id);
   }
-  catch(error) {
+  catch (error) {
     console.error('Error writing new note to Firebase Firestore Database', error);
   }
 }
@@ -317,36 +246,17 @@ export async function readNote() {
   const myNotes = query(collectionGroup(getFirestore(), 'note'));
   const querySnapshot = await getDocs(myNotes);
   querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
-      document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
-      document.getElementById("main").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
-      document.getElementById("main").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>"+ "<br><br>";
+    console.log(doc.id, ' => ', doc.data());
+    document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
+    document.getElementById("main").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
+    document.getElementById("main").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>" + "<br><br>";
 
   });
 }
-<<<<<<< HEAD
-if(document.getElementById('highlightDropdown')) {
-document.getElementById('highlightDropdown').style.display = "none";
-}
-$(document).ready(function () {
-  $('#main').on('DOMSubtreeModified', function () {
-    $("#main p").off();
-    $("#main p").on('click', function () {
-      console.log("Highlight");
-      //$(".dropdown-content").show();
-      var dd = document.getElementById('highlightDropdown');
-      if (dd.style.display == "none") {
-        dd.style.display = 'block';
-      } else { dd.style.display = 'none'; }
-      element = this;
-    });
-  });
-=======
 
 //Highlights
 
 var element;
->>>>>>> 5d3b51e7fce89fd1e16efde161bcf7852efb23b4
 
 export function toggleHighlight(color) {
   $(element).toggleClass(color + "Highlight");
@@ -373,10 +283,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function toggleDropdown() {
   var dd = document.getElementById('highlightDropdown');
-      if (dd.style.display == "none") {
-        dd.style.display = 'block';
-      } else { dd.style.display = 'none'; }
-      element = this;
+  if (dd.style.display == "none") {
+    dd.style.display = 'block';
+  } else { dd.style.display = 'none'; }
+  element = this;
 }
 
 //Toggle the dropdown for highlights
