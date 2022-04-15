@@ -164,7 +164,7 @@ document.addEventListener('keydown', () => {
 
 //"Cant find elemenybyID when hid initially, so we hide it during the static execution of this file."
 if (document.getElementById('highlightDropdown')){
-  document.getElementById('highlightDropdown').style.visibility = "hidden";
+  document.getElementById('highlightDropdown').style.display = "none";
 
 
 document.getElementById("redButton").addEventListener("click", () => {
