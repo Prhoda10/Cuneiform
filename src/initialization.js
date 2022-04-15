@@ -163,7 +163,9 @@ document.addEventListener('keydown', () => {
 //Highlight ActionListeners
 
 //"Cant find elemenybyID when hid initially, so we hide it during the static execution of this file."
-document.getElementById('highlightDropdown').style.display = "none";
+if (document.getElementById('highlightDropdown')){
+  document.getElementById('highlightDropdown').style.visibility = "hidden";
+
 
 document.getElementById("redButton").addEventListener("click", () => {
   toggleHighlight("red");
@@ -183,9 +185,11 @@ document.getElementById("purpleButton").addEventListener("click", () => {
 document.getElementById("yellowButton").addEventListener("click", () => {
   toggleHighlight("yellow");
 });
-
+}
 //Note button Action Listeners
 import { canon } from '../src/index.js';
+
+if(document.getElementById("noteButton")) {
 document.getElementById("noteButton").addEventListener("click", () => {
   document.getElementById("noteRef").innerHTML = canon;
   document.getElementById('myForm').style.display = "block";
@@ -199,3 +203,4 @@ document.getElementById("saveButton").addEventListener("click", () => {
   addNote(document.getElementById('NOTE').value, document.getElementById('noteRef').innerHTML);
   document.getElementById('myForm').style.display = "none";
 });
+}

@@ -4,7 +4,9 @@ module.exports = {
   entry: ['./src/initialization.js',
     './src/prayerjar.js',
     './src/memorize.js',
-    './src/index.js'],
+    './src/index.js',
+    './src/account.js',
+    ],
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),

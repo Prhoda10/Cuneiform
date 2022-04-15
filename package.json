@@ -20,8 +20,8 @@
   "homepage": "https://github.com/Prhoda10/Cuneiform#readme",
   "dependencies": {
     "firebase": "^9.6.9",
-    "firebase-tools": "^9.20.0",
     "firebase-admin": "^10.0.2",
+    "firebase-tools": "^10.6.0",
     "firebaseui": "^6.0.1",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",

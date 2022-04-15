@@ -486,3 +486,8 @@ textarea {
   width: 100%;
   box-sizing:border-boxs
 }
+
+#whenSignedOut {
+  margin: 10px;
+  padding: 40px;
+}
