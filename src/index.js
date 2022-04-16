@@ -261,6 +261,7 @@ var element;
 export function toggleHighlight(color) {
   $(element).toggleClass(color + "Highlight");
   document.getElementById('highlightDropdown').style.display = "none";
+  addHighlight(color, canon ,element.id);
 }
 
 //Highlight Jquery
@@ -289,23 +290,33 @@ function toggleDropdown() {
   element = this;
 }
 
-//Toggle the dropdown for highlights
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-// function dropdown() {
-//   document.getElementById("dropdown-content").classList.toggle("show");
-// }
+//Highlights to DB
+export async function addHighlight(color, ref, verse) {
+  try {
+    const docRef = await addDoc(collection(getFirestore(), 'highlight'), {
+      reference: ref,
+      color: color,
+      verse: verse,
+      timestamp: serverTimestamp()
+    });
+    console.log("Highlight Submitted: ", docRef.id);
+  }
+  catch (error) {
+    console.error('Error writing new highlight to Firebase Firestore Database', error);
+  }
+}
 
-// Close the dropdown menu if the user clicks outside of it
-// window.onclick = function(event) {
-//   if (!event.target.matches('#main p')) {
-//     var dropdowns = document.getElementsByClassName("dropdown-content");
-//     var i;
-//     for (i = 0; i < dropdowns.length; i++) {
-//       var openDropdown = dropdowns[i];
-//       if (openDropdown.classList.contains('show')) {
-//         openDropdown.classList.remove('show');
-//       }
-//     }
-//   }
-// }
+//Get highlights from DB
+export async function getHighlight() {
+  console.log("getHighlight Called");
+
+  const myHighlights = query(collectionGroup(getFirestore(), 'hilghlight'));
+  const querySnapshot = await getDocs(myHighlights);
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, ' => ', doc.data());
+    document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
+    document.getElementById("main").innerHTML += "<div>" + "color: " + doc.data().color + "</div>";
+    document.getElementById("main").innerHTML += "<div>" + "verse: " + doc.data().verse + "</div>" + "<br><br>";
+
+  });
+}
