@@ -75,12 +75,13 @@ export async function getCPT() {
   var trans = getUrlVars()["vers"];
   if (trans == "" || trans == "undefined") { trans = "ESV"; } //default to ESV
   var ref = getUrlVars()["ref"];
-  if (ref == "") { ref = "Gen1"; } //default to Gen1
+  if (ref == "") { ref = "Genesis 1"; } //default to Gen1
   if (trans == "ESV") {
     executeESVAPI(ref);
   } else {
     executeBIBAPI(trans, ref);
   }
+  indicateNotes(ref);
 }
 
 //Begin fetching from ESV API
@@ -254,6 +255,20 @@ export async function readNote() {
   });
 }
 
+async function indicateNotes(ref) {
+    ref = ref.replace("%20"," ");
+    console.log(ref);
+    const notes = query(collectionGroup(getFirestore(), 'note'), where("reference", "==", ref));
+    const querySnapshot = await getDocs(notes);
+    querySnapshot.forEach((doc) => {
+    console.log(doc.id, ' => ', doc.data());
+    document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
+    document.getElementById("noteChart").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
+    document.getElementById("noteChart").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>" + "<br><br>";
+
+  });
+}
+
 //Highlights
 
 var element;
@@ -310,7 +325,7 @@ export async function addHighlight(color, ref, verse) {
 export async function getHighlight() {
   console.log("getHighlight Called");
 
-  const myHighlights = query(collectionGroup(getFirestore(), 'hilghlight'));
+  const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
   const querySnapshot = await getDocs(myHighlights);
   querySnapshot.forEach((doc) => {
     console.log(doc.id, ' => ', doc.data());
