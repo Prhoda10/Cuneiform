@@ -310,7 +310,7 @@ export async function addHighlight(color, ref, verse) {
 export async function getHighlight() {
   console.log("getHighlight Called");
 
-  const myHighlights = query(collectionGroup(getFirestore(), 'hilghlight'));
+  const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
   const querySnapshot = await getDocs(myHighlights);
   querySnapshot.forEach((doc) => {
     console.log(doc.id, ' => ', doc.data());
