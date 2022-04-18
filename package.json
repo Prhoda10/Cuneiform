@@ -21,8 +21,7 @@
   "dependencies": {
     "firebase": "^9.6.9",
     "firebase-admin": "^10.0.2",
-    "firebase-tools": "^10.6.0",
-    "firebaseui": "^6.0.1",
+    "firebase-tools": "^1.2.0",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "path": "^0.12.7"
