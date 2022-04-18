@@ -75,12 +75,13 @@ export async function getCPT() {
   var trans = getUrlVars()["vers"];
   if (trans == "" || trans == "undefined") { trans = "ESV"; } //default to ESV
   var ref = getUrlVars()["ref"];
-  if (ref == "") { ref = "Gen1"; } //default to Gen1
+  if (ref == "") { ref = "Genesis 1"; } //default to Gen1
   if (trans == "ESV") {
     executeESVAPI(ref);
   } else {
     executeBIBAPI(trans, ref);
   }
+  indicateNotes(ref);
 }
 
 //Begin fetching from ESV API
@@ -254,6 +255,20 @@ export async function readNote() {
   });
 }
 
+async function indicateNotes(ref) {
+    ref = ref.replace("%20"," ");
+    console.log(ref);
+    const notes = query(collectionGroup(getFirestore(), 'note'), where("reference", "==", ref));
+    const querySnapshot = await getDocs(notes);
+    querySnapshot.forEach((doc) => {
+    console.log(doc.id, ' => ', doc.data());
+    document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
+    document.getElementById("noteChart").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
+    document.getElementById("noteChart").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>" + "<br><br>";
+
+  });
+}
+
 //Highlights
 
 var element;
@@ -261,6 +276,7 @@ var element;
 export function toggleHighlight(color) {
   $(element).toggleClass(color + "Highlight");
   document.getElementById('highlightDropdown').style.display = "none";
+  addHighlight(color, canon ,element.id);
 }
 
 //Highlight Jquery
@@ -289,23 +305,33 @@ function toggleDropdown() {
   element = this;
 }
 
-//Toggle the dropdown for highlights
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-// function dropdown() {
-//   document.getElementById("dropdown-content").classList.toggle("show");
-// }
+//Highlights to DB
+export async function addHighlight(color, ref, verse) {
+  try {
+    const docRef = await addDoc(collection(getFirestore(), 'highlight'), {
+      reference: ref,
+      color: color,
+      verse: verse,
+      timestamp: serverTimestamp()
+    });
+    console.log("Highlight Submitted: ", docRef.id);
+  }
+  catch (error) {
+    console.error('Error writing new highlight to Firebase Firestore Database', error);
+  }
+}
 
-// Close the dropdown menu if the user clicks outside of it
-// window.onclick = function(event) {
-//   if (!event.target.matches('#main p')) {
-//     var dropdowns = document.getElementsByClassName("dropdown-content");
-//     var i;
-//     for (i = 0; i < dropdowns.length; i++) {
-//       var openDropdown = dropdowns[i];
-//       if (openDropdown.classList.contains('show')) {
-//         openDropdown.classList.remove('show');
-//       }
-//     }
-//   }
-// }
+//Get highlights from DB
+export async function getHighlight() {
+  console.log("getHighlight Called");
+
+  const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
+  const querySnapshot = await getDocs(myHighlights);
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, ' => ', doc.data());
+    document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
+    document.getElementById("main").innerHTML += "<div>" + "color: " + doc.data().color + "</div>";
+    document.getElementById("main").innerHTML += "<div>" + "verse: " + doc.data().verse + "</div>" + "<br><br>";
+
+  });
+}
