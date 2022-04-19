@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, arrayUnion, arrayRemove, getDoc, ref, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
@@ -29,6 +29,7 @@ let side = "front"; //The side of the card being viewed
 	document.getElementById("flip").addEventListener("click", flipFlashcard);
 	document.getElementById("delete").addEventListener("click", deleteFlashcard);
 	document.getElementById("exportFlashcards").addEventListener("click", exportFlashcards);
+	document.getElementById("getFlashcards").addEventListener("click", getFlashcards);
   }
 
 /**
@@ -44,15 +45,16 @@ function submitFlashcard() {
 		$('#card-back').val('');
 }
 
-/*function getFlashcards() {
-	flashcardArray = [];
+/*async function getFlashcards() {
+	console.log("getFlashcards called");
+	flashcardArray.splice(0, flashcardArray.length);
 	count = 0;
 	side = "front";
 	cardNumber.innerHTML = 0;
-	display.innerHTML= "";
+	displayFlashcard.innerHTML= "";
 
-	const ref = doc(db, "flashcardDecks", "p2VvflKtlwvcG2kGkEQv", "deck");
-	flashcardArray = await getDoc(ref);
+	const ref = collection(db, "flashcardDecks", "44HJMMzAy7Z0jaHj9mDN", "deck");
+	flashcardArray.push(await getDocs(ref));
 }*/
 
 /**
@@ -65,8 +67,8 @@ async function exportFlashcards() {
 	try {
 		const docRef = await addDoc(collection(db, "flashcardDecks"), {
 			name: deckName,
-			//deck: flashcardArray,
-			//timestamp: serverTimestamp()
+			deck: flashcardArray,
+			timestamp: serverTimestamp()
 		});
 		console.log("Document written with ID: ", docRef.id);
 	} 
@@ -82,22 +84,16 @@ function getPreviousFlashcard() {
 	let display = document.getElementById("displayFlashcard");
 	let cardNumber = document.getElementById("cardNumber");
 	if(count > 0) {
+		console.log("getPreviousFlashcard called at array index ", count);
 		count = count - 1;
 		cardNumber.innerHTML = count;
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
 	} 
-	else if(count == 0 && side == "back") {
-		return;
-	} 
 	else if(count == 0) {
-		cardNumber.innerHTML = count;
-		display.innerHTML = ["Front", flashcardArray[count].front];
-		side = "front";
-	} 
-	else {
+		console.log("getPreviousFlashcard called at array index ", count);
 		return;
-	}
+	} 
 }
 
 /**
@@ -107,22 +103,16 @@ function getNextFlashcard() {
 	let display = document.getElementById("displayFlashcard");
 	let cardNumber = document.getElementById("cardNumber");
 	if(count < flashcardArray.length - 1) {
+		console.log("getNextFlashcard called at array index ", count);
 		count = count + 1;
 		cardNumber.innerHTML = count;
 		display.innerHTML = ["Front", flashcardArray[count].front];
 		side = "front";
 	}
-	else if(count == flashcardArray.length - 1 && side == "back") {
-		return;
-	} 
 	else if(count == flashcardArray.length - 1) {
-		cardNumber.innerHTML = count;
-		display.innerHTML = ["Front", flashcardArray[count].front];
-		side = "front";
-	} 
-	else {
+		console.log("getNextFlashcard called at array index ", count);
 		return;
-	}
+	} 
 }
 
 /**
