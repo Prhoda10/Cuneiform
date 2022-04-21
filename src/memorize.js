@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, arrayUnion, arrayRemove, getDoc, ref, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, arrayUnion, arrayRemove, getDoc, ref, getDocs, query } from "firebase/firestore";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
@@ -13,8 +13,7 @@ const firebaseConfig = {
   };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const flashcardArray = []; //The array of cards being displayed
-let deckNumber = 0;
+let flashcardArray = [];
 let count = 0;
 let side = "front"; //The side of the card being viewed
 
@@ -36,8 +35,12 @@ let side = "front"; //The side of the card being viewed
  * A function for adding new flashcards to the user's flashcard list.
  */
 function submitFlashcard() {
-	console.log("flashcard created")
-	let card = {front: document.getElementById("card-front").value, 
+	if(flashcardArray.length == 100) {
+		document.getElementById("deck-name").value = "Deck length cannot exceed 100!";
+		return;
+	}
+	console.log("flashcard created");
+	let card = {front: document.getElementById("card-front").value,
 	back: document.getElementById("card-back").value};
 	flashcardArray.push(card);
 	getNextFlashcard();
@@ -45,24 +48,37 @@ function submitFlashcard() {
 		$('#card-back').val('');
 }
 
-/*async function getFlashcards() {
+/**
+ * A function for retriving the flashcard deck from the database
+ */
+async function getFlashcards() {
 	console.log("getFlashcards called");
 	flashcardArray.splice(0, flashcardArray.length);
 	count = 0;
 	side = "front";
 	cardNumber.innerHTML = 0;
-	displayFlashcard.innerHTML= "";
+	displayFlashcard.innerHTML = "";
+	let name = document.getElementById("deck-name").value;
 
-	const ref = collection(db, "flashcardDecks", "44HJMMzAy7Z0jaHj9mDN", "deck");
-	flashcardArray.push(await getDocs(ref));
-}*/
+	const q = query(collection(db, "flashcardDecks"));
+	const ref = await getDocs(q);
+	ref.forEach((a) => {
+		if(a.get("name") == name) {
+			flashcardArray = a.get("deck");
+			console.log("a");
+		}
+	})
+}
 
 /**
  * Exports the current flashcard array to the firebase database.
- * ! Currently not functioning !
  */
 async function exportFlashcards() {
 	console.log("export Called");
+	if(!(flashcardArray.length > 0)) {
+		document.getElementById("deck-name").value = "No cards to export!";
+		return;
+	}
 	const deckName = document.getElementById("deck-name").value;
 	try {
 		const docRef = await addDoc(collection(db, "flashcardDecks"), {
