@@ -86,6 +86,10 @@ async function exportFlashcards() {
 		document.getElementById("deck-name").value = "Deck name must be under 20 characters!";
 		return;
 	}
+	else if(deckName == "") {
+		document.getElementById("deck-name").value = "Deck must be named!";
+		return;
+	}
 	try {
 		const docRef = await addDoc(collection(db, "flashcardDecks"), {
 			name: deckName,
