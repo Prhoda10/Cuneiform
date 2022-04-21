@@ -16,6 +16,7 @@ const db = getFirestore(app);
 let flashcardArray = [];
 let count = 0;
 let side = "front"; //The side of the card being viewed
+constructDeckList();
 
 /**
  * Connect functions to html 
@@ -58,7 +59,7 @@ async function getFlashcards() {
 	side = "front";
 	cardNumber.innerHTML = 0;
 	displayFlashcard.innerHTML = "";
-	let name = document.getElementById("deck-name").value;
+	let name = document.getElementById("Decks").value;
 
 	const q = query(collection(db, "flashcardDecks"));
 	const ref = await getDocs(q);
@@ -68,6 +69,7 @@ async function getFlashcards() {
 			console.log("a");
 		}
 	})
+	constructDeckList();
 }
 
 /**
@@ -75,11 +77,15 @@ async function getFlashcards() {
  */
 async function exportFlashcards() {
 	console.log("export Called");
-	if(!(flashcardArray.length > 0)) {
+	if(!(flashcardArray.length > 0)) { //Check that the deck has flashcards
 		document.getElementById("deck-name").value = "No cards to export!";
 		return;
 	}
 	const deckName = document.getElementById("deck-name").value;
+	if(deckName.length > 20) { //Check that the deck name is 20 characters or less
+		document.getElementById("deck-name").value = "Deck name must be under 20 characters!";
+		return;
+	}
 	try {
 		const docRef = await addDoc(collection(db, "flashcardDecks"), {
 			name: deckName,
@@ -163,4 +169,20 @@ function deleteFlashcard() {
 		display.innerHTML = "";
 		cardNumber = "";
 	}
+}
+
+/**
+ * Get the decks from the database
+ */
+async function constructDeckList() {
+	let fCList = document.getElementById("Decks");
+	const q = query(collection(db, "flashcardDecks"));
+	const ref = await getDocs(q);
+	while(!(fCList.value == "")) {
+		fCList.remove(0);
+	}
+	ref.forEach((a) => {
+		console.log(a.get("name"));
+		fCList.add(new Option(a.get("name"), a.get("name")));
+	})
 }
