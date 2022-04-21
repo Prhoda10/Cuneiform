@@ -16,6 +16,8 @@ const db = getFirestore(app);
 let flashcardArray = [];
 let count = 0;
 let side = "front"; //The side of the card being viewed
+let display = document.getElementById("displayFlashcard");
+display.innerHTML = "Empty Deck";
 constructDeckList();
 
 /**
@@ -57,7 +59,6 @@ async function getFlashcards() {
 	flashcardArray.splice(0, flashcardArray.length);
 	count = 0;
 	side = "front";
-	cardNumber.innerHTML = 0;
 	displayFlashcard.innerHTML = "";
 	let name = document.getElementById("Decks").value;
 
@@ -70,6 +71,7 @@ async function getFlashcards() {
 		}
 	})
 	constructDeckList();
+	display.innerHTML = [count + 1, " Front: ", flashcardArray[count].front];
 }
 
 /**
@@ -101,19 +103,17 @@ async function exportFlashcards() {
 	catch (error) {
 		console.error("Error adding document");
 	}
+	constructDeckList();
 }
 
 /**
  *A function for getting the previous card in the array.
  */
 function getPreviousFlashcard() {
-	let display = document.getElementById("displayFlashcard");
-	let cardNumber = document.getElementById("cardNumber");
 	if(count > 0) {
 		console.log("getPreviousFlashcard called at array index ", count);
 		count = count - 1;
-		cardNumber.innerHTML = count;
-		display.innerHTML = ["Front", flashcardArray[count].front];
+		display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
 		side = "front";
 	} 
 	else if(count == 0) {
@@ -126,13 +126,10 @@ function getPreviousFlashcard() {
  *A function for getting the next card in the array.
  */
 function getNextFlashcard() {
-	let display = document.getElementById("displayFlashcard");
-	let cardNumber = document.getElementById("cardNumber");
 	if(count < flashcardArray.length - 1) {
 		console.log("getNextFlashcard called at array index ", count);
 		count = count + 1;
-		cardNumber.innerHTML = count;
-		display.innerHTML = ["Front", flashcardArray[count].front];
+		display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
 		side = "front";
 	}
 	else if(count == flashcardArray.length - 1) {
@@ -145,13 +142,15 @@ function getNextFlashcard() {
  *A function for fliping the currently displayed card.
  */
 function flipFlashcard() {
-	let display = document.getElementById("displayFlashcard");
+	if(flashcardArray.length == 0) {
+		return;
+	}
 	if(side == "front") {
-		display.innerHTML = ["Back", flashcardArray[count].back];
+		display.innerHTML = [count + 1 + " Back: " + flashcardArray[count].back];
 		side = "back";
 	}
 	else if(side == "back") {
-		display.innerHTML = ["Front", flashcardArray[count].front];
+		display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
 		side = "front";
 	}
 	else {
@@ -163,15 +162,23 @@ function flipFlashcard() {
  *A function for deleting the currently displayed card.
  */
 function deleteFlashcard() {
-	let display = document.getElementById("displayFlashcard");
 	if(flashcardArray.length == 0) {
 		return;
 	}
 	else {
 		flashcardArray.splice(count, 1);
-		count = count - 1;
-		display.innerHTML = "";
-		cardNumber = "";
+		if(count > 0) {
+			count--;
+		}
+		if(flashcardArray.length == 0) {
+			display.innerHTML = "Empty Deck";
+		}
+		else if(side == "back") {
+			display.innerHTML = [count + 1 + " Back: " + flashcardArray[count].back];
+		}
+		else if(side == "front") {
+			display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
+		}
 	}
 }
 
