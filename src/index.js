@@ -72,6 +72,7 @@ export async function getSRC() {
 }
 //Get actual chapter content and display
 export async function getCPT() {
+  console.log("getCPT() was called");
   var trans = getUrlVars()["vers"];
   if (trans == "" || trans == "undefined") { trans = "ESV"; } //default to ESV
   var ref = getUrlVars()["ref"];
@@ -82,6 +83,7 @@ export async function getCPT() {
     executeBIBAPI(trans, ref);
   }
   indicateNotes(ref);
+  showHighlight(ref);
 }
 
 //Begin fetching from ESV API
@@ -314,7 +316,6 @@ export async function addHighlight(color, ref, verse) {
       verse: verse,
       timestamp: serverTimestamp()
     });
-    console.log("Highlight Submitted: ", docRef.id);
   }
   catch (error) {
     console.error('Error writing new highlight to Firebase Firestore Database', error);
@@ -323,15 +324,23 @@ export async function addHighlight(color, ref, verse) {
 
 //Get highlights from DB
 export async function getHighlight() {
-  console.log("getHighlight Called");
-
   const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
   const querySnapshot = await getDocs(myHighlights);
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data());
     document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
     document.getElementById("main").innerHTML += "<div>" + "color: " + doc.data().color + "</div>";
     document.getElementById("main").innerHTML += "<div>" + "verse: " + doc.data().verse + "</div>" + "<br><br>";
 
+  });
+}
+
+export async function showHighlight(chapter) {
+  const currentChapter = chapter.replace("%20", " ");
+  const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
+  const querySnapshot = await getDocs(myHighlights);
+  querySnapshot.forEach((doc) => {
+    if(doc.data().reference == currentChapter) {
+      document.getElementById(doc.data().verse).classList.add(doc.data().color + "Highlight");
+    }
   });
 }
