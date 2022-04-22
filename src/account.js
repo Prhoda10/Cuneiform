@@ -1,35 +1,46 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, addDoc, collection, serverTimestamp, getDoc, query, where, onSnapshot } from "firebase/firestore";
 
 //parameters for signInWithPopup
-const provider = new GoogleAuthProvider();
-const auth = getAuth();
+var provider;
+var auth;
 
-document.getElementById("signInBtn").addEventListener("click", () => {
-   signInWithPopup(auth, provider)
-      .then((result) => {
-         console.log("sign in initiated");
-         // This gives you a Google Access Token. You can use it to access the Google API.
-         const credential = GoogleAuthProvider.credentialFromResult(result);
-         const token = credential.accessToken;
-         // The signed-in user info.
-         const user = result.user;
-         const name = user.displayName;
-         const email = user.email;
-         console.log(name + email);
-         addUser(name, email);
-
-      }).catch((error) => {
-         // Handle Errors here.
-         const errorCode = error.code;
-         const errorMessage = error.message;
-         // The email of the user's account used.
-         const email = error.email;
-         // The AuthCredential type that was used.
-         const credential = GoogleAuthProvider.credentialFromError(error);
-         // ...
-      });
+document.addEventListener('DOMContentLoaded', () => {
+   provider = new GoogleAuthProvider();
+   auth = getAuth();
 });
+
+if (document.getElementById("signInBtn")) {
+   document.getElementById("signInBtn").addEventListener("click", () => {
+      login();
+   });
+}
+
+export function login() {
+   signInWithPopup(auth, provider)
+   .then((result) => {
+      console.log("sign in initiated");
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      const name = user.displayName;
+      const email = user.email;
+      console.log(name + email);
+      addUser(name, email);
+
+   }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+   });
+}
 
 // var fb = getFirestore.database.ref();
 
@@ -65,4 +76,16 @@ export async function addUser(name, email) {
    catch (error) {
       console.error('Error writing new user to Firestore', error);
    }
+}
+
+export function isLoggedIn() {
+   if (auth.currentUser) {
+      return true;
+   } else {
+      return false;
+   }
+}
+
+export function getUserEmail() {
+   return auth.currentUser.email;
 }

@@ -225,10 +225,11 @@ document.addEventListener("DOMContentLoaded", function () {
 //Note Database methods
 
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { getUserEmail, isLoggedIn } from '../src/account.js';
 
 export async function addNote(note, ref) {
   try {
-    const docRef = await addDoc(collection(getFirestore(), 'note'), {
+    const docRef = await addDoc(collection(getFirestore(), 'users/'+getUserEmail().toString()+'/notes'), {
       reference: ref,
       text: note,
       timestamp: serverTimestamp()
@@ -256,9 +257,13 @@ export async function readNote() {
 }
 
 async function indicateNotes(ref) {
+  if (!isLoggedIn()) {
+    console.log("log: " +isLoggedIn());
+    return;
+  }
     ref = ref.replace("%20"," ");
     console.log(ref);
-    const notes = query(collectionGroup(getFirestore(), 'note'), where("reference", "==", ref));
+    const notes = query(collectionGroup(getFirestore(), 'users/'+getUserEmail()+'notes'), where("reference", "==", ref));
     const querySnapshot = await getDocs(notes);
     querySnapshot.forEach((doc) => {
     console.log(doc.id, ' => ', doc.data());

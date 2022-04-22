@@ -17,8 +17,8 @@ let flashcardArray = [];
 let count = 0;
 let side = "front"; //The side of the card being viewed
 let display = document.getElementById("displayFlashcard");
-display.innerHTML = "Empty Deck";
-constructDeckList();
+if (display) {	display.innerHTML = "Empty Deck"; }
+if (window.location.href.includes("memorize")) { constructDeckList(); }
 
 /**
  * Connect functions to html 
