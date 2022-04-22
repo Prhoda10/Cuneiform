@@ -3,6 +3,9 @@
 * connects functions from separate js files to appropriate html files
 */
 import { initializeApp } from 'firebase/app';
+import { getDatabase, ref as sRef, set } from 'firebase/database';
+
+
 
 const app = initializeApp({
   apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
@@ -17,7 +20,6 @@ const app = initializeApp({
 
 console.log("firebase initialized");
 
-import { getDatabase, ref as sRef, set } from 'firebase/database';
 
 //testing a function to use the realtime database
 function writeUserData(userId, name, email) {
@@ -196,11 +198,18 @@ document.getElementById("yellowButton").addEventListener("click", () => {
 }
 //Note button Action Listeners
 import { canon } from '../src/index.js';
+import { login, isLoggedIn, getUserEmail } from '../src/account.js';
 
 if(document.getElementById("noteButton")) {
 document.getElementById("noteButton").addEventListener("click", () => {
-  document.getElementById("noteRef").innerHTML = canon;
-  document.getElementById('myForm').style.display = "block";
+  console.log('log: ' + isLoggedIn());
+    if (isLoggedIn()) {
+    console.log('email: '+ getUserEmail());
+    document.getElementById("noteRef").innerHTML = canon;
+    document.getElementById('myForm').style.display = "block";
+  } else {
+    login();
+  }
 });
 
 document.getElementById("cancelButton").addEventListener("click", () => {
