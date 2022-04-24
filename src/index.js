@@ -78,12 +78,12 @@ export async function getCPT() {
   var ref = getUrlVars()["ref"];
   if (ref == "") { ref = "Genesis 1"; } //default to Gen1
   if (trans == "ESV") {
-    executeESVAPI(ref);
+    await executeESVAPI(ref);
   } else {
-    executeBIBAPI(trans, ref);
+    await executeBIBAPI(trans, ref);
   }
-  indicateNotes(ref);
-  showHighlight(ref);
+  indicateNotes(canon);
+  showHighlight(canon);
 }
 
 //Begin fetching from ESV API
@@ -100,6 +100,7 @@ async function executeESVAPI(ref) {
   next = data.passage_meta[0].next_chapter;
   prev = data.passage_meta[0].prev_chapter;
   canon = data.canonical;
+  console.log("set canon: "+canon);
 }
 
 //Begin fetching from BIB API
@@ -340,6 +341,7 @@ export async function getHighlight() {
 }
 
 export async function showHighlight(chapter) {
+  console.log("Chapter: "+chapter);
   const currentChapter = chapter.replace("%20", " ");
   const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
   const querySnapshot = await getDocs(myHighlights);
