@@ -89,3 +89,7 @@ export function isLoggedIn() {
 export function getUserEmail() {
    return auth.currentUser.email;
 }
+
+export function getUID() {
+   return auth.currentUser.uid;
+}

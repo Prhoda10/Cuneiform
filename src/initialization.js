@@ -117,7 +117,7 @@ export var bookMap = new Map([
 /* connecting functions to html */
 //set up translations, then either get search results or the chapter
 
-import { getSRC, getCPT, getTXT, darkmode, toggleHighlight, readNote, addNote, getHighlight } from '../src/index.js';
+import { getSRC, getCPT, getTXT, darkmode, toggleHighlight, addNote, getHighlight } from '../src/index.js';
 
 if (window.location.href.includes("index")||window.location.href.includes("search") ) {
   console.log("This is the index page")
@@ -135,7 +135,7 @@ if (window.location.href.includes("note")) {
   console.log("This is the note page")
   document.addEventListener('DOMContentLoaded', () => {
     //tranSetUp();
-    readNote();
+    //readNote();
   });
 }
 

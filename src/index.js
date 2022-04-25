@@ -82,7 +82,7 @@ export async function getCPT() {
   } else {
     await executeBIBAPI(trans, ref);
   }
-  indicateNotes(canon);
+  indicateNotes(canon, getUID());
   showHighlight(canon);
 }
 
@@ -228,52 +228,43 @@ document.addEventListener("DOMContentLoaded", function () {
 //Note Database methods
 
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { getUserEmail, isLoggedIn } from '../src/account.js';
+import { getDatabase, ref as dbref, set, onValue } from 'firebase/database';
+import { getUserEmail, getUID, isLoggedIn } from '../src/account.js';
 
-export async function addNote(note, ref) {
-  try {
-    const docRef = await addDoc(collection(getFirestore(), 'users/'+getUserEmail().toString()+'/notes'), {
-      reference: ref,
-      text: note,
-      timestamp: serverTimestamp()
-    });
-    console.log("Note Submitted: ", docRef.id);
-  }
-  catch (error) {
-    console.error('Error writing new note to Firebase Firestore Database', error);
-  }
-}
-
-import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
-export async function readNote() {
-  console.log("readNote Called");
-
-  const myNotes = query(collectionGroup(getFirestore(), 'note'));
-  const querySnapshot = await getDocs(myNotes);
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data());
-    document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
-    document.getElementById("main").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
-    document.getElementById("main").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>" + "<br><br>";
-
+export function addNote(note, ref) {
+  const db = getDatabase();
+  set(dbref(db, 'users/' + getUID() +'/notes'), {
+    reference: ref,
+    text: note,
+    timestamp: serverTimestamp()
   });
 }
 
-async function indicateNotes(ref) {
-  if (!isLoggedIn()) {
-    console.log("log: " +isLoggedIn());
-    return;
-  }
-    ref = ref.replace("%20"," ");
-    console.log(ref);
-    const notes = query(collectionGroup(getFirestore(), 'users/'+getUserEmail()+'notes'), where("reference", "==", ref));
-    const querySnapshot = await getDocs(notes);
-    querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data());
-    document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
-    document.getElementById("noteChart").innerHTML += "<div>" + "text: " + doc.data().text + "</div>";
-    document.getElementById("noteChart").innerHTML += "<div>" + "date: " + doc.data().timestamp + "</div>" + "<br><br>";
+// export async function addNote(note, ref) {
+//   try {
+//     const docRef = await addDoc(collection(getFirestore(), 'users/'+getUserEmail().toString()+'/notes'), {
+//       reference: ref,
+//       text: note,
+//       timestamp: serverTimestamp()
+//     });
+//     console.log("Note Submitted: ", docRef.id);
+//   }
+//   catch (error) {
+//     console.error('Error writing new note to Firebase Firestore Database', error);
+//   }
+// }
 
+import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
+
+function indicateNotes(ref, userID) {
+  const db = getDatabase();
+  const noteRef = dbref(db, 'users/'+userID+'/notes');
+  onValue(noteRef, (snapshot) => {
+    if (snapshot.val().reference == ref) {
+      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + snapshot.val().reference + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + snapshot.val().text + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + snapshot.val().timestamp + "</div>" + "<br><br>";
+    }
   });
 }
 

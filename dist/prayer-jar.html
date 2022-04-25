@@ -29,7 +29,9 @@
 
 		<button id="submit-prayer">Submit Prayer</button>
 		<button id="get-prayer">Get Prayer</button>
-		<!-- <input type="text" placeholder="--Group ID code--"></input> -->
+		<button id="make-group">New Group</button>
+		<button id="join-group">Join Group</button>
+		<input id="groupIDcode" type="text" placeholder="--Group ID code--"></input>
 	</div>
 	<p id="invalidPrayerInput"></p>
 
@@ -37,6 +39,17 @@
 		<h1>Prayer Requests</h1>
 		<ol id="prayerList"></ol>
 	</div>
+
+	<div class="form-popup" id="groupForm">
+		<form class="form-container">
+		   <div>New Group Name:</div>
+  
+		   <input type="text" id="newGroupName">
+  
+		   <button type="button" class="btn submit" id="createGButton">Create Group</button>
+		   <button type="button" class="btn cancel" id="cancelButton">Cancel</button>
+		</form>
+	 </div>
 
 	<script src="main.js"></script>
 
