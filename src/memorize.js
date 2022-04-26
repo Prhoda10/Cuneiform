@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, arrayUnion, arrayRemove, getDoc, ref, getDocs, query } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query } from "firebase/firestore";
+import { getUID } from "./account";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
@@ -13,10 +15,19 @@ const firebaseConfig = {
   };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+var auth = getAuth();
+var isLoggedIn = false;
 let flashcardArray = [];
 let count = 0;
 let side = "front"; //The side of the card being viewed
 let display = document.getElementById("displayFlashcard");
+onAuthStateChanged(auth, (user) => {
+	if (user) {
+	   isLoggedIn = true;
+	} else {
+	   isLoggedIn = false;
+	}
+ });
 if (display) {	display.innerHTML = "Empty Deck"; }
 if (window.location.href.includes("memorize")) { constructDeckList(); }
 
@@ -79,6 +90,10 @@ async function getFlashcards() {
  */
 async function exportFlashcards() {
 	console.log("export Called");
+	let id = getUID();
+	if(id == null) {
+		return;
+	}
 	if(!(flashcardArray.length > 0)) { //Check that the deck has flashcards
 		document.getElementById("deck-name").value = "No cards to export!";
 		return;
@@ -95,6 +110,7 @@ async function exportFlashcards() {
 	try {
 		const docRef = await addDoc(collection(db, "flashcardDecks"), {
 			name: deckName,
+			user: id,
 			deck: flashcardArray,
 			timestamp: serverTimestamp()
 		});
@@ -187,13 +203,16 @@ function deleteFlashcard() {
  */
 async function constructDeckList() {
 	let fCList = document.getElementById("Decks");
+	let id = getUID();
 	const q = query(collection(db, "flashcardDecks"));
 	const ref = await getDocs(q);
 	while(!(fCList.value == "")) {
 		fCList.remove(0);
 	}
 	ref.forEach((a) => {
-		console.log(a.get("name"));
-		fCList.add(new Option(a.get("name"), a.get("name")));
+		if(id == a.get("user")) {
+			console.log(a.get("name"));
+			fCList.add(new Option(a.get("name"), a.get("name")));
+		}
 	})
 }
