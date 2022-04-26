@@ -8,6 +8,32 @@ let next = [];
 let prev = [];
 export var canon = "";
 
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+
+const app = initializeApp({
+  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
+  authDomain: "cuneiform-99812.firebaseapp.com",
+  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
+  projectId: "cuneiform-99812",
+  storageBucket: "cuneiform-99812.appspot.com",
+  messagingSenderId: "294328255555",
+  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
+  measurementId: "G-9PGSSD2423"
+});
+
+//Auth
+var auth = getAuth();
+var isLoggedIn;
+
+onAuthStateChanged(auth, (user) => {
+   if (user) {
+      isLoggedIn = true;
+   } else {
+      isLoggedIn = false;
+   }
+});
+
 //Check if its a search or a reference and delegate
 export async function getTXT(mode) {
   var trans = document.getElementById("translation").value;
@@ -82,8 +108,11 @@ export async function getCPT() {
   } else {
     await executeBIBAPI(trans, ref);
   }
-  indicateNotes(canon, getUID());
-  showHighlight(canon);
+  if (isLoggedIn) {
+    indicateNotes(canon);
+    showHighlight(canon);
+  }
+  
 }
 
 //Begin fetching from ESV API
@@ -229,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getDatabase, ref as dbref, set, onValue } from 'firebase/database';
-import { getUserEmail, getUID, isLoggedIn } from '../src/account.js';
+import { getUserEmail, getUID } from '../src/account.js';
 
 export function addNote(note, ref) {
   const db = getDatabase();
@@ -256,9 +285,9 @@ export function addNote(note, ref) {
 
 import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
 
-function indicateNotes(ref, userID) {
+function indicateNotes(ref) {
   const db = getDatabase();
-  const noteRef = dbref(db, 'users/'+userID+'/notes');
+  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes');
   onValue(noteRef, (snapshot) => {
     if (snapshot.val().reference == ref) {
       document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + snapshot.val().reference + "</div>";

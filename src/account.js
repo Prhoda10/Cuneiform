@@ -1,18 +1,42 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore, addDoc, collection, serverTimestamp, getDoc, query, where, onSnapshot } from "firebase/firestore";
 
 //parameters for signInWithPopup
-var provider;
-var auth;
+import { initializeApp } from 'firebase/app';
 
-document.addEventListener('DOMContentLoaded', () => {
-   provider = new GoogleAuthProvider();
-   auth = getAuth();
+const app = initializeApp({
+   apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
+   authDomain: "cuneiform-99812.firebaseapp.com",
+   databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
+   projectId: "cuneiform-99812",
+   storageBucket: "cuneiform-99812.appspot.com",
+   messagingSenderId: "294328255555",
+   appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
+   measurementId: "G-9PGSSD2423"
+ });
+
+var provider = new GoogleAuthProvider();
+var auth = getAuth();
+
+onAuthStateChanged(auth, (user) => {
+   if (user) {
+      //logged in stuff
+   } else {
+      //not logged in
+   }
 });
 
 if (document.getElementById("signInBtn")) {
    document.getElementById("signInBtn").addEventListener("click", () => {
       login();
+   });
+}
+if (document.getElementById("signOutBtn")) {
+   document.getElementById("signOutBtn").addEventListener("click", () => {
+      console.log("Signing out...");
+      if (auth) {
+         signOut(auth);
+      }
    });
 }
 

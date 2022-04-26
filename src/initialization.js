@@ -3,6 +3,7 @@
 * connects functions from separate js files to appropriate html files
 */
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import { getDatabase, ref as sRef, set } from 'firebase/database';
 
 
