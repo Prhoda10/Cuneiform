@@ -1,4 +1,3 @@
-
 /* Fonts */
 
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
@@ -8,8 +7,8 @@
 /* Basic */
 
 * {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -18,7 +17,7 @@ body,
 button,
 .Container {
   height: 100%;
-	font-family: 'Nunito Sans', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   padding: 30px;
 }
 
@@ -32,7 +31,7 @@ ul {
 }
 
 .darkmode-icon {
-  background: rgb(148, 141, 175);
+  background: #948DAF;
   color: white;
 }
 
@@ -65,7 +64,7 @@ ul {
   float: left;
   font-size: 3em;
   font-family: 'Alegreya Sans', sans-serif;
-  color:rgb(127, 106, 139);
+  color: rgb(127, 106, 139);
   text-decoration: none;
 }
 
@@ -93,33 +92,34 @@ ul {
 }
 
 #main {
-    position: relative;
-    width: 90%;
-    height: auto;
-    margin: 30px auto;
-    padding: 40px;
-    border-radius: 5px;
-    text-align: left;
-    overflow: hidden;
-    line-height: 2;
+  position: relative;
+  width: 90%;
+  height: auto;
+  margin: 30px auto;
+  padding: 40px;
+  border-radius: 5px;
+  text-align: left;
+  overflow: hidden;
+  line-height: 2;
 }
 
 button {
-  background-color: rgb(148, 141, 175);
+  height: initial;
+  background-color: #948DAF;
   padding: 7px;
   text-decoration: none;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  }
+}
 
-  /*********************----------HIGHLIGHTS----------********************/
+/*********************----------HIGHLIGHTS----------********************/
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
   position: fixed;
   display: inline-block;
-  bottom:85px;
+  bottom: 85px;
   width: 100%;
   margin-left: 39%;
 }
@@ -137,16 +137,21 @@ button {
 }
 
 /* Change color of dropdown buttons on hover */
-.dropdown-content button:hover {color: black}
+.dropdown-content button:hover {
+  color: black
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
+.show {
+  display: block;
+}
 
 .redHighlight {
   background-color: rgb(184, 71, 71);
-  color:#ffffff;
+  color: #ffffff;
   cursor: pointer;
 }
+
 #redButton {
   background-color: rgb(184, 71, 71);
 }
@@ -155,6 +160,7 @@ button {
   background-color: lightsalmon;
   color: black;
 }
+
 #orangeButton {
   background-color: lightsalmon;
 }
@@ -163,6 +169,7 @@ button {
   background-color: rgb(245, 245, 147);
   color: black;
 }
+
 #yellowButton {
   background-color: rgb(245, 245, 147);
 }
@@ -171,6 +178,7 @@ button {
   background-color: lightgreen;
   color: black;
 }
+
 #greenButton {
   background-color: lightgreen;
 }
@@ -179,6 +187,7 @@ button {
   background-color: lightblue;
   color: black;
 }
+
 #blueButton {
   background-color: lightblue;
 }
@@ -187,12 +196,13 @@ button {
   background-color: rgb(188, 154, 255);
   color: black;
 }
+
 #purpleButton {
   background-color: rgb(188, 154, 255);
 }
 
 #noteButton {
-  background-color: rgb(148, 141, 175);
+  background-color: #948DAF;
 }
 
 
@@ -203,17 +213,17 @@ button {
 } */
 
 #langu {
-  color:rgb(94, 92, 133);
+  color: rgb(94, 92, 133);
   background-color: #ffffff;
   font-family: 'Nunito Sans', sans-serif;
-  border: 1px solid rgb(148, 141, 175);
+  border: 1px solid #948DAF;
 }
 
 #translation {
-  color:rgb(94, 92, 133);
+  color: rgb(94, 92, 133);
   background-color: #ffffff;
   font-family: 'Nunito Sans', sans-serif;
-  border: 1px solid rgb(148, 141, 175);
+  border: 1px solid #948DAF;
 }
 
 #search {
@@ -229,17 +239,17 @@ button {
   white-space: nowrap;
   padding: 7px;
   width: 120%;
-  border: 1px solid rgb(148, 141, 175);
+  border: 1px solid #948DAF;
 }
 
 .nav-reading {
-background-color: rgb(148, 141, 175);
-padding: 7px;
-bottom: 0;
-display: block;
-left: 0;
-position: fixed;
-width: 100%;
+  background-color: #948DAF;
+  padding: 7px;
+  bottom: 0;
+  display: block;
+  left: 0;
+  position: fixed;
+  width: 100%;
 }
 
 nav {
@@ -265,11 +275,13 @@ nav {
   font-size: medium;
 }
 
-.nav-reading-next a, .nav-reading-prev a {
-padding: 8px 16px;
-color: white;
-text-decoration: none;
+.nav-reading-next a,
+.nav-reading-prev a {
+  padding: 8px 16px;
+  color: white;
+  text-decoration: none;
 }
+
 .nav-reading-up {
   float: none;
   position: absolute;
@@ -313,11 +325,11 @@ text-decoration: none;
   margin-top: 2%;
   font-size: 1em;
   font-family: 'Alegreya Sans', sans-serif;
-  color:rgb(127, 106, 139);
+  color: rgb(127, 106, 139);
   text-decoration: none;
 }
 
-#prayerDiv li{
+#prayerDiv li {
   margin-top: 1.5%;
   margin-left: 0.5%;
 }
@@ -353,13 +365,15 @@ text-decoration: none;
 #prayerDiv {
   padding: 10px;
 }
+
 #prayerlist {
   size: 60%;
 }
 
 /* memorize */
 
-#card-back, #card-front {
+#card-back,
+#card-front {
   text-align: left;
   margin: auto 5px;
   height: 200px;
@@ -369,20 +383,21 @@ text-decoration: none;
   overflow-wrap: normal;
 }
 
-.Memorize-Creation-Controls{
+.Memorize-Creation-Controls {
   margin-left: 10%;
   margin-top: 2%;
 }
+
 .fd {
   display: inline-block;
-  border:#000
+  border: #000
 }
 
-#displayFlashcard{
-  width:300px;
- height:200px;
- font-size:45px;
- display: inline-block;
+#displayFlashcard {
+  width: 300px;
+  height: 200px;
+  font-size: 45px;
+  display: inline-block;
 }
 
 .flashcard-options {
@@ -390,24 +405,30 @@ text-decoration: none;
   margin: 50px 10px;
 }
 
-.flashcard-options button{
+.flashcard-options button {
   margin: 5px auto;
   position: relative;
 }
 
 .Flashcard-Display button {
   margin-left: 0px;
-  width: 100px ;
+  width: 100px;
 }
 
 .decks {
-  width: 160px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  width: 160px;
+  /* Set the width of the sidebar */
+  position: fixed;
+  /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  /* Stay at the top */
   left: 0;
-  background-color: rgb(94, 92, 133); /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
+  background-color: rgb(94, 92, 133);
+  /* Black */
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
   margin: 15% auto;
   padding: 20px;
 }
@@ -445,7 +466,8 @@ text-decoration: none;
 }
 
 /* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
+.form-container input[type=text],
+.form-container input[type=password] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -454,21 +476,22 @@ text-decoration: none;
 }
 
 /* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+.form-container input[type=text]:focus,
+.form-container input[type=password]:focus {
   background-color: #ddd;
   outline: none;
 }
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color:rgb(94, 92, 133);
+  background-color: rgb(94, 92, 133);
   color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
   margin-top: 10px;
-  margin-bottom:5px;
+  margin-bottom: 5px;
   opacity: 0.8;
   font-family: 'Nunito Sans', sans-serif;
 }
@@ -479,17 +502,156 @@ text-decoration: none;
 }
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
+.form-container .btn:hover,
+.open-button:hover {
   opacity: 1;
 }
 
 textarea {
   height: 100%;
   width: 100%;
-  box-sizing:border-boxs
+  box-sizing: border-boxs
 }
 
+/* ACCOUNT */
 #whenSignedOut {
   margin: 10px;
   padding: 40px;
+}
+
+.main-acc {
+  background-color: #FFFFFF;
+  width: 400px;
+  height: 400px;
+  margin: 7em auto;
+  border-radius: 1.5em;
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+.signin {
+  padding-top: 40px;
+  color: #8C55AA;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+.username {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 50px;
+  margin-left: 46px;
+  text-align: center;
+  margin-bottom: 27px;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+form.form1 {
+  padding-top: 40px;
+}
+
+.username:focus {
+  border: 2px solid rgba(0, 0, 0, 0.18) !important;
+
+}
+
+.signin-submit {
+  cursor: pointer;
+  border-radius: 5em;
+  color: #fff;
+  background: linear-gradient(to right, #7D93B3, #948DAF);
+  border: 0;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-left: 35%;
+  font-size: 13px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+}
+
+.no-group {
+  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+  color: #9c82a0;
+  padding-top: 15px;
+}
+
+a {
+  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+  color: #E1BEE7;
+  text-decoration: none
+}
+
+/* join group */
+.loginPopup {
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.formPopup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 5%;
+  transform: translate(-90%, 5%);
+  background-color: #643064;
+  border: 1px solid rgb(6 5 5);
+  z-index: 9;
+}
+
+.formContainer {
+  max-width: 300px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.formContainer input[type=text],
+.formContainer input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 20px 0;
+  border: none;
+  background: #eee;
+}
+
+.formContainer input[type=text]:focus,
+.formContainer input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.formContainer .btn {
+  padding: 12px 20px;
+  border: none;
+  background-color: #8ebf42;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 15px;
+  opacity: 0.8;
+}
+
+.formContainer .cancel {
+  margin-left: 240px;
+  color: #df0e0e;
+  font-size: x-large;
+  font-weight: 900;
+  padding: 5px;
+  background-color: #cc000000;
+}
+
+.formContainer .btn:hover,
+.openButton:hover {
+  opacity: 1;
 }
