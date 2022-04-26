@@ -1,6 +1,51 @@
-import { convertMultiFactorInfoToServerFormat } from "firebase-admin/lib/auth/user-import-builder";
-import { getDatabase, ref as dbref, set, child, get } from "firebase/database";
+import { getDatabase, ref as dbref, set, child, get, onValue } from "firebase/database";
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
+
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { login } from '../src/account.js';
+
+const app = initializeApp({
+  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
+  authDomain: "cuneiform-99812.firebaseapp.com",
+  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
+  projectId: "cuneiform-99812",
+  storageBucket: "cuneiform-99812.appspot.com",
+  messagingSenderId: "294328255555",
+  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
+  measurementId: "G-9PGSSD2423"
+});
+
+//Auth
+var auth = getAuth();
+var isLoggedIn;
+
+
+if (window.location.href.includes("prayer-jar")) {
+	onAuthStateChanged(auth, (user) => {
+		if (user) {
+			isLoggedIn = true;
+			loadGroups();
+		} else {
+			isLoggedIn = false;
+			login();
+		}
+	});
+}
+
+async function loadGroups() {
+	const db = getDatabase();
+	const groupRef = dbref(db, 'users/'+auth.currentUser.uid+'/groups');
+  	onValue(groupRef, (snapshot) => {
+    	console.log(snapshot.val());
+		printGroup(snapshot.val());
+  });
+}
+
+function printGroup(item) {
+	document.getElementById("groupChart").innerHTML += "<div>" + item.GroupID + "</div>";
+}
+
 // Saves a new message to Cloud Firestore.
 async function saveMessage(msg) {
 	// Add a new message entry to the Firebase database.
