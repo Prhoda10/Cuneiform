@@ -85,7 +85,7 @@ if (window.location.href.includes("prayer")) {
 	document.getElementById("make-group").addEventListener("click", () => {
 		document.getElementById('groupForm').style.display = "block";
 	});
-	document.getElementById("join-group").addEventListener("click", () => {
+	document.getElementsByClassName("btn")[0].addEventListener("click", () => {
 		let groupID = document.getElementById("groupIDcode").value;
 		joinGroup(groupID);
 	});
@@ -97,6 +97,12 @@ if (window.location.href.includes("prayer")) {
 	});
 	document.getElementById("cancelButton").addEventListener("click", () => {
 		document.getElementById('groupForm').style.display = "none";
+	});
+	document.getElementsByClassName("openButton")[0].addEventListener("click", () => {
+		document.getElementById("popupForm").style.display = "block";
+	});
+		document.getElementsByClassName("btn cancel")[0].addEventListener("click", () => {
+		document.getElementById("popupForm").style.display = "none";
 	});
 }
 
@@ -164,8 +170,6 @@ export function generateID(count){
 	}
 	return result;
   }
-
-
 
 const unacceptableWords = []; //An array of words banned from prayer requests.
 /**

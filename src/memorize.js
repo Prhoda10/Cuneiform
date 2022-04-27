@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query } from "firebase/firestore";
-import { getUID } from "./account";
+import { getUID, getUserEmail } from "./account";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
@@ -24,13 +24,14 @@ let display = document.getElementById("displayFlashcard");
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 	   isLoggedIn = true;
+	   document.getElementById("loginStatus").innerHTML = "Logged In";
 	} else {
 	   isLoggedIn = false;
+	   document.getElementById("loginStatus").innerHTML = "Logged Out";
 	}
  });
 if (display) {	display.innerHTML = "Empty Deck"; }
 if (window.location.href.includes("memorize")) { constructDeckList(); }
-
 /**
  * Connect functions to html 
  */ 
@@ -82,7 +83,7 @@ async function getFlashcards() {
 		}
 	})
 	constructDeckList();
-	display.innerHTML = [count + 1, " Front: ", flashcardArray[count].front];
+	display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
 }
 
 /**

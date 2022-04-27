@@ -30,8 +30,17 @@
 		<button id="submit-prayer">Submit Prayer</button>
 		<button id="get-prayer">Get Prayer</button>
 		<button id="make-group">New Group</button>
-		<button id="join-group">Join Group</button>
-		<input id="groupIDcode" type="text" placeholder="--Group ID code--"></input>
+		<button class="openButton">Join Group</button>
+		<div class="loginPopup">
+			<div class="formPopup" id="popupForm">
+				<form class="formContainer">
+					<span class="btn cancel">&times;</span>
+					<h2>Join Group</h2>
+					<input type="text" id="email" placeholder="Enter Group Code" name="email" required>
+					<button type="join-submit" class="btn">Join</button>
+				</form>
+			</div>
+		</div>
 	</div>
 	<p id="invalidPrayerInput"></p>
 
@@ -44,17 +53,15 @@
 
 	<div class="form-popup" id="groupForm">
 		<form class="form-container">
-		   <div>New Group Name:</div>
-  
-		   <input type="text" id="newGroupName">
-  
-		   <button type="button" class="btn submit" id="createGButton">Create Group</button>
-		   <button type="button" class="btn cancel" id="cancelButton">Cancel</button>
+			<div>New Group Name:</div>
+
+			<input type="text" id="newGroupName">
+
+			<button type="button" class="btn submit" id="createGButton">Create Group</button>
+			<button type="button" class="btn cancel" id="cancelButton">Cancel</button>
 		</form>
-	 </div>
+	</div>
 
 	<script src="main.js"></script>
-
 </body>
-
 </html>
