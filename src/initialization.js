@@ -3,11 +3,6 @@
 * connects functions from separate js files to appropriate html files
 */
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getDatabase, ref as sRef, set } from 'firebase/database';
-
-
-
 const app = initializeApp({
   apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
   authDomain: "cuneiform-99812.firebaseapp.com",
@@ -20,7 +15,7 @@ const app = initializeApp({
 });
 
 console.log("firebase initialized");
-
+import { getDatabase, ref as sRef, set } from 'firebase/database';
 
 //testing a function to use the realtime database
 function writeUserData(userId, name, email) {
@@ -118,8 +113,8 @@ export var bookMap = new Map([
 /* connecting functions to html */
 //set up translations, then either get search results or the chapter
 
-import { getSRC, getCPT, getTXT, darkmode, toggleHighlight, addNote, getHighlight } from '../src/index.js';
-
+import { getSRC, getCPT, getTXT, darkmode, toggleHighlight, getHighlight } from '../src/index.js';
+import { addNote } from '../src/notes.js';
 if (window.location.href.includes("index")||window.location.href.includes("search") ) {
   console.log("This is the index page")
   document.addEventListener('DOMContentLoaded', () => {

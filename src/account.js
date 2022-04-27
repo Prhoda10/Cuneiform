@@ -1,9 +1,4 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
-import { getFirestore, addDoc, collection, serverTimestamp, getDoc, query, where, onSnapshot } from "firebase/firestore";
-
-//parameters for signInWithPopup
 import { initializeApp } from 'firebase/app';
-
 const app = initializeApp({
    apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
    authDomain: "cuneiform-99812.firebaseapp.com",
@@ -14,30 +9,46 @@ const app = initializeApp({
    appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
    measurementId: "G-9PGSSD2423"
  });
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, addDoc, collection, serverTimestamp, getDoc, query, where, onSnapshot } from "firebase/firestore";
 
+//parameters for signInWithPopup
 var provider = new GoogleAuthProvider();
 var auth = getAuth();
 
 onAuthStateChanged(auth, (user) => {
+   var x = document.getElementById("signOutBtn");
+   var y = document.getElementById("signInBtn");
    if (user) {
+      isLoggedIn();
       //logged in stuff
+      y.style.display = "none";
+      x.style.display = "block";
    } else {
       //not logged in
+      y.style.display = "block";
+      x.style.display = "none";
    }
 });
 
 if (document.getElementById("signInBtn")) {
    document.getElementById("signInBtn").addEventListener("click", () => {
+      if(isLoggedIn()) {
+         isLoggendIn();
+         window.alert("You are already signed in.");
+      } else {
       login();
+      }
    });
 }
 if (document.getElementById("signOutBtn")) {
    document.getElementById("signOutBtn").addEventListener("click", () => {
-      console.log("Signing out...");
       if (auth) {
+         console.log("Signing out...");
          signOut(auth);
       }
    });
+   document.getElementById("signOutBtn").style.display = "block";
 }
 
 export function login() {
@@ -66,18 +77,6 @@ export function login() {
    });
 }
 
-// var fb = getFirestore.database.ref();
-
-// /**
-//  * @param {string} emailAddress
-//  * @return {Object} the object contains zero or more user records, the keys are the users' ids
-//  */
-// function findUsersMatchingEmail( emailAddress, callback ) {
-//     fb.child('user').orderByChild('emailAddress').equalTo(emailAddress).once('value', function(snap) {
-//         callback( snap.val() );
-//     });
-// }
-
 export async function addUser(name, email) {
    try {
       const q = query(
@@ -103,9 +102,12 @@ export async function addUser(name, email) {
 }
 
 export function isLoggedIn() {
-   if (auth.currentUser) {
+   const user = auth.currentUser;
+   if (user) {
+      console.log("The current user is: " + user.displayName + " " + user.email + " " + user.uid);
       return true;
    } else {
+      console.log("user is null/user doesn't exist");
       return false;
    }
 }

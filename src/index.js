@@ -1,3 +1,14 @@
+import { initializeApp } from 'firebase/app';
+const app = initializeApp({
+  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
+  authDomain: "cuneiform-99812.firebaseapp.com",
+  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
+  projectId: "cuneiform-99812",
+  storageBucket: "cuneiform-99812.appspot.com",
+  messagingSenderId: "294328255555",
+  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
+  measurementId: "G-9PGSSD2423"
+});
 import { bookMap, versMap } from '../src/initialization.js'
 //fetch API
 var esvapi_url = 'https://api.esv.org/v3/passage/html/?q=';
@@ -9,18 +20,6 @@ let prev = [];
 export var canon = "";
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-
-const app = initializeApp({
-  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
-  authDomain: "cuneiform-99812.firebaseapp.com",
-  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
-  projectId: "cuneiform-99812",
-  storageBucket: "cuneiform-99812.appspot.com",
-  messagingSenderId: "294328255555",
-  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
-  measurementId: "G-9PGSSD2423"
-});
 
 //Auth
 var auth = getAuth();
@@ -254,20 +253,25 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+<<<<<<< HEAD
 //Note Database methods
 
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getDatabase, ref as dbref, set, onValue } from 'firebase/database';
-import { getUserEmail, getUID } from '../src/account.js';
+import { getUserEmail, getUID, login } from '../src/account.js';
+import { generateID } from './prayerjar.js';
 
 export function addNote(note, ref) {
   const db = getDatabase();
-  set(dbref(db, 'users/' + getUID() +'/notes'), {
+  let noteID = generateID(10);
+  set(dbref(db, 'users/' + auth.currentUser.uid +'/notes/'+ref+'/'+noteID), {
     reference: ref,
     text: note,
     timestamp: serverTimestamp()
   });
 }
+
+
 
 // export async function addNote(note, ref) {
 //   try {
@@ -287,16 +291,18 @@ import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/fi
 
 function indicateNotes(ref) {
   const db = getDatabase();
-  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes');
+  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref);
   onValue(noteRef, (snapshot) => {
-    if (snapshot.val().reference == ref) {
-      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + snapshot.val().reference + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + snapshot.val().text + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + snapshot.val().timestamp + "</div>" + "<br><br>";
-    }
+    snapshot.forEach((childSnapshot) => {
+      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + childSnapshot.val().reference + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + childSnapshot.val().text + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + childSnapshot.val().timestamp + "</div>" + "<br><br>";
+    });
   });
 }
 
+=======
+>>>>>>> 2b585401ca743dc14e3b98b68f80b0fb32263cf6
 //Highlights
 
 var element;
@@ -304,7 +310,8 @@ var element;
 export function toggleHighlight(color) {
   $(element).toggleClass(color + "Highlight");
   document.getElementById('highlightDropdown').style.display = "none";
-  addHighlight(color, canon ,element.id);
+  console.log("element.value: " + element.innerText);
+  addHighlight(color, canon ,element.id, element.innerText);
 }
 
 //Highlight Jquery
@@ -334,40 +341,47 @@ function toggleDropdown() {
 }
 
 //Highlights to DB
-export async function addHighlight(color, ref, verse) {
-  try {
-    const docRef = await addDoc(collection(getFirestore(), 'highlight'), {
-      reference: ref,
-      color: color,
-      verse: verse,
-      timestamp: serverTimestamp()
-    });
-  }
-  catch (error) {
-    console.error('Error writing new highlight to Firebase Firestore Database', error);
-  }
-}
-
-//Get highlights from DB
-export async function getHighlight() {
-  const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
-  const querySnapshot = await getDocs(myHighlights);
-  querySnapshot.forEach((doc) => {
-    document.getElementById("main").innerHTML += "<div>" + "reference: " + doc.data().reference + "</div>";
-    document.getElementById("main").innerHTML += "<div>" + "color: " + doc.data().color + "</div>";
-    document.getElementById("main").innerHTML += "<div>" + "verse: " + doc.data().verse + "</div>" + "<br><br>";
-
+export function addHighlight(color, ref, verse, text) {
+  console.log("Highlight added (hopefully)");
+  const db = getDatabase();
+  set(dbref(db, 'users/' + auth.currentUser.uid + '/highlights/'+ref+'/'+verse), {
+    reference: ref,
+    color: color,
+    verse: verse,
+    text: text,
+    timestamp: serverTimestamp()
   });
 }
 
-export async function showHighlight(chapter) {
-  console.log("Chapter: "+chapter);
-  const currentChapter = chapter.replace("%20", " ");
-  const myHighlights = query(collectionGroup(getFirestore(), 'highlight'));
-  const querySnapshot = await getDocs(myHighlights);
-  querySnapshot.forEach((doc) => {
-    if(doc.data().reference == currentChapter) {
-      document.getElementById(doc.data().verse).classList.add(doc.data().color + "Highlight");
-    }
+//Get highlights from DB
+export function getHighlight() {
+  if (!isLoggedIn) {
+    console.log('not logged in!');
+    login();
+  }
+  const db = getDatabase();
+  const highRef = dbref(db, 'users/'+auth.currentUser.uid+'/highlights');
+  onValue(highRef,(snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      childSnapshot.forEach((childChildSnapshot) => {
+        document.getElementById("main").innerHTML += "<div>" + "reference: " + childChildSnapshot.val().text + "</div>";
+      });
+    });
+  });
+}
+
+function showHighlight(ref) {
+  console.log("ShowHighlight called");
+  const db = getDatabase();
+  const currentChapter = dbref(db, 'users/'+auth.currentUser.uid+'/highlights/'+ref+'/');
+  onValue(currentChapter, (snapshot) => {
+    console.log("onValue in showHighlight");
+    snapshot.forEach((childSnapshot) => {
+      console.log("ref: " + ref);
+      console.log("reference: " + childSnapshot.val().reference);
+      if (childSnapshot.val().reference === ref) {
+        document.getElementById(childSnapshot.val().verse).classList.add(childSnapshot.val().color + "Highlight");
+      }
+    });
   });
 }

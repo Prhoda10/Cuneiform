@@ -2,10 +2,11 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: ['./src/initialization.js',
-    './src/prayerjar.js',
     './src/memorize.js',
     './src/index.js',
     './src/account.js',
+    './src/notes.js',
+    './src/prayerjar.js'
     ],
   output: {
     filename: 'main.js',

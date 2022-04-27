@@ -15,9 +15,12 @@ if (document.getElementById("loginStatus")) {
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 	   isLoggedIn = true;
-	  	document.getElementById("loginStatus").innerHTML = "Logged In";
+	   if (document.getElementById("loginStatus"))
+	   		document.getElementById("loginStatus").innerHTML = "Logged In";
 	} else {
 	   isLoggedIn = false;
+	   if (document.getElementById("loginStatus"))
+	   		document.getElementById("loginStatus").innerHTML = "Logged Out";
 	}
  });
 };

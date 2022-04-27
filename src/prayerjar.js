@@ -1,25 +1,11 @@
 import { getDatabase, ref as dbref, set, child, get, onValue } from "firebase/database";
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
-
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
 import { login } from '../src/account.js';
-
-const app = initializeApp({
-  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
-  authDomain: "cuneiform-99812.firebaseapp.com",
-  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
-  projectId: "cuneiform-99812",
-  storageBucket: "cuneiform-99812.appspot.com",
-  messagingSenderId: "294328255555",
-  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
-  measurementId: "G-9PGSSD2423"
-});
 
 //Auth
 var auth = getAuth();
 var isLoggedIn;
-
 
 if (window.location.href.includes("prayer-jar")) {
 	onAuthStateChanged(auth, (user) => {
@@ -37,14 +23,23 @@ async function loadGroups() {
 	const db = getDatabase();
 	const groupRef = dbref(db, 'users/'+auth.currentUser.uid+'/groups');
   	onValue(groupRef, (snapshot) => {
-    	console.log(snapshot.val());
-		printGroup(snapshot.val());
+    	snapshot.forEach((childSnapshot) => {
+			printGroup(childSnapshot.val());
+		  });
   });
 }
 
-function printGroup(item) {
-	document.getElementById("groupChart").innerHTML += "<div>" + item.GroupID + "</div>";
-}
+function printGroup(groupRef) {
+	if(groupRef) {
+	groupRef.ref.once("value")
+	.then(function(snapshot) {
+		var name = snapshot.child("name").val(); // {name: my prayer group}
+		document.getElementById("groupChart").innerHTML += "<div>" + name + "</div>";
+	});
+	} else {
+		console.log("Not in any groups?");
+	}
+};
 
 // Saves a new message to Cloud Firestore.
 async function saveMessage(msg) {
@@ -84,7 +79,7 @@ if (window.location.href.includes("prayer")) {
 	document.getElementById("make-group").addEventListener("click", () => {
 		document.getElementById('groupForm').style.display = "block";
 	});
-	document.getElementById("join-group").addEventListener("click", () => {
+	document.getElementsByClassName("join-submit")[0].addEventListener("click", () => {
 		let groupID = document.getElementById("groupIDcode").value;
 		joinGroup(groupID);
 	});
@@ -97,6 +92,12 @@ if (window.location.href.includes("prayer")) {
 	document.getElementById("cancelButton").addEventListener("click", () => {
 		document.getElementById('groupForm').style.display = "none";
 	});
+	document.getElementsByClassName("openButton")[0].addEventListener("click", () => {
+		document.getElementById("popupForm").style.display = "block";
+	});
+	document.getElementsByClassName("btn cancel")[0].addEventListener("click", () => {
+		document.getElementById("popupForm").style.display = "none";
+	});
 }
 
 import { getUID } from '../src/account.js';
@@ -104,15 +105,15 @@ import { getUID } from '../src/account.js';
 function createGroup(name) {
 	console.log("createGroup called");
 	let members = [getUID()];
-	let id = generateGroupID(6);
+	let id = generateID(6);
 	const db = getDatabase();
-	set(dbref(db, 'groups/'+id), {
+	set(dbref(db, 'groups/' + id), {
 		Name: name,
 		Owner: getUID(),
 		Members: members,
 		ID: id
 	});
-	set(dbref(db, 'users/'+getUID()+'/groups/' + id), {
+	set(dbref(db, 'users/' + getUID() + '/groups/' + id), {
 		GroupID: id
 	});
 }
@@ -123,11 +124,11 @@ async function joinGroup(ID) {
 	var newMembers = [uid];
 	var owner;
 	var name;
-	set(dbref(db, 'users/'+ uid +'/groups/'+ID), { //Should we check if already in this group first?
+	set(dbref(db, 'users/' + uid + '/groups/' + ID), { //Should we check if already in this group first?
 		GroupID: ID
 	});
 	console.log("joinGroup called");
-	await get(child(dbref(db), 'groups/'+ID)).then((snapshot) => { //Just to read the Members array for ID's group
+	await get(child(dbref(db), 'groups/' + ID)).then((snapshot) => { //Just to read the Members array for ID's group
 		if (snapshot.exists()) {
 			console.log("snapshot Exists");
 			console.log(snapshot.val());
@@ -145,26 +146,24 @@ async function joinGroup(ID) {
 	});
 	console.log(newMembers);
 
-	set(dbref(db, 'groups/'+ID), {
+	set(dbref(db, 'groups/' + ID), {
 		Name: name,
 		Owner: owner,
 		Members: newMembers,
 		ID: ID
 	});
-	
+
 }
 
-function generateGroupID(count){
+export function generateID(count){
 	var chars = 'acdefhiklmnoqrstuvwxyz0123456789'.split('');
 	var result = '';
-	for(var i=0; i<count; i++){
-	  var x = Math.floor(Math.random() * chars.length);
-	  result += chars[x];
+	for (var i = 0; i < count; i++) {
+		var x = Math.floor(Math.random() * chars.length);
+		result += chars[x];
 	}
 	return result;
-  }
-
-
+}
 
 const unacceptableWords = []; //An array of words banned from prayer requests.
 /**
@@ -184,8 +183,6 @@ function submitPrayer() {
 		saveMessage(prayer);
 	}
 }
-
-
 
 /**
 * A function for remmoving prayer requests.
