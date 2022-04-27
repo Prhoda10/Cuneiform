@@ -514,7 +514,7 @@ textarea {
 }
 
 /* ACCOUNT */
-#whenSignedOut {
+#whenSignedIn {
   margin: 10px;
   padding: 40px;
 }
@@ -631,7 +631,7 @@ a {
   outline: none;
 }
 
-.formContainer .btn {
+.formContainer .join-submit {
   padding: 12px 20px;
   border: none;
   background-color: #8ebf42;

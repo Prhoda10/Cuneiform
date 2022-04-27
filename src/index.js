@@ -1,3 +1,14 @@
+import { initializeApp } from 'firebase/app';
+const app = initializeApp({
+  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
+  authDomain: "cuneiform-99812.firebaseapp.com",
+  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
+  projectId: "cuneiform-99812",
+  storageBucket: "cuneiform-99812.appspot.com",
+  messagingSenderId: "294328255555",
+  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
+  measurementId: "G-9PGSSD2423"
+});
 import { bookMap, versMap } from '../src/initialization.js'
 //fetch API
 var esvapi_url = 'https://api.esv.org/v3/passage/html/?q=';
@@ -9,18 +20,6 @@ let prev = [];
 export var canon = "";
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-
-const app = initializeApp({
-  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
-  authDomain: "cuneiform-99812.firebaseapp.com",
-  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
-  projectId: "cuneiform-99812",
-  storageBucket: "cuneiform-99812.appspot.com",
-  messagingSenderId: "294328255555",
-  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
-  measurementId: "G-9PGSSD2423"
-});
 
 //Auth
 var auth = getAuth();
@@ -254,6 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+<<<<<<< HEAD
 //Note Database methods
 
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -301,6 +301,8 @@ function indicateNotes(ref) {
   });
 }
 
+=======
+>>>>>>> 2b585401ca743dc14e3b98b68f80b0fb32263cf6
 //Highlights
 
 var element;
