@@ -24,10 +24,8 @@ let display = document.getElementById("displayFlashcard");
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 	   isLoggedIn = true;
-	   document.getElementById("loginStatus").innerHTML = "Logged In";
 	} else {
 	   isLoggedIn = false;
-	   document.getElementById("loginStatus").innerHTML = "Logged Out";
 	}
  });
 if (display) {	display.innerHTML = "Empty Deck"; }
