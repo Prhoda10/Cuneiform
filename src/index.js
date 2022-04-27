@@ -1,3 +1,14 @@
+import { initializeApp } from 'firebase/app';
+const app = initializeApp({
+  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
+  authDomain: "cuneiform-99812.firebaseapp.com",
+  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
+  projectId: "cuneiform-99812",
+  storageBucket: "cuneiform-99812.appspot.com",
+  messagingSenderId: "294328255555",
+  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
+  measurementId: "G-9PGSSD2423"
+});
 import { bookMap, versMap } from '../src/initialization.js'
 //fetch API
 var esvapi_url = 'https://api.esv.org/v3/passage/html/?q=';
@@ -9,18 +20,6 @@ let prev = [];
 export var canon = "";
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-
-const app = initializeApp({
-  apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
-  authDomain: "cuneiform-99812.firebaseapp.com",
-  databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
-  projectId: "cuneiform-99812",
-  storageBucket: "cuneiform-99812.appspot.com",
-  messagingSenderId: "294328255555",
-  appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
-  measurementId: "G-9PGSSD2423"
-});
 
 //Auth
 var auth = getAuth();
@@ -253,49 +252,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-//Note Database methods
-
-import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { getDatabase, ref as dbref, set, onValue } from 'firebase/database';
-import { getUserEmail, getUID } from '../src/account.js';
-
-export function addNote(note, ref) {
-  const db = getDatabase();
-  set(dbref(db, 'users/' + getUID() +'/notes'), {
-    reference: ref,
-    text: note,
-    timestamp: serverTimestamp()
-  });
-}
-
-// export async function addNote(note, ref) {
-//   try {
-//     const docRef = await addDoc(collection(getFirestore(), 'users/'+getUserEmail().toString()+'/notes'), {
-//       reference: ref,
-//       text: note,
-//       timestamp: serverTimestamp()
-//     });
-//     console.log("Note Submitted: ", docRef.id);
-//   }
-//   catch (error) {
-//     console.error('Error writing new note to Firebase Firestore Database', error);
-//   }
-// }
-
-import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
-
-function indicateNotes(ref) {
-  const db = getDatabase();
-  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes');
-  onValue(noteRef, (snapshot) => {
-    if (snapshot.val().reference == ref) {
-      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + snapshot.val().reference + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + snapshot.val().text + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + snapshot.val().timestamp + "</div>" + "<br><br>";
-    }
-  });
-}
 
 //Highlights
 

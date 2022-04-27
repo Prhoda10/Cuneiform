@@ -3,33 +3,26 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query } from "firebase/firestore";
 import { getUID, getUserEmail } from "./account";
 
-const firebaseConfig = {
-	apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
-	authDomain: "cuneiform-99812.firebaseapp.com",
-	databaseURL: "https://cuneiform-99812-default-rtdb.firebaseio.com",
-	projectId: "cuneiform-99812",
-	storageBucket: "cuneiform-99812.appspot.com",
-	messagingSenderId: "294328255555",
-	appId: "1:294328255555:web:a47d8083d73fe98aafc0f6",
-	measurementId: "G-9PGSSD2423"
-  };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getFirestore();
 var auth = getAuth();
 var isLoggedIn = false;
 let flashcardArray = [];
 let count = 0;
 let side = "front"; //The side of the card being viewed
 let display = document.getElementById("displayFlashcard");
+
+if (document.getElementById("loginStatus")) {
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 	   isLoggedIn = true;
-	   document.getElementById("loginStatus").innerHTML = "Logged In";
+	  	document.getElementById("loginStatus").innerHTML = "Logged In";
 	} else {
 	   isLoggedIn = false;
 	   document.getElementById("loginStatus").innerHTML = "Logged Out";
 	}
  });
+};
+
 if (display) {	display.innerHTML = "Empty Deck"; }
 if (window.location.href.includes("memorize")) { constructDeckList(); }
 /**
