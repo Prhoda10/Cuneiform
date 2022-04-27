@@ -259,15 +259,19 @@ document.addEventListener("DOMContentLoaded", function () {
 import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getDatabase, ref as dbref, set, onValue } from 'firebase/database';
 import { getUserEmail, getUID } from '../src/account.js';
+import { generateID } from './prayerjar.js';
 
 export function addNote(note, ref) {
   const db = getDatabase();
-  set(dbref(db, 'users/' + getUID() +'/notes'), {
+  let noteID = generateID(10);
+  set(dbref(db, 'users/' + getUID() +'/notes/'+ref+'/'+noteID), {
     reference: ref,
     text: note,
     timestamp: serverTimestamp()
   });
 }
+
+
 
 // export async function addNote(note, ref) {
 //   try {
@@ -287,13 +291,13 @@ import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/fi
 
 function indicateNotes(ref) {
   const db = getDatabase();
-  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes');
+  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref);
   onValue(noteRef, (snapshot) => {
-    if (snapshot.val().reference == ref) {
-      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + snapshot.val().reference + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + snapshot.val().text + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + snapshot.val().timestamp + "</div>" + "<br><br>";
-    }
+    snapshot.forEach((childSnapshot) => {
+      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + childSnapshot.val().reference + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + childSnapshot.val().text + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + childSnapshot.val().timestamp + "</div>" + "<br><br>";
+    });
   });
 }
 

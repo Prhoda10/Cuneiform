@@ -37,8 +37,9 @@ async function loadGroups() {
 	const db = getDatabase();
 	const groupRef = dbref(db, 'users/'+auth.currentUser.uid+'/groups');
   	onValue(groupRef, (snapshot) => {
-    	console.log(snapshot.val());
-		printGroup(snapshot.val());
+    	snapshot.forEach((childSnapshot) => {
+			printGroup(childSnapshot.val());
+		  });
   });
 }
 
@@ -104,7 +105,7 @@ import { getUID } from '../src/account.js';
 function createGroup(name) {
 	console.log("createGroup called");
 	let members = [getUID()];
-	let id = generateGroupID(6);
+	let id = generateID(6);
 	const db = getDatabase();
 	set(dbref(db, 'groups/'+id), {
 		Name: name,
@@ -154,7 +155,7 @@ async function joinGroup(ID) {
 	
 }
 
-function generateGroupID(count){
+export function generateID(count){
 	var chars = 'acdefhiklmnoqrstuvwxyz0123456789'.split('');
 	var result = '';
 	for(var i=0; i<count; i++){
