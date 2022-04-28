@@ -3,6 +3,7 @@ import { getDatabase, ref as dbref, set, onValue, serverTimestamp } from 'fireba
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getUID } from '../src/account.js';
 import { app } from './initialization.js';
+import { generateID } from './prayerjar.js';
 
 var auth = getAuth();
 var isLoggedIn;
