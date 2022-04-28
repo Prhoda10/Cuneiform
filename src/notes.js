@@ -1,10 +1,24 @@
 //Note Database methods  
 import { getDatabase, ref as dbref, set, onValue, serverTimestamp } from 'firebase/database';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getUID } from '../src/account.js';
+import { app } from './initialization.js';
+
+var auth = getAuth();
+var isLoggedIn;
+
+onAuthStateChanged(auth, (user) => {
+   if (user) {
+      isLoggedIn = true;
+   } else {
+      isLoggedIn = false;
+   }
+});
 
 export function addNote(note, ref) {
   const db = getDatabase();
-  set(dbref(db, 'users/' + getUID() +'/notes'), {
+  let noteID = generateID(10);
+  set(dbref(db, 'users/' + auth.currentUser.uid +'/notes/'+ref+'/'+noteID), {
     reference: ref,
     text: note,
     timestamp: serverTimestamp()
@@ -25,14 +39,14 @@ export function addNote(note, ref) {
 //   }
 // }
 
-function indicateNotes(ref) {
+export function indicateNotes(ref) {
   const db = getDatabase();
-  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes');
+  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref);
   onValue(noteRef, (snapshot) => {
-    if (snapshot.val().reference == ref) {
-      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + snapshot.val().reference + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + snapshot.val().text + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + snapshot.val().timestamp + "</div>" + "<br><br>";
-    }
+    snapshot.forEach((childSnapshot) => {
+      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + childSnapshot.val().reference + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + childSnapshot.val().text + "</div>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + childSnapshot.val().timestamp + "</div>" + "<br><br>";
+    });
   });
 }

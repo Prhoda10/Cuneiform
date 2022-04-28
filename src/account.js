@@ -17,17 +17,19 @@ var provider = new GoogleAuthProvider();
 var auth = getAuth();
 
 onAuthStateChanged(auth, (user) => {
-   var x = document.getElementById("signOutBtn");
-   var y = document.getElementById("signInBtn");
-   if (user) {
-      isLoggedIn();
-      //logged in stuff
-      y.style.display = "none";
-      x.style.display = "block";
-   } else {
-      //not logged in
-      y.style.display = "block";
-      x.style.display = "none";
+   if (document.getElementById("signInBtn")) {
+      var x = document.getElementById("signOutBtn");
+      var y = document.getElementById("signInBtn");
+      if (user) {
+         isLoggedIn();
+         //logged in stuff
+         y.style.display = "none";
+         x.style.display = "block";
+      } else {
+         //not logged in
+         y.style.display = "block";
+         x.style.display = "none";
+      }
    }
 });
 
