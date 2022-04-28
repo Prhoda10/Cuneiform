@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query } from "firebase/firestore";
-import { getUID, getUserEmail } from "./account";
+import { getUID, getUserEmail, login } from "./account";
 
 const db = getFirestore();
 var auth = getAuth();
@@ -11,16 +11,22 @@ let count = 0;
 let side = "front"; //The side of the card being viewed
 let display = document.getElementById("displayFlashcard");
 
-if (document.getElementById("loginStatus")) {
+if (document.getElementById("signIn")) {
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 	   isLoggedIn = true;
-	   if (document.getElementById("loginStatus"))
-	   		document.getElementById("loginStatus").innerHTML = "Logged In";
+	   if (document.getElementById("signIn"))
+	   		document.getElementById("signIn").innerHTML = "My Page";
+			document.getElementById("signIn").onclick = function() {
+				location.href = "account.html";
+			};
 	} else {
 	   isLoggedIn = false;
-	   if (document.getElementById("loginStatus"))
-	   		document.getElementById("loginStatus").innerHTML = "Logged Out";
+	   if (document.getElementById("signIn"))
+	   		document.getElementById("signIn").innerHTML = "Sign In";
+			document.getElementById("signIn").onclick = function () {
+				login();
+			};
 	}
  });
 };
