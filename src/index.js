@@ -108,11 +108,14 @@ export async function getCPT() {
   } else {
     await executeBIBAPI(trans, ref);
   }
-  if (isLoggedIn) {
-    indicateNotes(canon);
-    showHighlight(canon);
-  }
-  
+  onAuthStateChanged(getAuth(), (user) => {
+    if (user) {
+      indicateNotes(canon);
+      showHighlight(canon);
+    } else {
+      console.log("Not logged in, Can't retrieve notes/highlights");
+    }
+ });
 }
 
 //Begin fetching from ESV API
