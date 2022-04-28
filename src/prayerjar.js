@@ -83,11 +83,9 @@ if (window.location.href.includes("prayer")) {
 		document.getElementById('groupForm').style.display = "block";
 	});
 	document.getElementById("secondaryJoin").addEventListener("click", () => {
-		console.log("test1234");
 		let groupID = document.getElementById("groupIDcode").value;
-		console.log("Text from box: "+groupID);
-		//joinGroup(groupID);
-		document.getElementById('groupForm').style.display = "none";
+		joinGroup(groupID);
+		document.getElementById('popupForm').style.display = "none";
 	});
 	document.getElementById("createGButton").addEventListener("click", () => {
 		console.log("createGButton pressed");
@@ -124,44 +122,38 @@ function createGroup(name) {
 	});
 }
 
-function joinGroup(ID) {
+async function joinGroup(ID) {
 	console.log(ID);
-	// const db = getDatabase();
-	// var uid = getUID();
-	// var newMembers = [uid];
-	// setUserToGroup(db, uid, ID);
-	// let group = await getGroupObject(ID);
-	// console.log("joinGroup called");
-	// if (group) {
-	// 	console.log(group.Members);
-	// } else { console.log("null group"); }
-		// if (snapshot.exists()) {
-		// 	console.log("snapshot Exists");
-		// 	console.log(snapshot.val());
-		// 	owner = snapshot.val().Owner;
-		// 	name = snapshot.val().Name;
-		// 	if (!snapshot.val().Members.includes(newMembers[0])) {
-		// 		newMembers = newMembers.concat(snapshot.val().Members);
-		// 	} else {
-		// 		newMembers = snapshot.val().Members;
-		// 	}
-		// }
-	// }).catch((error) => {
-	// 	console.log("snapshot Error");
-	// 	console.error(error);
-	// });
-
-	// set(dbref(db, 'groups/'+ID), {
-	// 	Name: name,
-	// 	Owner: owner,
-	// 	Members: newMembers,
-	// 	ID: ID
-	
+	const db = getDatabase();
+	var uid = getUID();
+	var newMembers = [uid];
+	setGroupToUser(db, uid, ID);
+	const group = await getGroupObject(ID);
+	console.log("joinGroup called");
+	if (group) {
+		console.log(group.Members);
+		if (!group.Members.includes(newMembers[0])) {
+			newMembers = newMembers.concat(group.Members);
+			console.log(newMembers);
+		} else {
+			newMembers = group.Members;
+		}
+		addUserToGroup(db, group.Name, group.Owner, newMembers, ID);
+	} else { console.log("null group"); }	
 }
 
-function getGroupObject(groupId) {
+function addUserToGroup(db,name, owner, newMembers, ID) {
+	set(dbref(db, 'groups/'+ID), {
+		Name: name,
+		Owner: owner,
+		Members: newMembers,
+		ID: ID
+	});
+}
+
+async function getGroupObject(groupId) {
 	const dbRef = dbref(getDatabase());
-	get(child(dbRef, 'groups/'+groupId)).then((snapshot) => {
+	const snapshot = await get(child(dbRef, 'groups/'+groupId));
 	if (snapshot.exists()) {
 		console.log(snapshot.val());
 		return snapshot.val();
@@ -169,12 +161,9 @@ function getGroupObject(groupId) {
 		console.log("No data available");
 		return null;
 	}
-	}).catch((error) => {
-	console.error(error);
-	});
 }
 
-function setUserToGroup(db, uid, groupId) {
+function setGroupToUser(db, uid, groupId) {
 	set(dbref(db, 'users/'+ uid +'/groups/'+groupId), { //Should we check if already in this group first?
 		GroupID: groupId
 	});
