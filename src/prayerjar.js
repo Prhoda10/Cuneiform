@@ -7,6 +7,10 @@ import { login } from '../src/account.js';
 var auth = getAuth();
 var isLoggedIn;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> c13e6a8cfdc1dc36b1858c11ecd7c270a8222543
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 		isLoggedIn = true;
@@ -34,8 +38,13 @@ async function loadGroups() {
 }
 
 function printGroup(item, val) {
+<<<<<<< HEAD
+	let button = document.createElement('Button');
+	button.innerText = ""+item.Name;
+=======
 	let button = document.createElement('button');
 	button.innerText = "" + item.GroupID;
+>>>>>>> c13e6a8cfdc1dc36b1858c11ecd7c270a8222543
 	button.addEventListener('click', () => {
 		loadPrayers(item.GroupID);
 	});
@@ -121,7 +130,8 @@ function createGroup(name) {
 		ID: id
 	});
 	set(dbref(db, 'users/'+getUID()+'/groups/' + id), {
-		GroupID: id
+		GroupID: id,
+		Name: name
 	});
 }
 
@@ -130,7 +140,6 @@ async function joinGroup(ID) {
 	const db = getDatabase();
 	var uid = getUID();
 	var newMembers = [uid];
-	setGroupToUser(db, uid, ID);
 	const group = await getGroupObject(ID);
 	console.log("joinGroup called");
 	if (group) {
@@ -143,6 +152,7 @@ async function joinGroup(ID) {
 		}
 		addUserToGroup(db, group.Name, group.Owner, newMembers, ID);
 	} else { console.log("null group"); }	
+	setGroupToUser(db, uid, ID, group.Name);
 }
 
 function addUserToGroup(db,name, owner, newMembers, ID) {
@@ -166,9 +176,10 @@ async function getGroupObject(groupId) {
 	}
 }
 
-function setGroupToUser(db, uid, groupId) {
+function setGroupToUser(db, uid, groupId, name) {
 	set(dbref(db, 'users/'+ uid +'/groups/'+groupId), { //Should we check if already in this group first?
-		GroupID: groupId
+		GroupID: groupId,
+		Name: name
 	});
 	console.log("User set to group");
 }
