@@ -320,7 +320,7 @@ nav {
   margin-left: 30px;
 }
 
-#prayerDiv, .prayerGroupList {
+#prayerDiv, #groupChart {
   margin-left: 30px;
   margin-top: 2%;
   font-size: 1em;
@@ -328,7 +328,9 @@ nav {
   color: rgb(127, 106, 139);
   text-decoration: none;
 }
-
+#groupChart button {
+  margin: auto 2px;
+}
 #prayerDiv li {
   margin-top: 1.5%;
   margin-left: 0.5%;

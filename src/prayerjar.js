@@ -7,23 +7,26 @@ import { login } from '../src/account.js';
 var auth = getAuth();
 var isLoggedIn;
 
-
-// onAuthStateChanged(auth, (user) => {
-// 	if (user) {
-// 		isLoggedIn = true;
-// 		if (window.location.href.includes("prayer-jar"))
-// 			loadGroups();
-// 	} else {
-// 		isLoggedIn = false;
-// 		if (window.location.href.includes("prayer-jar"))
-// 			login();
-// 	}
-// });
+onAuthStateChanged(auth, (user) => {
+	if (user) {
+		isLoggedIn = true;
+		if (window.location.href.includes("prayer-jar"))
+			loadGroups();
+	} else {
+		isLoggedIn = false;
+		if (window.location.href.includes("prayer-jar"))
+			login();
+	}
+});
 
 async function loadGroups() {
 	const db = getDatabase();
 	const groupRef = dbref(db, 'users/'+auth.currentUser.uid+'/groups');
   	onValue(groupRef, (snapshot) => {
+		const newDiv = document.createElement("div");
+		const newContent = document.createTextNode("My Groups:");
+		newDiv.appendChild(newContent);
+		document.getElementById("groupChart").appendChild(newDiv);
     	snapshot.forEach((childSnapshot) => {
 			printGroup(childSnapshot.val());
 		  });
@@ -31,8 +34,8 @@ async function loadGroups() {
 }
 
 function printGroup(item, val) {
-	let button = document.createElement('Button');
-	button.innerText = ""+item.GroupID;
+	let button = document.createElement('button');
+	button.innerText = "" + item.GroupID;
 	button.addEventListener('click', () => {
 		loadPrayers(item.GroupID);
 	});
