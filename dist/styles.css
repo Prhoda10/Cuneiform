@@ -205,6 +205,22 @@ button {
   background-color: #948DAF;
 }
 
+.noteChartContainer {
+  position: fixed;
+  bottom: 10px;
+  left: 90%;
+  max-width: 100px;
+}
+
+#noteChart {
+  color: rgb(94, 92, 133);
+  background-color: #ffffff;
+  font-family: 'Nunito Sans', sans-serif;
+  font-style: italic;
+  float: right;
+  max-width: 100px;
+}
+
 
 /* #searchKey {
   position: relative;

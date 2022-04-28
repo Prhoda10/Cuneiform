@@ -45,9 +45,10 @@ export function indicateNotes(ref) {
   const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref);
   onValue(noteRef, (snapshot) => {
     snapshot.forEach((childSnapshot) => {
-      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + childSnapshot.val().reference + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + childSnapshot.val().text + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + childSnapshot.val().timestamp + "</div>" + "<br><br>";
+      document.getElementById("noteChart").innerHTML += "<div>" + "\"" + childSnapshot.val().text + "\"" + "</div>";
+      var timeStamp = childSnapshot.val().timestamp;
+      var date = new Date(timeStamp);
+      document.getElementById("noteChart").innerHTML += "<div>" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear() + "</div>" + "<br><br>";
     });
   });
 }
