@@ -7,7 +7,10 @@ import { login } from '../src/account.js';
 var auth = getAuth();
 var isLoggedIn;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c13e6a8cfdc1dc36b1858c11ecd7c270a8222543
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 		isLoggedIn = true;
@@ -24,6 +27,10 @@ async function loadGroups() {
 	const db = getDatabase();
 	const groupRef = dbref(db, 'users/'+auth.currentUser.uid+'/groups');
   	onValue(groupRef, (snapshot) => {
+		const newDiv = document.createElement("div");
+		const newContent = document.createTextNode("My Groups:");
+		newDiv.appendChild(newContent);
+		document.getElementById("groupChart").appendChild(newDiv);
     	snapshot.forEach((childSnapshot) => {
 			printGroup(childSnapshot.val());
 		  });
@@ -31,8 +38,13 @@ async function loadGroups() {
 }
 
 function printGroup(item, val) {
+<<<<<<< HEAD
 	let button = document.createElement('Button');
 	button.innerText = ""+item.Name;
+=======
+	let button = document.createElement('button');
+	button.innerText = "" + item.GroupID;
+>>>>>>> c13e6a8cfdc1dc36b1858c11ecd7c270a8222543
 	button.addEventListener('click', () => {
 		loadPrayers(item.GroupID);
 	});
