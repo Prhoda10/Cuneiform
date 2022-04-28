@@ -8,17 +8,17 @@ var auth = getAuth();
 var isLoggedIn;
 
 
-// onAuthStateChanged(auth, (user) => {
-// 	if (user) {
-// 		isLoggedIn = true;
-// 		if (window.location.href.includes("prayer-jar"))
-// 			loadGroups();
-// 	} else {
-// 		isLoggedIn = false;
-// 		if (window.location.href.includes("prayer-jar"))
-// 			login();
-// 	}
-// });
+onAuthStateChanged(auth, (user) => {
+	if (user) {
+		isLoggedIn = true;
+		if (window.location.href.includes("prayer-jar"))
+			loadGroups();
+	} else {
+		isLoggedIn = false;
+		if (window.location.href.includes("prayer-jar"))
+			login();
+	}
+});
 
 async function loadGroups() {
 	const db = getDatabase();
@@ -32,7 +32,7 @@ async function loadGroups() {
 
 function printGroup(item, val) {
 	let button = document.createElement('Button');
-	button.innerText = ""+item.GroupID;
+	button.innerText = ""+item.Name;
 	button.addEventListener('click', () => {
 		loadPrayers(item.GroupID);
 	});
@@ -118,7 +118,8 @@ function createGroup(name) {
 		ID: id
 	});
 	set(dbref(db, 'users/'+getUID()+'/groups/' + id), {
-		GroupID: id
+		GroupID: id,
+		Name: name
 	});
 }
 
@@ -127,7 +128,6 @@ async function joinGroup(ID) {
 	const db = getDatabase();
 	var uid = getUID();
 	var newMembers = [uid];
-	setGroupToUser(db, uid, ID);
 	const group = await getGroupObject(ID);
 	console.log("joinGroup called");
 	if (group) {
@@ -140,6 +140,7 @@ async function joinGroup(ID) {
 		}
 		addUserToGroup(db, group.Name, group.Owner, newMembers, ID);
 	} else { console.log("null group"); }	
+	setGroupToUser(db, uid, ID, group.Name);
 }
 
 function addUserToGroup(db,name, owner, newMembers, ID) {
@@ -163,9 +164,10 @@ async function getGroupObject(groupId) {
 	}
 }
 
-function setGroupToUser(db, uid, groupId) {
+function setGroupToUser(db, uid, groupId, name) {
 	set(dbref(db, 'users/'+ uid +'/groups/'+groupId), { //Should we check if already in this group first?
-		GroupID: groupId
+		GroupID: groupId,
+		Name: name
 	});
 	console.log("User set to group");
 }
