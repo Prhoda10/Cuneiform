@@ -7,17 +7,18 @@ import { login } from '../src/account.js';
 var auth = getAuth();
 var isLoggedIn;
 
-if (window.location.href.includes("prayer-jar")) {
-	onAuthStateChanged(auth, (user) => {
-		if (user) {
-			isLoggedIn = true;
-			loadGroups();
-		} else {
-			isLoggedIn = false;
-			login();
-		}
-	});
-}
+
+// onAuthStateChanged(auth, (user) => {
+// 	if (user) {
+// 		isLoggedIn = true;
+// 		if (window.location.href.includes("prayer-jar"))
+// 			loadGroups();
+// 	} else {
+// 		isLoggedIn = false;
+// 		if (window.location.href.includes("prayer-jar"))
+// 			login();
+// 	}
+// });
 
 async function loadGroups() {
 	const db = getDatabase();
@@ -81,9 +82,12 @@ if (window.location.href.includes("prayer")) {
 	document.getElementById("make-group").addEventListener("click", () => {
 		document.getElementById('groupForm').style.display = "block";
 	});
-	document.getElementsByClassName("join-submit")[0].addEventListener("click", () => {
+	document.getElementById("secondaryJoin").addEventListener("click", () => {
+		console.log("test1234");
 		let groupID = document.getElementById("groupIDcode").value;
-		joinGroup(groupID);
+		console.log("Text from box: "+groupID);
+		//joinGroup(groupID);
+		document.getElementById('groupForm').style.display = "none";
 	});
 	document.getElementById("createGButton").addEventListener("click", () => {
 		console.log("createGButton pressed");
@@ -120,43 +124,61 @@ function createGroup(name) {
 	});
 }
 
-async function joinGroup(ID) {
-	console.log("joinGroup Called");
-	const db = getDatabase();
-	var uid = getUID();
-	var newMembers = [uid];
-	console.log(newMembers);
-	var owner;
-	var name;
-	set(dbref(db, 'users/'+ uid +'/groups/'+ID), { //Should we check if already in this group first?
-		GroupID: ID
-	});
-	console.log("joinGroup called");
-	await get(child(dbref(db), 'groups/'+ID)).then((snapshot) => { //Just to read the Members array for ID's group
-		if (snapshot.exists()) {
-			console.log("snapshot Exists");
-			console.log(snapshot.val());
-			owner = snapshot.val().Owner;
-			name = snapshot.val().Name;
-			if (!snapshot.val().Members.includes(newMembers[0])) {
-				newMembers = newMembers.concat(snapshot.val().Members);
-			} else {
-				newMembers = snapshot.val().Members;
-			}
-		}
-	}).catch((error) => {
-		console.log("snapshot Error");
-		console.error(error);
-	});
-	console.log(newMembers);
+function joinGroup(ID) {
+	console.log(ID);
+	// const db = getDatabase();
+	// var uid = getUID();
+	// var newMembers = [uid];
+	// setUserToGroup(db, uid, ID);
+	// let group = await getGroupObject(ID);
+	// console.log("joinGroup called");
+	// if (group) {
+	// 	console.log(group.Members);
+	// } else { console.log("null group"); }
+		// if (snapshot.exists()) {
+		// 	console.log("snapshot Exists");
+		// 	console.log(snapshot.val());
+		// 	owner = snapshot.val().Owner;
+		// 	name = snapshot.val().Name;
+		// 	if (!snapshot.val().Members.includes(newMembers[0])) {
+		// 		newMembers = newMembers.concat(snapshot.val().Members);
+		// 	} else {
+		// 		newMembers = snapshot.val().Members;
+		// 	}
+		// }
+	// }).catch((error) => {
+	// 	console.log("snapshot Error");
+	// 	console.error(error);
+	// });
 
-	set(dbref(db, 'groups/'+ID), {
-		Name: name,
-		Owner: owner,
-		Members: newMembers,
-		ID: ID
-	});
+	// set(dbref(db, 'groups/'+ID), {
+	// 	Name: name,
+	// 	Owner: owner,
+	// 	Members: newMembers,
+	// 	ID: ID
 	
+}
+
+function getGroupObject(groupId) {
+	const dbRef = dbref(getDatabase());
+	get(child(dbRef, 'groups/'+groupId)).then((snapshot) => {
+	if (snapshot.exists()) {
+		console.log(snapshot.val());
+		return snapshot.val();
+	} else {
+		console.log("No data available");
+		return null;
+	}
+	}).catch((error) => {
+	console.error(error);
+	});
+}
+
+function setUserToGroup(db, uid, groupId) {
+	set(dbref(db, 'users/'+ uid +'/groups/'+groupId), { //Should we check if already in this group first?
+		GroupID: groupId
+	});
+	console.log("User set to group");
 }
 
 export function generateID(count){
