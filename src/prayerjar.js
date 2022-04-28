@@ -7,10 +7,6 @@ import { login } from '../src/account.js';
 var auth = getAuth();
 var isLoggedIn;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> c13e6a8cfdc1dc36b1858c11ecd7c270a8222543
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 		isLoggedIn = true;
@@ -38,13 +34,8 @@ async function loadGroups() {
 }
 
 function printGroup(item, val) {
-<<<<<<< HEAD
 	let button = document.createElement('Button');
 	button.innerText = ""+item.Name;
-=======
-	let button = document.createElement('button');
-	button.innerText = "" + item.GroupID;
->>>>>>> c13e6a8cfdc1dc36b1858c11ecd7c270a8222543
 	button.addEventListener('click', () => {
 		loadPrayers(item.GroupID);
 	});
@@ -119,6 +110,7 @@ if (window.location.href.includes("prayer")) {
 import { getUID } from '../src/account.js';
 //Adds a group to the database with the given name, creates a unique group id for the group, adds caller as group leader, adds caller to group.
 function createGroup(name) {
+	$("#groupChart").html(""); //make sure groups don't appear twice
 	console.log("createGroup called");
 	let members = [getUID()];
 	let id = generateID(6);
@@ -206,9 +198,6 @@ function submitPrayer() {
 		return;
 	} else {
 		window.alert("Prayer Submitted!");
-		/*li.setAttribute('id', prayer);
-		li.appendChild(document.createTextNode(prayer));
-		list.appendChild(li);*/
 		saveMessage(prayer);
 	}
 }
