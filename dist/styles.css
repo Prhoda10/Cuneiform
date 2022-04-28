@@ -320,7 +320,7 @@ nav {
   margin-left: 30px;
 }
 
-#prayerDiv {
+#prayerDiv, .prayerGroupList {
   margin-left: 30px;
   margin-top: 2%;
   font-size: 1em;
@@ -369,6 +369,7 @@ nav {
 #prayerlist {
   size: 60%;
 }
+
 
 /* memorize */
 
@@ -514,7 +515,7 @@ textarea {
 }
 
 /* ACCOUNT */
-#whenSignedIn {
+#account-container {
   margin: 10px;
   padding: 40px;
 }
