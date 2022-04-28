@@ -1,4 +1,6 @@
 import { initializeApp } from 'firebase/app';
+import { indicateNotes } from './notes.js';
+import { getDatabase, set, ref as dbref, onValue, serverTimestamp } from 'firebase/database';
 const app = initializeApp({
   apiKey: "AIzaSyBdfLZLTXIK3dFvMUR7R0vOWwC01iceGAo",
   authDomain: "cuneiform-99812.firebaseapp.com",
@@ -92,7 +94,6 @@ export async function getSRC() {
 
     document.getElementById("main").innerHTML += "<div class=\"Divtext" + i + "\">" + data.results[i].reference + "</div>" + data.results[i].content + "<br><br>";
   }
-
 
 }
 //Get actual chapter content and display
@@ -253,56 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-<<<<<<< HEAD
-//Note Database methods
-
-import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { getDatabase, ref as dbref, set, onValue } from 'firebase/database';
-import { getUserEmail, getUID, login } from '../src/account.js';
-import { generateID } from './prayerjar.js';
-
-export function addNote(note, ref) {
-  const db = getDatabase();
-  let noteID = generateID(10);
-  set(dbref(db, 'users/' + auth.currentUser.uid +'/notes/'+ref+'/'+noteID), {
-    reference: ref,
-    text: note,
-    timestamp: serverTimestamp()
-  });
-}
-
-
-
-// export async function addNote(note, ref) {
-//   try {
-//     const docRef = await addDoc(collection(getFirestore(), 'users/'+getUserEmail().toString()+'/notes'), {
-//       reference: ref,
-//       text: note,
-//       timestamp: serverTimestamp()
-//     });
-//     console.log("Note Submitted: ", docRef.id);
-//   }
-//   catch (error) {
-//     console.error('Error writing new note to Firebase Firestore Database', error);
-//   }
-// }
-
-import { doc, getDoc, collectionGroup, query, where, getDocs } from "firebase/firestore";
-
-function indicateNotes(ref) {
-  const db = getDatabase();
-  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref);
-  onValue(noteRef, (snapshot) => {
-    snapshot.forEach((childSnapshot) => {
-      document.getElementById("noteChart").innerHTML += "<div>" + "reference: " + childSnapshot.val().reference + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "text: " + childSnapshot.val().text + "</div>";
-      document.getElementById("noteChart").innerHTML += "<div>" + "date: " + childSnapshot.val().timestamp + "</div>" + "<br><br>";
-    });
-  });
-}
-
-=======
->>>>>>> 2b585401ca743dc14e3b98b68f80b0fb32263cf6
 //Highlights
 
 var element;
@@ -310,7 +261,6 @@ var element;
 export function toggleHighlight(color) {
   $(element).toggleClass(color + "Highlight");
   document.getElementById('highlightDropdown').style.display = "none";
-  console.log("element.value: " + element.innerText);
   addHighlight(color, canon ,element.id, element.innerText);
 }
 

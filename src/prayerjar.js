@@ -29,23 +29,25 @@ async function loadGroups() {
   });
 }
 
-function printGroup(groupRef) {
-	if(groupRef) {
-	groupRef.ref.once("value")
-	.then(function(snapshot) {
-		var name = snapshot.child("name").val(); // {name: my prayer group}
-		document.getElementById("groupChart").innerHTML += "<div>" + name + "</div>";
+function printGroup(item, val) {
+	let button = document.createElement('Button');
+	button.innerText = ""+item.GroupID;
+	button.addEventListener('click', () => {
+		loadPrayers(item.GroupID);
 	});
-	} else {
-		console.log("Not in any groups?");
-	}
-};
+	document.getElementById("groupChart").appendChild(button);
+}
+
+function loadPrayers() {
+	return;
+}
 
 // Saves a new message to Cloud Firestore.
-async function saveMessage(msg) {
+async function saveMessage(msg, grpID) {
 	// Add a new message entry to the Firebase database.
 	try {
-		const docRef = await addDoc(collection(getFirestore(), 'prayer'), {
+		const db = getDatabase();
+		set(dbref(db, 'groups/'+grpID+"/prayers"), {
 			text: msg,
 			timestamp: serverTimestamp()
 		});
@@ -107,28 +109,30 @@ function createGroup(name) {
 	let members = [getUID()];
 	let id = generateID(6);
 	const db = getDatabase();
-	set(dbref(db, 'groups/' + id), {
+	set(dbref(db, 'groups/'+id), {
 		Name: name,
 		Owner: getUID(),
 		Members: members,
 		ID: id
 	});
-	set(dbref(db, 'users/' + getUID() + '/groups/' + id), {
+	set(dbref(db, 'users/'+getUID()+'/groups/' + id), {
 		GroupID: id
 	});
 }
 
 async function joinGroup(ID) {
+	console.log("joinGroup Called");
 	const db = getDatabase();
 	var uid = getUID();
 	var newMembers = [uid];
+	console.log(newMembers);
 	var owner;
 	var name;
-	set(dbref(db, 'users/' + uid + '/groups/' + ID), { //Should we check if already in this group first?
+	set(dbref(db, 'users/'+ uid +'/groups/'+ID), { //Should we check if already in this group first?
 		GroupID: ID
 	});
 	console.log("joinGroup called");
-	await get(child(dbref(db), 'groups/' + ID)).then((snapshot) => { //Just to read the Members array for ID's group
+	await get(child(dbref(db), 'groups/'+ID)).then((snapshot) => { //Just to read the Members array for ID's group
 		if (snapshot.exists()) {
 			console.log("snapshot Exists");
 			console.log(snapshot.val());
@@ -146,13 +150,13 @@ async function joinGroup(ID) {
 	});
 	console.log(newMembers);
 
-	set(dbref(db, 'groups/' + ID), {
+	set(dbref(db, 'groups/'+ID), {
 		Name: name,
 		Owner: owner,
 		Members: newMembers,
 		ID: ID
 	});
-
+	
 }
 
 export function generateID(count){
