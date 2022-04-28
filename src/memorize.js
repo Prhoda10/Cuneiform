@@ -16,10 +16,7 @@ onAuthStateChanged(auth, (user) => {
 	if (user) {
 	   isLoggedIn = true;
 	   if (document.getElementById("signIn"))
-	   		document.getElementById("signIn").innerHTML = "My Page";
-			document.getElementById("signIn").onclick = function() {
-				location.href = "account.html";
-			};
+	   		$("#signIn").replaceWith("<li> <a class='nav-link' id='login' href='account.html'>Account</a> </li>");
 	} else {
 	   isLoggedIn = false;
 	   if (document.getElementById("signIn"))

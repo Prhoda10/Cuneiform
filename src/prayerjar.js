@@ -193,7 +193,7 @@ const unacceptableWords = []; //An array of words banned from prayer requests.
 function submitPrayer() {
 	let list = document.getElementById("prayerList");
 	let prayer = document.getElementById("submissionBox").value;
-	let li = document.createElement("li");
+
 	if (checkPrayer(prayer, unacceptableWords)) {
 		return;
 	} else {
