@@ -39,6 +39,7 @@ function printGroup(item, val) {
 	let button = document.createElement('Button');
 	button.innerText = ""+item.Name;
 	button.addEventListener('click', () => {
+		document.getElementById("idIndicator").innerHTML = "Current GroupID: "+item.GroupID;
 		loadPrayers(item.GroupID);
 		currentGroup = item.GroupID;
 	});
@@ -49,6 +50,7 @@ function loadPrayers(gid) {
 	const db = getDatabase();
 	const prayRef = dbref(db, 'groups/'+gid+'/prayers/');
   	onValue(prayRef, (snapshot) => {
+		$("#prayerList").empty();
     	snapshot.forEach((childSnapshot) => {
 			let li = document.createElement("li");
 			li.setAttribute('id', prayer);
@@ -61,7 +63,7 @@ function loadPrayers(gid) {
 // Saves a new message to Cloud Firestore.
 async function saveMessage(msg) {
 	// Add a new message entry to the Firebase database.
-	$("#prayerList").html("");
+	$("#prayerList").empty();
 	const pid = generateID(9);
 	try {
 		const db = getDatabase();

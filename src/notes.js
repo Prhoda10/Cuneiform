@@ -25,7 +25,7 @@ export function addNote(note, ref) {
     text: note,
     timestamp: serverTimestamp()
   });
-  location.reload();
+  //location.reload();
 }
 
 // export async function addNote(note, ref) {
@@ -43,10 +43,11 @@ export function addNote(note, ref) {
 // }
 
 export function indicateNotes(ref) {
-  $("#noteChart").empty();
+  console.log("indicated noted");
   const db = getDatabase();
   const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref+"/");
   onValue(noteRef, (snapshot) => {
+    $("#noteChart").empty();
     snapshot.forEach((childSnapshot) => {
       let div = document.createElement("div");
       div.innerHTML = "\"" + childSnapshot.val().text + "\"";
@@ -55,6 +56,8 @@ export function indicateNotes(ref) {
       var timeStamp = childSnapshot.val().timestamp;
       var date = new Date(timeStamp);
       document.getElementById("noteChart").innerHTML += "<div>" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear() + "</div>" + "<br><br>";
+    }, {
+      onlyOnce: true
     });
   });
 }
