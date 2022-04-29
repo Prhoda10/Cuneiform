@@ -61,7 +61,7 @@ function submitFlashcard() {
 	let card = {front: document.getElementById("card-front").value,
 	back: document.getElementById("card-back").value};
 	flashcardArray.push(card);
-	display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
+	display.innerHTML = [flashcardArray[count].front];
 }
 
 /**
@@ -83,7 +83,7 @@ async function getFlashcards() {
 		}
 	})
 	constructDeckList();
-	display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
+	display.innerHTML = [flashcardArray[count].front];
 }
 
 /**
@@ -130,7 +130,7 @@ function getPreviousFlashcard() {
 	if(count > 0) {
 		console.log("getPreviousFlashcard called at array index ", count);
 		count = count - 1;
-		display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
+		display.innerHTML = [flashcardArray[count].front];
 		side = "front";
 	} 
 	else if(count == 0) {
@@ -146,7 +146,7 @@ function getNextFlashcard() {
 	if(count < flashcardArray.length - 1) {
 		console.log("getNextFlashcard called at array index ", count);
 		count = count + 1;
-		display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
+		display.innerHTML = [flashcardArray[count].front];
 		side = "front";
 	}
 	else if(count == flashcardArray.length - 1) {
@@ -163,11 +163,11 @@ function flipFlashcard() {
 		return;
 	}
 	if(side == "front") {
-		display.innerHTML = [count + 1 + " Back: " + flashcardArray[count].back];
+		display.innerHTML = [flashcardArray[count].back];
 		side = "back";
 	}
 	else if(side == "back") {
-		display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
+		display.innerHTML = [flashcardArray[count].front];
 		side = "front";
 	}
 	else {
@@ -191,10 +191,10 @@ function deleteFlashcard() {
 			display.innerHTML = "Empty Deck";
 		}
 		else if(side == "back") {
-			display.innerHTML = [count + 1 + " Back: " + flashcardArray[count].back];
+			display.innerHTML = [flashcardArray[count].back];
 		}
 		else if(side == "front") {
-			display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
+			display.innerHTML = [flashcardArray[count].front];
 		}
 	}
 }
