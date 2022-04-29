@@ -25,25 +25,33 @@
 		<select name="Decks" id="Decks">
 		</select>
 	</div>
+	<br>
 
 	<!---Controls for creating new flashcards--->
 	<div class="Memorize-Creation-Controls">
-		<div class="fd">
+		<div id="currentFlashcard">
 			<p id="displayFlashcard"></p>
-			<div class="flashcard-options">
-				<button id="previous">Previous</button>
-				<button id="next">Next</button>
-				<button id="flip">Flip</button>
-				<button id="delete">Delete</button>
-			</div>
 		</div>
-		<input type="text" class="searchfield" id="card-front" placeholder="Front">
-		<input type="text" class="searchfield" id="card-back" placeholder="Back">
-		<input type="text" id="deck-name" placeholder="Enter deck name here">
-		<ul class="flashcard-options">
-			<li> <button id="createNewFlashcard">Add Flashcard</button> </li>
-			<li> <button id="getFlashcards">Get Flashcard Deck</button> </li>
-			<li> <button id="exportFlashcards">Save Flashcard Deck</button> </li>
+		<br>
+		<div id="flashcardOps">
+			<button id="previous">Previous</button>
+			<button id="next">Next</button>
+			<button id="flip">Flip</button>
+			<button id="delete">Delete</button>
+		</div>
+		
+		<br>
+		<div id="createFlashcard">
+			<input type="text" class="searchfield" id="card-front" placeholder="Front">
+			<input type="text" class="searchfield" id="card-back" placeholder="Back">
+			<br>
+			<input type="text" id="deck-name" placeholder="Enter deck name here">
+		</div>
+		<br>
+		<ul id="flashcardButtons">
+			<button id="createNewFlashcard">Add Flashcard</button>
+			<button id="getFlashcards">Get Flashcard Deck</button>
+			<button id="exportFlashcards">Save Flashcard Deck</button>
 		</ul>
 		<!---Area for displaying a flashcard--->
 

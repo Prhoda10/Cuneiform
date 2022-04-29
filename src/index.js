@@ -307,7 +307,7 @@ export function addHighlight(color, ref, verse, text) {
   });
 }
 
-//Get highlights from DB
+//Add highlights to the highlights page from the DB
 export function getHighlight() {
   if (!isLoggedIn) {
     console.log('not logged in!');
@@ -324,6 +324,7 @@ export function getHighlight() {
   });
 }
 
+//Display highlights on each chapter from the DB
 function showHighlight(ref) {
   console.log("ShowHighlight called");
   const db = getDatabase();
