@@ -2,7 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query } from "firebase/firestore";
 import { getUID, getUserEmail, login } from "./account";
-
+/**
+ * Deck must be named.
+ * Deck name must be 20 chars or less.
+ * Deck must be 100 cards or less.
+ * Deck must have at least 1 card.
+ */
 const db = getFirestore();
 var auth = getAuth();
 var isLoggedIn = false;
@@ -33,10 +38,10 @@ onAuthStateChanged(auth, (user) => {
 
 if (display) {	display.innerHTML = "Empty Deck"; }
 if (window.location.href.includes("memorize")) { constructDeckList(); }
+
 /**
  * Connect functions to html 
  */ 
-
  if (document.getElementById("createNewFlashcard")) {
 	document.getElementById("createNewFlashcard").addEventListener("click", submitFlashcard);
 	document.getElementById("previous").addEventListener("click", getPreviousFlashcard);
@@ -59,9 +64,7 @@ function submitFlashcard() {
 	let card = {front: document.getElementById("card-front").value,
 	back: document.getElementById("card-back").value};
 	flashcardArray.push(card);
-	getNextFlashcard();
-		$('#card-front').val(''); 
-		$('#card-back').val('');
+	display.innerHTML = [count + 1 + " Front: " + flashcardArray[count].front];
 }
 
 /**
@@ -74,7 +77,6 @@ async function getFlashcards() {
 	side = "front";
 	displayFlashcard.innerHTML = "";
 	let name = document.getElementById("Decks").value;
-
 	const q = query(collection(db, "flashcardDecks"));
 	const ref = await getDocs(q);
 	ref.forEach((a) => {
