@@ -108,7 +108,8 @@ export async function getCPT() {
   } else {
     await executeBIBAPI(trans, ref);
   }
-  onAuthStateChanged(getAuth(), (user) => {
+  var authi = getAuth();
+  onAuthStateChanged(authi, (user) => {
     if (user) {
       indicateNotes(canon);
       showHighlight(canon);
