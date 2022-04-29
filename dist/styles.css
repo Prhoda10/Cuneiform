@@ -421,11 +421,31 @@ nav {
   border: #000
 }
 
+#currentFlashcard {
+  border: 1px solid rgb(94, 92, 133);
+  margin-left: 35%;
+  width: 30%;
+  text-align: center;
+}
+
+#flashcardOps {
+  text-align: center;
+}
+
+#createFlashcard {
+  text-align: center;
+}
+
+#flashcardButtons {
+  text-align: center;
+}
+
 #displayFlashcard {
   width: 300px;
   height: 200px;
   font-size: 45px;
   display: inline-block;
+  text-align: center;
 }
 
 .flashcard-options {
