@@ -3,6 +3,8 @@ import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/fire
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { login } from '../src/account.js';
 
+let currentGroup = "";
+
 //Auth
 var auth = getAuth();
 var isLoggedIn;
@@ -38,42 +40,42 @@ function printGroup(item, val) {
 	button.innerText = ""+item.Name;
 	button.addEventListener('click', () => {
 		loadPrayers(item.GroupID);
+		currentGroup = item.GroupID;
 	});
 	document.getElementById("groupChart").appendChild(button);
 }
 
-function loadPrayers() {
-	return;
+function loadPrayers(gid) {
+	const db = getDatabase();
+	const prayRef = dbref(db, 'groups/'+gid+'/prayers/');
+  	onValue(prayRef, (snapshot) => {
+    	snapshot.forEach((childSnapshot) => {
+			let li = document.createElement("li");
+			li.setAttribute('id', prayer);
+			li.appendChild(document.createTextNode(childSnapshot.val().text));
+			document.getElementById("prayerList").appendChild(li);
+		  });
+  });
 }
 
 // Saves a new message to Cloud Firestore.
-async function saveMessage(msg, grpID) {
+async function saveMessage(msg) {
 	// Add a new message entry to the Firebase database.
+	$("#prayerList").html("");
+	const pid = generateID(9);
 	try {
 		const db = getDatabase();
-		set(dbref(db, 'groups/'+grpID+"/prayers"), {
+		set(dbref(db, 'groups/'+currentGroup+"/prayers/"+pid), {
+			author: auth.currentUser.uid,
+			pid: pid,
 			text: msg,
 			timestamp: serverTimestamp()
 		});
-		console.log("Prayer submitted: ", docRef.id);
+		console.log("Prayer submitted: ");
 	}
 	catch (error) {
 		console.error('Error writing new message to Firebase Database', error);
 	}
-}
-
-import { query, getDocs } from "firebase/firestore";
-
-async function readMessage() {
-	const q = query(collection(getFirestore(), 'prayer'));
-	const querySnapshot = await getDocs(q);
-	querySnapshot.forEach((doc) => {
-		console.log(doc.id, " => ", doc.data());
-		let li = document.createElement("li");
-		li.setAttribute('id', prayer);
-		li.appendChild(document.createTextNode(doc.data().text));
-		document.getElementById("prayerList").appendChild(li)
-	})
 }
 
 /*
