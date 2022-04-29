@@ -17,6 +17,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 export function addNote(note, ref) {
+  $('#noteChart').empty();
   const db = getDatabase();
   let noteID = generateID(10);
   set(dbref(db, 'users/' + auth.currentUser.uid +'/notes/'+ref+'/'+noteID), {
@@ -24,6 +25,7 @@ export function addNote(note, ref) {
     text: note,
     timestamp: serverTimestamp()
   });
+  location.reload();
 }
 
 // export async function addNote(note, ref) {
@@ -41,11 +43,15 @@ export function addNote(note, ref) {
 // }
 
 export function indicateNotes(ref) {
+  $("#noteChart").empty();
   const db = getDatabase();
-  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref);
+  const noteRef = dbref(db, 'users/'+auth.currentUser.uid+'/notes/'+ref+"/");
   onValue(noteRef, (snapshot) => {
     snapshot.forEach((childSnapshot) => {
-      document.getElementById("noteChart").innerHTML += "<div>" + "\"" + childSnapshot.val().text + "\"" + "</div>";
+      let div = document.createElement("div");
+      div.innerHTML = "\"" + childSnapshot.val().text + "\"";
+      document.getElementById("noteChart").appendChild(div);
+      console.log("div");
       var timeStamp = childSnapshot.val().timestamp;
       var date = new Date(timeStamp);
       document.getElementById("noteChart").innerHTML += "<div>" + date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear() + "</div>" + "<br><br>";
