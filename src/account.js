@@ -36,7 +36,6 @@ onAuthStateChanged(auth, (user) => {
 if (document.getElementById("signInBtn")) {
    document.getElementById("signInBtn").addEventListener("click", () => {
       if(isLoggedIn()) {
-         isLoggendIn();
          window.alert("You are already signed in.");
       } else {
       login();

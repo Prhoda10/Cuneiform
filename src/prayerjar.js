@@ -112,6 +112,7 @@ if (window.location.href.includes("prayer")) {
 import { getUID } from '../src/account.js';
 //Adds a group to the database with the given name, creates a unique group id for the group, adds caller as group leader, adds caller to group.
 function createGroup(name) {
+	$("#groupChart").html(""); //make sure groups don't appear twice
 	console.log("createGroup called");
 	let members = [getUID()];
 	let id = generateID(6);
@@ -194,7 +195,7 @@ const unacceptableWords = []; //An array of words banned from prayer requests.
 function submitPrayer() {
 	let list = document.getElementById("prayerList");
 	let prayer = document.getElementById("submissionBox").value;
-	let li = document.createElement("li");
+
 	if (checkPrayer(prayer, unacceptableWords)) {
 		return;
 	} else {

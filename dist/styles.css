@@ -52,9 +52,21 @@ ul {
 .navigation a {
   color: rgba(147, 112, 216, 0.637);
   text-decoration: none;
+
 }
 
 .navigation a:hover {
+  color: mediumpurple;
+  text-decoration: underline;
+}
+
+.navigation button {
+  all: unset;
+  color: rgba(147, 112, 216, 0.637);
+}
+
+.navigation button:hover {
+  all: unset;
   color: mediumpurple;
   text-decoration: underline;
 }
@@ -221,13 +233,6 @@ button {
   max-width: 100px;
 }
 
-
-/* #searchKey {
-  position: relative;
-  margin: 30px 0px;
-  float: left;
-} */
-
 #langu {
   color: rgb(94, 92, 133);
   background-color: #ffffff;
@@ -248,6 +253,10 @@ button {
   padding-right: 15%;
   float: right;
   white-space: nowrap;
+}
+
+#search select {
+  margin: 0px;
 }
 
 .searchfield {
@@ -545,14 +554,6 @@ textarea {
   margin: 7em auto;
   border-radius: 1.5em;
   box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
-}
-
-.signin {
-  padding-top: 40px;
-  color: #8C55AA;
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: bold;
-  font-size: 23px;
 }
 
 .username {
