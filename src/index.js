@@ -142,7 +142,7 @@ async function executeBIBAPI(trans, ref) {
     'include-chapter-numbers': 'false',
     'include-titles': 'true',
     'content-type': 'json',
-    'include-notes': 'true'
+    'include-notes': 'false'
   };
   ref = parseRef(ref);
   var request = "https://api.scripture.api.bible/v1/bibles/" + versMap.get(trans) + "/chapters/" + ref + "?";
@@ -158,6 +158,7 @@ async function executeBIBAPI(trans, ref) {
     document.getElementById("main").innerHTML = "<h2>Not supported yet or doesnt exist!</h2>";
   } else {
     nonESVPrintText(data);
+    console.log(data);
     next = [data.data.next.id];
     prev = [data.data.previous.id];
     canon = data.data.reference;
