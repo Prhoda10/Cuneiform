@@ -115,7 +115,10 @@ export var bookMap = new Map([
 
 import { getSRC, getCPT, getTXT, darkmode, toggleHighlight, getHighlight } from '../src/index.js';
 import { addNote } from '../src/notes.js';
-if (window.location.href.includes("index")||window.location.href.includes("search") ) {
+
+var p = window.location.pathname;
+var onIndex = (p.length === 0 || p === "/" || p.match('index.html') != null);
+if (window.location.href.includes("index")||window.location.href.includes("search") || onIndex) {
   console.log("This is the index page")
   document.addEventListener('DOMContentLoaded', () => {
     tranSetUp();

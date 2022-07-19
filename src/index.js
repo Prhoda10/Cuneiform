@@ -100,9 +100,9 @@ export async function getSRC() {
 export async function getCPT() {
   console.log("getCPT() was called");
   var trans = getUrlVars()["vers"];
-  if (trans == "" || trans == "undefined") { trans = "ESV"; } //default to ESV
+  if (trans == "" || trans == "undefined" || trans == undefined) { trans = "ESV"; } //default to ESV
   var ref = getUrlVars()["ref"];
-  if (ref == "") { ref = "Genesis 1"; } //default to Gen1
+  if (ref == "" || ref == "undefined" || ref == undefined) { ref = "Genesis 1"; } //default to Gen1
   if (trans == "ESV") {
     await executeESVAPI(ref);
   } else {
