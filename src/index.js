@@ -38,7 +38,7 @@ onAuthStateChanged(auth, (user) => {
 //Check if its a search or a reference and delegate
 export async function getTXT(mode) {
   var trans = document.getElementById("translation").value;
-  if (trans == "") {
+  if (trans == "" || trans == undefined || trans == 'undefined') {
     trans = getUrlVars()["vers"]; //if translation not clear from dropdown, then use URL parameter
   }
   var request;
@@ -103,7 +103,7 @@ export async function getCPT() {
   if (trans == "" || trans == "undefined" || trans == undefined) { trans = "ESV"; } //default to ESV
   var ref = getUrlVars()["ref"];
   if (ref == "" || ref == "undefined" || ref == undefined) { ref = "Genesis 1"; } //default to Gen1
-  if (trans == "ESV") {
+  if (trans == "ESV" || trans == "ESV#") {
     await executeESVAPI(ref);
   } else {
     await executeBIBAPI(trans, ref);
