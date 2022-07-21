@@ -103,7 +103,7 @@ export async function getCPT() {
   if (trans == "" || trans == "undefined" || trans == undefined) { trans = "ESV"; } //default to ESV
   var ref = getUrlVars()["ref"];
   if (ref == "" || ref == "undefined" || ref == undefined) { ref = "Genesis 1"; } //default to Gen1
-  if (trans == "ESV" || trans == "ESV#") {
+  if (trans == "ESV") {
     await executeESVAPI(ref);
   } else {
     await executeBIBAPI(trans, ref);
@@ -225,7 +225,7 @@ function parseRef(ref) {
 function getUrlVars() {
   var vars = {};
   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-    vars[key] = value;
+    vars[key] = value.replace('#', '');
   });
   return vars;
 }
@@ -242,6 +242,8 @@ function refRedirect(loc, trans) {
 export function darkmode() {
   var element = document.body;
   element.classList.toggle("darkmode");
+  var darkmode = element.classList.contains("darkmode");
+  document.cookie = "darkmode=" + darkmode + "; SameSite=None; Secure";
 }
 
 //Click search results

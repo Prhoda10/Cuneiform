@@ -116,6 +116,10 @@ export var bookMap = new Map([
 import { getSRC, getCPT, getTXT, darkmode, toggleHighlight, getHighlight } from '../src/index.js';
 import { addNote } from '../src/notes.js';
 
+if (document.cookie.split("; ").find(row => row.startsWith('darkmode='))?.split("=")[1] === "true") {
+  darkmode();
+}
+
 var p = window.location.pathname;
 var onIndex = (p.length === 0 || p === "/" || p.match('index.html') != null);
 if (window.location.href.includes("index")||window.location.href.includes("search") || onIndex) {
